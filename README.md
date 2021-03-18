@@ -2,21 +2,25 @@
 
 This `psborrow` package aims to evaluate the effect of external borrowing using an integrated approach that combines propensity score and Bayesian dynamic borrowing methods. Users are encouraged to check the vigbette for detailed instructions.
 
-Please first download the supporting packages and programs:
+## Installation
 
-- nphsim
+Please first download the supporting packages and [rjags](https://mcmc-jags.sourceforge.io/):
+
+```r
+# remotes
 install.packages("remotes")
-
+# nphsim
 remotes::install_github("keaven/nphsim")
+```
+Then install this psborrow package with:
 
-- rjags
-https://mcmc-jags.sourceforge.io/
-
-Then install this psborrow package using the following code:
+```r
 remotes::install_github("Genentech/psborrow")
+```
 
-Some resources:
-- [Slides](https://github.roche.com/LUY85/psborrow_supplement/blob/master/presentation/Bayesian%20Dynamic%20Borrowing%20with%20psborrow.pdf)
-- [Presentation](https://drive.google.com/file/d/1WWA2oA699ZDtAa7cRJ6-XgRUWcTHeS5v/view)
-- [User guide](https://github.roche.com/LUY85/psborrow/blob/master/vignettes/user_guide.html)
-- [Demo code](https://github.roche.com/LUY85/psborrow/blob/master/vignettes/demo.html)
+## Usage
+You can use the following tutorials to follow the package flow
+
+- [User guide](https://htmlpreview.github.io/?https://github.com/Genentech/psborrow/blob/master/vignettes/user_guide.html)
+- [Use case](https://htmlpreview.github.io/?https://github.com/Genentech/psborrow/blob/master/vignettes/DLBCL_use_case.html)
+
