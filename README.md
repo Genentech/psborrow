@@ -22,5 +22,5 @@ remotes::install_github("Genentech/psborrow")
 You can use the following tutorials to follow the package flow
 
 - [User guide](https://htmlpreview.github.io/?https://github.com/Genentech/psborrow/blob/master/vignettes/user_guide.html)
-- [Use case](https://htmlpreview.github.io/?https://github.com/Genentech/psborrow/blob/master/vignettes/DLBCL_use_case.html)
+- [Use case](https://htmlpreview.github.io/?https://github.com/Genentech/psborrow/blob/master/vignettes/use_case.html)
 

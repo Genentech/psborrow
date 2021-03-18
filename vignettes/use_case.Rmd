@@ -1,5 +1,5 @@
 ---
-title: "DLBCL use case"
+title: "use case"
 author: "Yichen Lu"
 date: "`r Sys.Date()`"
 output:
@@ -15,7 +15,7 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
 collapse = TRUE,
-comment = "#>", eval = TRUE, warning = FALSE, message = FALSE, echo = TRUE, cache = FALSE, results='hide'
+comment = "#>", eval = TRUE, warning = FALSE, message = FALSE, echo = TRUE, cache = FALSE, results='hide', eval = FALSE
 , fig.height = 6, fig.width=8)
 ```
 
