@@ -13,7 +13,6 @@ vignette: >
 
 ```{r setup, include = FALSE}
 remove(list = ls())
-knitr::opts_chunk$set(collapse = TRUE, comment = "#>", warning = FALSE, message = FALSE, echo = TRUE, cache=FALSE, fig.height = 6, fig.width=8)
 ```
 
 
