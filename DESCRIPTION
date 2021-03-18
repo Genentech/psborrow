@@ -1,0 +1,48 @@
+Package: psborrow
+Title: Bayesian dynamic borrowing with propensity score
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Yichen",
+           family = "Lu",
+           role = c("aut", "cre"),
+           email = "lu.yichen@gene.com",
+           comment = c(ORCID = ""))
+Description: What the package does (one paragraph).
+License: `use_mit_license()`, `use_gpl3_license()` or friends to
+    pick a license
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Imports: 
+    dplyr,
+    tidyr,
+    data.table,
+    rjags,
+    mvtnorm,
+    matrixcalc,
+    ggplot2,
+    foreach,
+    doParallel,
+    parallel,
+    MatchIt,
+    survival,
+    futile.logger
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat,
+VignetteBuilder: knitr
+Collate: 
+    'add_cov.R'
+    'add_time.R'
+    'add_mcmc.R'
+    'simu_cov.R'
+    'match_cov.R'
+    'simu_time.R'
+    'run_mcmc.R'
+    'get_summary.R'
+    'utils.R'
+    'rpwexp.R'
+Depends: 
+    R (>= 2.10)
