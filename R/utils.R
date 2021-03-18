@@ -1,10 +1,11 @@
 # Helper functions
-# Last update on 082320
+# Last update on 031721
 
 #' @import dplyr
 #' @import data.table
 #' @import rjags
 #' @import mvtnorm
+#' @import nphsim
 #' @import MatchIt
 #' @import futile.logger
 

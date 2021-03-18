@@ -16,11 +16,6 @@ remove(list = ls())
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>", warning = FALSE, message = FALSE, echo = TRUE, cache=FALSE, fig.height = 6, fig.width=8)
 ```
 
-## Install the package
-
-```{r, results = 'hide'}
-devtools::install_github(repo = "https://github.roche.com/LUY85/psborrow", host = "https://github.roche.com/api/v3", force = TRUE)
-```
 
 ## Load the package
 
