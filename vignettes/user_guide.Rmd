@@ -25,12 +25,11 @@ Here we demonstrate the usage of the package with an example. The goal is to:
 *   Simulate covariates for external control, internal control, and internal treatment arms
 *   Simulate censored survival times
 *   Run Markov chain Monte Carlo (MCMC) to generate the posterior distribution for Bayesian hierarchical model
-*   Summarize posterior distributions
+*   Summarize posterior distributions for treatment effect estimate
 
 ## Install the package
 
 ```{r setup}
-devtools::install_github(repo = "https://github.roche.com/LUY85/psborrow", host = "https://github.roche.com/api/v3", force = TRUE)
 library(psborrow)
 ```
 
@@ -93,7 +92,7 @@ The number of simulations `nsim` and seed parameters `seed` are included in the 
 
 ```{r}
 cov_list <- c(covset1, covset2)
-sample_cov <- simu_cov(ssObj = ss, covObj = cov_list, HR = c(0.67, 1), driftHR = c(1, 1.2), nsim = 2, seed = 47)
+sample_cov <- simu_cov(ssObj = ss, covObj = cov_list, HR = c(0.67, 1), driftHR = c(1, 1.2), nsim = 100, seed = 47)
 ```
 
 *Example of one simulated dataset (matrix) with covariates and treatment arm information from output `sample_cov`:*
