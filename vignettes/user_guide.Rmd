@@ -92,7 +92,7 @@ The number of simulations `nsim` and seed parameters `seed` are included in the 
 
 ```{r}
 cov_list <- c(covset1, covset2)
-sample_cov <- simu_cov(ssObj = ss, covObj = cov_list, HR = c(0.67, 1), driftHR = c(1, 1.2), nsim = 100, seed = 47)
+sample_cov <- simu_cov(ssObj = ss, covObj = cov_list, HR = c(0.67, 1), driftHR = c(1, 1.2), nsim = 10, seed = 47)
 ```
 
 *Example of one simulated dataset (matrix) with covariates and treatment arm information from output `sample_cov`:*
@@ -213,7 +213,7 @@ c_int = set_clin(gamma = c(2,3,16), e_itv = c(5,10),  CCOD = "fixed-first", CCOD
 For the external trial, both the recruitment rate `gamma` and the drop-out rate `etaC` are assumed to be constant. We can skip `etaE` since the external trial contains data on control arm only. Note that in this case, we do not need to specify *e_itv* or *d_itv*. The cut-off date `CCOD = "event"` means the analysis starts once 150 events have been observed.
 
 ```{r}
-c_ext = set_clin(gamma = 10, CCOD = "event", CCOD_t = 50, etaC = 0.05)
+c_ext = set_clin(gamma = 10, CCOD = "event", CCOD_t = 150, etaC = 0.05)
 ```
 
 With all the information provided above, we simulate enrollment pattern, time-to-events and time-to-dropout using function `simu_time()`. User can also provide a seed value here too.
@@ -237,14 +237,19 @@ We also specify the initial values for the following parameters in the JAGS mode
 -   `alpha`: log of baseline hazard rate for external and internal control arms
 -   `d`: precision parameter
 
+For each dataset simulated, we can run Bayesian analysis using different predictors or priors simultaneously. For this batch of priors for testing, we choose to account for all covariates in the model. 
+
 ```{r}
 pr1 <- set_prior(pred = "all", prior = "cauchy", r0 = 1, alpha = c(0, 0), sigma = 0.03)
+pr2 <- set_prior(pred = "all", prior = "gamma", r0 = 1,  alpha = c(0, 0))
+pr3 <- set_prior(pred = "all", prior = "no_ext", r0 = 1, alpha = 0)
+pr4 <- set_prior(pred = "all", prior = "full_ext", r0 = 1, alpha = 0)
 ```
 
-For each dataset simulated, we can run Bayesian analysis using different predictors or priors simultaneously. In `pr2`, we use a propensity score calculated based on two covariates `cov1` and `cov2` to be the predictor in the weibull model. The propensity score are generated using a logistic regression model.
+In the next example, we use a propensity score calculated based on two covariates `cov1` and `cov2` to be the predictor in the weibull model. The propensity score are generated using a logistic regression model.
 
-```{r}
-pr2 <-set_prior(pred = c("ps", "cov1", "cov2"), prior = "gamma", r0 = 1,  alpha = c(0, 0))
+```{r eval = FALSE}
+set_prior(pred = c("ps", "cov1", "cov2"), prior = "gamma", r0 = 1,  alpha = c(0, 0))
 ```
 
 Below we present some other examples of `set_prior()`. Users can use `?set_prior` to see more options.
@@ -260,23 +265,19 @@ set_prior(pred = "ps", prior = "full_ext", r0 = 1, alpha = 0)
 set_prior(pred = c("cov2", "cov5"), prior = "no_ext", r0 = 1, alpha = 0)
 ```
 
-Lastly, we combine `pr1` and `pr2`, and run MCMC to generate samples from posterior distributions. The number of parallel chains for the model, number of iterations for adaptation, number of iterations discarded as burn-in and number of iterations to monitor are 2, 100, 100, 200 respectively. User can also provide a seed value. User can choose to leverage parallel processing through calling `run_mcmc_p()` instead of `run_mcmc()`.
+Lastly, we combine all four priors, and run MCMC to generate samples from posterior distributions. The number of parallel chains for the model, number of iterations for adaptation, number of iterations discarded as burn-in and number of iterations to monitor are 2, 100, 100, 200 respectively. User can also provide a seed value. User can choose to leverage parallel processing through calling `run_mcmc_p()` instead of `run_mcmc()`.
 
 If folder path `path` is provided, `run_mcmc()` and `run_mcmc_p()` will output and save the MCMC result and summary statistics.
 
 ```{r}
-pr_list = c(pr1, pr2)
-res <- run_mcmc(dt = sample_time, pr_list, n.chains = 2, n.adapt = 100, n.burn = 100, n.iter = 200, seed = 2)
+pr_list = c(pr1, pr2, pr3, pr4)
+res <- run_mcmc_p(dt = sample_time, pr_list, n.chains = 2, n.adapt = 100, n.burn = 100, n.iter = 100, seed = 2)
 # res <- run_mcmc_p(dt = sample_time, pr_list, n.chains = 2, n.adapt = 100, n.burn = 100, n.iter = 200, seed = 2)
 ```
 
 ## Posterior summary statistics
 
 To generate summary statistics of one or multiple simulation scenarios, we can call `get_summary()`. 
-
-```{r, echo = FALSE, eval = FALSE}
-load("~/psborrow/data/demo_exp.rda")
-```
 
 ```{r}
 summ <- get_summary(res)
@@ -287,12 +288,13 @@ summ <- get_summary(res)
 ```{r}
 head(summ, 5)
 ```
+
 To visualize the results, users can call `plot_hr`, `plot_type1error` and `plot_power` to see the  Bayesian posterior mean hazard ratios between the treatment and control arm, as well as power, type I error implications.
 
 ```{r}
-plot_type1error(summ, driftHR = 1, pred = "all")
+plot_type1error(summ, driftHR = 1.2, pred = "all")
 plot_power(summ, HR = 0.67, driftHR = 1, pred = "all")
-plot_hr(summ, HR = 0.67, driftHR = 1, pred = "all")
-plot_bias(summ, HR = 0.67, driftHR = 1, pred = "all")
+plot_hr(summ, HR = 0.67, driftHR = 1.2, pred = "all")
+plot_bias(summ, HR = 1, driftHR = 1.2, pred = "all")
 plot_mse(summ, HR = 0.67, driftHR = 1, pred = "all")
 ```
