@@ -4,13 +4,11 @@ This `psborrow` package aims to evaluate the effect of external borrowing using 
 
 ## Installation
 
-Please first download the supporting packages and [rjags](https://mcmc-jags.sourceforge.io/):
+Please first download the supporting package and [rjags](https://mcmc-jags.sourceforge.io/):
 
 ```r
 # remotes
 install.packages("remotes")
-# nphsim
-remotes::install_github("keaven/nphsim")
 ```
 Then install this psborrow package with:
 
