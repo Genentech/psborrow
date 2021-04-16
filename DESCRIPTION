@@ -27,7 +27,6 @@ Imports:
     parallel,
     MatchIt,
     survival,
-    nphsim,
     futile.logger
 Suggests: 
     knitr,
