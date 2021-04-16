@@ -11,6 +11,37 @@
 
 `%notin%` <- Negate(`%in%`)
 
+# The piecewise exponential distribution useful for conditions where failure rates change or simulations with a delayed or changing treatment effect
+
+rpwexp <- function(n, rate=1, intervals=NULL, cumulative=FALSE){
+  if(is.null(intervals)){
+    if (cumulative){return(cumsum(rexp(n,rate[1])))}else
+      return(rexp(n,rate[1]))}
+  k <- length(rate)
+  if (k==1){
+    if(cumulative){return(cumsum(rexp(n,rate)))}else
+      return(rexp(n,rate))
+  }
+  if (length(intervals) < k-1) stop("length(intervals) must be at least length(rate) - 1")
+  tx <- 0
+  j <- 1
+  times <- array(0,n)
+  timex <- cumsum(intervals)
+  indx <- array(TRUE,n)
+  for(i in 1:k){
+    nindx <- sum(indx)
+    if (nindx==0) break
+    increment <- rexp(nindx,rate[i])
+    if (cumulative) times[indx] <- tx + cumsum(increment)
+    else times[indx] <- tx + increment
+    if (i<k){
+      tx <- timex[i]
+      indx <- (times > timex[i])
+    }
+  }
+  return(times)
+}
+
 
 # Specify sample size
 s_trt = function(ssC, ssE, ssExt){
