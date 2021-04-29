@@ -23,7 +23,7 @@ This `psborrow` package aims to evaluate the effect of external borrowing using 
 Here we demonstrate the usage of the package with an example. The goal is to: 
 
 *   Simulate covariates for external control, internal control, and internal treatment arms
-*   Simulate censored survival times
+*   Generate censored survival times
 *   Run Markov chain Monte Carlo (MCMC) to generate the posterior distribution for Bayesian hierarchical model
 *   Summarize posterior distributions for treatment effect estimate
 
@@ -41,14 +41,7 @@ We start with making the sample size for internal control, internal treatment, a
 ss = set_n(ssC = 200, ssE = 180, ssExt = 400)
 ```
 
-We call function `set_cov()` to create two binary covariates $x_1$, $x_2$ and one continuous covariate $x_3$ from a multivariate normal distribution.
-
-```{r}
-covset1 = set_cov(n_cat = 2, n_cont = 1, 
-                  mu_int = c(0, 0.5, 0.5), mu_ext = c(0.7, 0.5, 0.9), 
-                  var = c(1, 1.2, 1), cov = c(0.5, 0.7, 0.9), 
-                  prob_int = c(0.45, 0.55), prob_ext = c(0.65, 0.55))
-```
+We call function `set_cov()` to create two binary covariates $x_1$, $x_2$, and one continuous covariate $x_3$ from the following multivariate normal distribution with covariance between each pair of the variables specified by `cov` in the order of $Cov(x_1, x_2)$, $Cov(x_1, x_3)$, and $Cov(x_2, x_3)$.
 
 $$\begin{aligned}
 \begin{bmatrix}
@@ -60,11 +53,15 @@ x_1\\x_2\\x_3\\
 0.5 & 1.2 & 0.9\\
 0.7 & 0.9 & 1\\
 \end{bmatrix} \right)
-\\
-Cov(x_1, x_2) = 0.5\\
-Cov(x_1, x_3) = 0.7\\
-Cov(x_2, x_3) = 0.9
 \end{aligned}$$
+
+```{r}
+covset1 = set_cov(n_cat = 2, n_cont = 1, 
+                  mu_int = c(0, 0.5, 0.5), mu_ext = c(0.7, 0.5, 0.9), 
+                  var = c(1, 1.2, 1), cov = c(0.5, 0.7, 0.9), 
+                  prob_int = c(0.45, 0.55), prob_ext = c(0.65, 0.55))
+```
+
 
 $x_1$ and $x_2$ are further converted to binary variables $x_1$ and $x_2$ using quantiles of the normal distribution calculated from the probability specified by `prob_int` for internal trial and by `prob_ext` for external trial:
 
@@ -76,7 +73,7 @@ $$\begin{aligned}
 P(X_2 = 1) &= 0.55\\
 \end{aligned}$$
 
-We can also add multiple clusters of covariates. `covset2` includes information for two continuous covariates and three binary covariates. We set `mu_int = 0` to have the mean for all five variables in this cluster to be 0 in the internal trial. The same rule applies to parameter `mu_ext`, `var`, `cov`, `prob_int` and `prob_ext`. 
+The package enables the user to add covariates in batch. `covset2` includes information for two continuous covariates and three binary covariates. We set `mu_int = 0` to have the mean for all five variables in this cluster to be 0 in the internal trial. The same rule applies to parameter `mu_ext`, `var`, `cov`, `prob_int` and `prob_ext`. 
 
 ```{r}
 covset2 = set_cov(n_cat = 2, n_cont = 3, 
@@ -86,7 +83,7 @@ covset2 = set_cov(n_cat = 2, n_cont = 3,
 
 We then combine `covset1` and `covset2`, and call function `simu_cov()` to simulate the covariates and add them to the treatment variables saved in `ss`. 
 
-In this step, we also specify the **true** hazard ratio `HR` between the internal treatment and control arm, and the hazard ratio `driftHR` between the external control and internal control arms. User can provide a list of different `HR` and `driftHR` values to test a range of different hazard ratios between the three arms. 
+In this step, we also set the **true** hazard ratio `HR` between the internal treatment and control arm, and the hazard ratio `driftHR` between the external control and internal control arms. User can provide a list of different `HR` and `driftHR` values to test a range of different hazard ratios between the three arms. 
 
 The number of simulations `nsim` and seed parameters `seed` are included in the same statement to produce reproducible results. `sample_cov` is a list of `r 2*2*2` matrices.
 
