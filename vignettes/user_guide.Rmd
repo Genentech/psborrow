@@ -103,7 +103,7 @@ head(sample_cov[[1]], 5)
 
 ### Time-to-event
 
-The second part involves generating time-to-events from either a piece-wise exponential distribution. In the example below, We assume baseline hazard rate is constant in months 1-2, and from month 3 onward. The baseline hazard rate (`lambdaC`) for patients with all covariate equaling 0 in the internal control arm in these time periods are 0.0135 and 0.2, respectively. The baseline hazard rate for the internal treatment and external control arm are the product of `lambdaC` and `HR`, `driftHR`, respectively.
+The second part involves generating time-to-events from either a piece-wise exponential distribution or weibull distribution. In the example below, we assume the survival time follows the piece-wise exponential distirbution such that baseline hazard rate is constant in months 1-2, and from month 3 onward. The baseline hazard rate (`lambdaC`) for patients with all covariate equaling 0 in the internal control arm in these time periods are 0.0135 and 0.2, respectively. The baseline hazard rate for the internal treatment and external control arm are the product of `lambdaC` and `HR`, `driftHR`, respectively.
 
 The calculation below details how we draw event time for each patient following an exponential distribution. For each patient, we calculate a specific $\lambda$ value based on the trial and treatment indicator, along with the covariate values for this patient.
 
@@ -140,7 +140,7 @@ log(k) &= - \frac{1}{v} \Bigl[ log(\lambda_c) + log(\text{HR}) + e^{X \beta} \Bi
 log(k) &= - \frac{1}{v} \Bigl[ log(\lambda_c) + log(\text{driftHR}) + e^{X \beta} \Bigr] \\
 \end{aligned}$$
 
-Since the covariate data we generated in `sample_match` contains 8 covariates, we also need to make sure the length of `beta` is 8.
+Since the covariate data we generate in `sample_match` contains 8 covariates, we also want to make sure the length of `beta` is 8.
 
 ```{r}
 evt = set_event(event = "pwexp", lambdaC = c(0.0135, 0.02), t_itv = 2,
@@ -160,7 +160,7 @@ set_event(event = "pwexp", lambdaC = c(0.0135, 0.02), t_itv = 2,
                         c("cov1", "^", "3")), keep = "cov3")
 ```
 
-Time-to-events can also follow a weibull distribution. In this case, we specify the shape of the weibull distribution to be 0.9. We set *beta = 0.5* as coefficients for all covariates. Users can use `?set_event` to see more options.
+Time-to-events can also follow a weibull distribution. Under this setting, we are expected to enter the shape of the weibull distribution which is 0.9 in this case. We let *beta = 0.5* to be the coefficients for all covariates. Users can use `?set_event` to see more options.
 
 ```{r, eval = FALSE}
 set_event(event = "weibull", shape = 0.9, lambdaC = 0.0135, beta = 0.5)
@@ -197,7 +197,7 @@ F(t) &= 1 - e^{-\lambda t} \\
 
 ### Enrollment pattern, drop-out, analysis start time
 
-Next, we specify the parameters for enrollment time, drop-out pattern and analysis start time. Both enrollment time and time to drop-out follow piece-wise exponential distribution. 
+Next, we specify the parameters for enrollment time, drop-out pattern and analysis start time. Both enrollment time and time-to-exit follow piece-wise exponential distribution. 
 
 The parameters are set separately for internal and external trials. For internal trial, we recruit 2 patients per month in the first 5 months, 3 patients from month 6 to month 1, and 16 patients per month after month 10. We assume dropouts at a rate of `etaC = 1` per month for the control arm in the first 2 month and the rate increases to 1.2 afterwards.
 
@@ -220,6 +220,7 @@ sample_time <- simu_time(dt = sample_cov, eventObj = evt, clinInt = c_int, clinE
 ```
 
 *Example of one simulated dataset with time-to-events information from output `sample_time`:*
+
 ```{r, results='show'}
 head(sample_time[[1]], 5)
 ```
@@ -228,7 +229,7 @@ head(sample_time[[1]], 5)
 
 In the last part, we want to generate a sequence of samples from the posterior distribution of the parameters of interest using the JAGS model. Here we call `set_prior()` to use all covariates as predictors in the weibull distribution and use a half-cauchy distribution for the precision parameter in hierarchical dynamic borrowing. 
 
-We also specify the initial values for the following parameters in the JAGS model:
+Users are expected to enter the initial values for the following parameters in the JAGS model:
 
 -   `r0`: shape of the weibull distribution for time-to-events
 -   `alpha`: log of baseline hazard rate for external and internal control arms
