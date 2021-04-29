@@ -12,7 +12,7 @@
 
 <meta name="author" content="Yichen Lu" />
 
-<meta name="date" content="2021-04-13" />
+<meta name="date" content="2021-04-29" />
 
 <title>User guide: External borrowing with psborrow</title>
 
@@ -141,7 +141,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <h1 class="title toc-ignore">User guide: External borrowing with psborrow</h1>
 <h4 class="author">Yichen Lu</h4>
-<h4 class="date">2021-04-13</h4>
+<h4 class="date">2021-04-29</h4>
 
 
 
@@ -149,7 +149,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Here we demonstrate the usage of the package with an example. The goal is to:</p>
 <ul>
 <li>Simulate covariates for external control, internal control, and internal treatment arms</li>
-<li>Simulate censored survival times</li>
+<li>Generate censored survival times</li>
 <li>Run Markov chain Monte Carlo (MCMC) to generate the posterior distribution for Bayesian hierarchical model</li>
 <li>Summarize posterior distributions for treatment effect estimate</li>
 </ul>
@@ -161,11 +161,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>Simulate covariates</h2>
 <p>We start with making the sample size for internal control, internal treatment, and external control arms to be 200, 180 and 400 respectively.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ss <span class="ot">=</span> <span class="fu">set_n</span>(<span class="at">ssC =</span> <span class="dv">200</span>, <span class="at">ssE =</span> <span class="dv">180</span>, <span class="at">ssExt =</span> <span class="dv">400</span>)</span></code></pre></div>
-<p>We call function <code>set_cov()</code> to create two binary covariates <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span> and one continuous covariate <span class="math inline">\(x_3\)</span> from a multivariate normal distribution.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>covset1 <span class="ot">=</span> <span class="fu">set_cov</span>(<span class="at">n_cat =</span> <span class="dv">2</span>, <span class="at">n_cont =</span> <span class="dv">1</span>, </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">mu_int =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>), <span class="at">mu_ext =</span> <span class="fu">c</span>(<span class="fl">0.7</span>, <span class="fl">0.5</span>, <span class="fl">0.9</span>), </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">var =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">1.2</span>, <span class="dv">1</span>), <span class="at">cov =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.7</span>, <span class="fl">0.9</span>), </span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">prob_int =</span> <span class="fu">c</span>(<span class="fl">0.45</span>, <span class="fl">0.55</span>), <span class="at">prob_ext =</span> <span class="fu">c</span>(<span class="fl">0.65</span>, <span class="fl">0.55</span>))</span></code></pre></div>
+<p>We call function <code>set_cov()</code> to create two binary covariates <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span>, and one continuous covariate <span class="math inline">\(x_3\)</span> from the following multivariate normal distribution with covariance between each pair of the variables specified by <code>cov</code> in the order of <span class="math inline">\(Cov(x_1, x_2)\)</span>, <span class="math inline">\(Cov(x_1, x_3)\)</span>, and <span class="math inline">\(Cov(x_2, x_3)\)</span>.</p>
 <p><span class="math display">\[\begin{aligned}
 \begin{bmatrix}
 x_1\\x_2\\x_3\\
@@ -176,11 +172,11 @@ x_1\\x_2\\x_3\\
 0.5 &amp; 1.2 &amp; 0.9\\
 0.7 &amp; 0.9 &amp; 1\\
 \end{bmatrix} \right)
-\\
-Cov(x_1, x_2) = 0.5\\
-Cov(x_1, x_3) = 0.7\\
-Cov(x_2, x_3) = 0.9
 \end{aligned}\]</span></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>covset1 <span class="ot">=</span> <span class="fu">set_cov</span>(<span class="at">n_cat =</span> <span class="dv">2</span>, <span class="at">n_cont =</span> <span class="dv">1</span>, </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">mu_int =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>), <span class="at">mu_ext =</span> <span class="fu">c</span>(<span class="fl">0.7</span>, <span class="fl">0.5</span>, <span class="fl">0.9</span>), </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">var =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">1.2</span>, <span class="dv">1</span>), <span class="at">cov =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.7</span>, <span class="fl">0.9</span>), </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">prob_int =</span> <span class="fu">c</span>(<span class="fl">0.45</span>, <span class="fl">0.55</span>), <span class="at">prob_ext =</span> <span class="fu">c</span>(<span class="fl">0.65</span>, <span class="fl">0.55</span>))</span></code></pre></div>
 <p><span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> are further converted to binary variables <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> using quantiles of the normal distribution calculated from the probability specified by <code>prob_int</code> for internal trial and by <code>prob_ext</code> for external trial:</p>
 <p><span class="math display">\[\begin{aligned}
 \text{internal: Pr} (X_1 = 1) &amp;= 0.45 \\
@@ -189,12 +185,12 @@ Cov(x_2, x_3) = 0.9
 \text{external: Pr} (X_1 = 1) &amp;= 0.65\\
 P(X_2 = 1) &amp;= 0.55\\
 \end{aligned}\]</span></p>
-<p>We can also add multiple clusters of covariates. <code>covset2</code> includes information for two continuous covariates and three binary covariates. We set <code>mu_int = 0</code> to have the mean for all five variables in this cluster to be 0 in the internal trial. The same rule applies to parameter <code>mu_ext</code>, <code>var</code>, <code>cov</code>, <code>prob_int</code> and <code>prob_ext</code>.</p>
+<p>The package enables the user to add covariates in batch. <code>covset2</code> includes information for two continuous covariates and three binary covariates. We set <code>mu_int = 0</code> to have the mean for all five variables in this cluster to be 0 in the internal trial. The same rule applies to parameter <code>mu_ext</code>, <code>var</code>, <code>cov</code>, <code>prob_int</code> and <code>prob_ext</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>covset2 <span class="ot">=</span> <span class="fu">set_cov</span>(<span class="at">n_cat =</span> <span class="dv">2</span>, <span class="at">n_cont =</span> <span class="dv">3</span>, </span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">mu_int =</span> <span class="dv">0</span>, <span class="at">mu_ext =</span> <span class="fl">0.2</span>, <span class="at">var =</span> <span class="fl">0.7</span>, <span class="at">cov =</span> <span class="fl">0.7</span>, </span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">prob_int =</span> <span class="fl">0.5</span>)</span></code></pre></div>
 <p>We then combine <code>covset1</code> and <code>covset2</code>, and call function <code>simu_cov()</code> to simulate the covariates and add them to the treatment variables saved in <code>ss</code>.</p>
-<p>In this step, we also specify the <strong>true</strong> hazard ratio <code>HR</code> between the internal treatment and control arm, and the hazard ratio <code>driftHR</code> between the external control and internal control arms. User can provide a list of different <code>HR</code> and <code>driftHR</code> values to test a range of different hazard ratios between the three arms.</p>
+<p>In this step, we also set the <strong>true</strong> hazard ratio <code>HR</code> between the internal treatment and control arm, and the hazard ratio <code>driftHR</code> between the external control and internal control arms. User can provide a list of different <code>HR</code> and <code>driftHR</code> values to test a range of different hazard ratios between the three arms.</p>
 <p>The number of simulations <code>nsim</code> and seed parameters <code>seed</code> are included in the same statement to produce reproducible results. <code>sample_cov</code> is a list of 8 matrices.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>cov_list <span class="ot">&lt;-</span> <span class="fu">c</span>(covset1, covset2)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>sample_cov <span class="ot">&lt;-</span> <span class="fu">simu_cov</span>(<span class="at">ssObj =</span> ss, <span class="at">covObj =</span> cov_list, <span class="at">HR =</span> <span class="fu">c</span>(<span class="fl">0.67</span>, <span class="dv">1</span>), <span class="at">driftHR =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">1.2</span>), <span class="at">nsim =</span> <span class="dv">10</span>, <span class="at">seed =</span> <span class="dv">47</span>)</span></code></pre></div>
@@ -217,7 +213,7 @@ P(X_2 = 1) &amp;= 0.55\\
 <h2>Survival</h2>
 <div id="time-to-event" class="section level3">
 <h3>Time-to-event</h3>
-<p>The second part involves generating time-to-events from either a piece-wise exponential distribution. In the example below, We assume baseline hazard rate is constant in months 1-2, and from month 3 onward. The baseline hazard rate (<code>lambdaC</code>) for patients with all covariate equaling 0 in the internal control arm in these time periods are 0.0135 and 0.2, respectively. The baseline hazard rate for the internal treatment and external control arm are the product of <code>lambdaC</code> and <code>HR</code>, <code>driftHR</code>, respectively.</p>
+<p>The second part involves generating time-to-events from either a piece-wise exponential distribution or weibull distribution. In the example below, we assume the survival time follows the piece-wise exponential distirbution such that baseline hazard rate is constant in months 1-2, and from month 3 onward. The baseline hazard rate (<code>lambdaC</code>) for patients with all covariate equaling 0 in the internal control arm in these time periods are 0.0135 and 0.2, respectively. The baseline hazard rate for the internal treatment and external control arm are the product of <code>lambdaC</code> and <code>HR</code>, <code>driftHR</code>, respectively.</p>
 <p>The calculation below details how we draw event time for each patient following an exponential distribution. For each patient, we calculate a specific <span class="math inline">\(\lambda\)</span> value based on the trial and treatment indicator, along with the covariate values for this patient.</p>
 <p><span class="math display">\[\begin{aligned}
 f(t) &amp;= v\lambda t^{v-1} e^{-\lambda t^v} \\
@@ -251,7 +247,7 @@ log(k) &amp;= - \frac{1}{v} \Bigl[ log(\lambda_c) + log(\text{HR}) + e^{X \beta}
 \lambda(t) &amp;= \lambda_c \times \text{driftHR} \times e^{X \beta} \times v t ^{v-1} \\
 log(k) &amp;= - \frac{1}{v} \Bigl[ log(\lambda_c) + log(\text{driftHR}) + e^{X \beta} \Bigr] \\
 \end{aligned}\]</span></p>
-<p>Since the covariate data we generated in <code>sample_match</code> contains 8 covariates, we also need to make sure the length of <code>beta</code> is 8.</p>
+<p>Since the covariate data we generate in <code>sample_match</code> contains 8 covariates, we also want to make sure the length of <code>beta</code> is 8.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>evt <span class="ot">=</span> <span class="fu">set_event</span>(<span class="at">event =</span> <span class="st">&quot;pwexp&quot;</span>, <span class="at">lambdaC =</span> <span class="fu">c</span>(<span class="fl">0.0135</span>, <span class="fl">0.02</span>), <span class="at">t_itv =</span> <span class="dv">2</span>,</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">beta =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="fl">0.2</span>,<span class="dv">3</span>), <span class="fl">0.3</span>, <span class="fu">rep</span>(<span class="fl">0.5</span>,<span class="dv">2</span>), <span class="fu">rep</span>(<span class="dv">2</span>, <span class="dv">2</span>)))</span></code></pre></div>
 <p>Additionally, users can choose to expand the covariates when calculating the hazard rate. In the example below, the hazard rate for patient i from the internal control will be calculated as below. Same as internal treatment and external control arms.</p>
@@ -262,7 +258,7 @@ log(k) &amp;= - \frac{1}{v} \Bigl[ log(\lambda_c) + log(\text{driftHR}) + e^{X \
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">beta =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.5</span>, <span class="dv">2</span>),</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">change =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">&quot;cov1&quot;</span>, <span class="st">&quot;*&quot;</span>, <span class="st">&quot;cov3&quot;</span>), <span class="fu">c</span>(<span class="st">&quot;cov2&quot;</span>, <span class="st">&quot;+&quot;</span>, <span class="st">&quot;cov3&quot;</span>), </span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">c</span>(<span class="st">&quot;cov1&quot;</span>, <span class="st">&quot;^&quot;</span>, <span class="st">&quot;3&quot;</span>)), <span class="at">keep =</span> <span class="st">&quot;cov3&quot;</span>)</span></code></pre></div>
-<p>Time-to-events can also follow a weibull distribution. In this case, we specify the shape of the weibull distribution to be 0.9. We set <em>beta = 0.5</em> as coefficients for all covariates. Users can use <code>?set_event</code> to see more options.</p>
+<p>Time-to-events can also follow a weibull distribution. Under this setting, we are expected to enter the shape of the weibull distribution which is 0.9 in this case. We let <em>beta = 0.5</em> to be the coefficients for all covariates. Users can use <code>?set_event</code> to see more options.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set_event</span>(<span class="at">event =</span> <span class="st">&quot;weibull&quot;</span>, <span class="at">shape =</span> <span class="fl">0.9</span>, <span class="at">lambdaC =</span> <span class="fl">0.0135</span>, <span class="at">beta =</span> <span class="fl">0.5</span>)</span></code></pre></div>
 <p>For Weibull distribution, the goal is to find the hazard rate <span class="math inline">\(\lambda(t)\)</span> for patient with covariates <span class="math inline">\(X\)</span>.</p>
 <p><span class="math display">\[\begin{aligned}
@@ -294,7 +290,7 @@ F(t) &amp;= 1 - e^{-\lambda t} \\
 </div>
 <div id="enrollment-pattern-drop-out-analysis-start-time" class="section level3">
 <h3>Enrollment pattern, drop-out, analysis start time</h3>
-<p>Next, we specify the parameters for enrollment time, drop-out pattern and analysis start time. Both enrollment time and time to drop-out follow piece-wise exponential distribution.</p>
+<p>Next, we specify the parameters for enrollment time, drop-out pattern and analysis start time. Both enrollment time and time-to-exit follow piece-wise exponential distribution.</p>
 <p>The parameters are set separately for internal and external trials. For internal trial, we recruit 2 patients per month in the first 5 months, 3 patients from month 6 to month 1, and 16 patients per month after month 10. We assume dropouts at a rate of <code>etaC = 1</code> per month for the control arm in the first 2 month and the rate increases to 1.2 afterwards.</p>
 <p>The analysis is set to start at 45 months after the study begins (enrollment of the first patient) and a warning message will show if any patient enrolled after this cut-off date and they will be excluded from any future analysis.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>c_int <span class="ot">=</span> <span class="fu">set_clin</span>(<span class="at">gamma =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">16</span>), <span class="at">e_itv =</span> <span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">10</span>),  <span class="at">CCOD =</span> <span class="st">&quot;fixed-first&quot;</span>, <span class="at">CCOD_t =</span> <span class="dv">45</span>, <span class="at">etaC =</span> <span class="fu">c</span>(<span class="fl">0.02</span>, <span class="fl">0.03</span>), <span class="at">etaE =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.3</span>), <span class="at">d_itv =</span> <span class="dv">2</span>)</span></code></pre></div>
@@ -321,7 +317,7 @@ F(t) &amp;= 1 - e^{-\lambda t} \\
 <div id="bayesian-analysis" class="section level2">
 <h2>Bayesian analysis</h2>
 <p>In the last part, we want to generate a sequence of samples from the posterior distribution of the parameters of interest using the JAGS model. Here we call <code>set_prior()</code> to use all covariates as predictors in the weibull distribution and use a half-cauchy distribution for the precision parameter in hierarchical dynamic borrowing.</p>
-<p>We also specify the initial values for the following parameters in the JAGS model:</p>
+<p>Users are expected to enter the initial values for the following parameters in the JAGS model:</p>
 <ul>
 <li><code>r0</code>: shape of the weibull distribution for time-to-events</li>
 <li><code>alpha</code>: log of baseline hazard rate for external and internal control arms</li>
