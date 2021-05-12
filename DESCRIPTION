@@ -2,11 +2,16 @@ Package: psborrow
 Title: Bayesian dynamic borrowing with propensity score
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "Yichen",
+    c(person(given = "Yichen",
            family = "Lu",
            role = c("aut", "cre"),
            email = "lu.yichen@gene.com",
-           comment = c(ORCID = ""))
+           comment = c(ORCID = "")),
+    person(given = "Aijing",
+           family = "Lin",
+           role = c("ctb", "cre"),
+           email = "lina21@gene.com"))       
+           
 Description: What the package does (one paragraph).
 License: `use_mit_license()`, `use_gpl3_license()` or friends to
     pick a license
