@@ -4,14 +4,13 @@ Version: 0.0.0.9000
 Authors@R: 
     c(person(given = "Yichen",
            family = "Lu",
-           role = c("aut", "cre"),
+           role = c("aut"),
            email = "lu.yichen@gene.com",
            comment = c(ORCID = "")),
     person(given = "Aijing",
            family = "Lin",
-           role = c("ctb", "cre"),
-           email = "lina21@gene.com"))       
-           
+           role = c("ctb","cre"),
+           email = "lina21@gene.com"))      
 Description: What the package does (one paragraph).
 License: `use_mit_license()`, `use_gpl3_license()` or friends to
     pick a license
