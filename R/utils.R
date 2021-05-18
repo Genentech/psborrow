@@ -5,7 +5,6 @@
 #' @import data.table
 #' @import rjags
 #' @import mvtnorm
-#' @import nphsim
 #' @import MatchIt
 #' @import futile.logger
 
