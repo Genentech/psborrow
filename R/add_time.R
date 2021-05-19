@@ -115,7 +115,7 @@ setMethod(f="add_time", signature(dt = "matrix", eventObj = ".eventClass", clinI
             }
 
             # checl
-            if (c("driftHR", "HR", "trt", "ext") %notin% colnames(dt) || sum(!grepl("cov[1234567890]", colnames(dt)[colnames(dt) %notin% c("driftHR", "HR", "trt", "ext")])) > 0) stop("Please make sure the trial data contains the correct variable names.")
+            if (any(c("driftHR", "HR", "trt", "ext") %notin% colnames(dt), sum(!grepl("cov[1234567890]", colnames(dt)[colnames(dt) %notin% c("driftHR", "HR", "trt", "ext")])) > 0)) stop("Please make sure the trial data contains the correct variable names.")
 
             new_cov_name = NULL
             cov_name = colnames(dt)[colnames(dt) %notin% c("driftHR", "HR", "trt", "ext")]

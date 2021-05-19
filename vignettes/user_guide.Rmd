@@ -269,7 +269,7 @@ If folder path `path` is provided, `run_mcmc()` and `run_mcmc_p()` will output a
 
 ```{r}
 pr_list = c(pr1, pr2, pr3, pr4)
-res <- run_mcmc_p(dt = sample_time, pr_list, n.chains = 2, n.adapt = 100, n.burn = 100, n.iter = 100, seed = 2)
+res <- run_mcmc(dt = sample_time, pr_list, n.chains = 2, n.adapt = 10, n.burn = 10, n.iter = 10, seed = 2)
 # res <- run_mcmc_p(dt = sample_time, pr_list, n.chains = 2, n.adapt = 100, n.burn = 100, n.iter = 200, seed = 2)
 ```
 
