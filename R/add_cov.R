@@ -151,8 +151,9 @@ set_cov <- function(n_cat, n_cont, mu_int, mu_ext, var, cov, prob_int, prob_ext)
 }
 
 #' Concatenate multiple \code{.covClasss} classes
-#'
-#' @param covObj A \code{.covClasss} class with covariate information generated in \code{\link{set_cov}}
+#' 
+#' @param x A \code{.covClasss} class with covariate information generated in \code{\link{set_cov}}
+#' @param ... Other \code{.covClasss} classes with covariate information generated in \code{\link{set_cov}}
 #' @return A vector of \code{.covClasss} classes
 #'
 #' @export

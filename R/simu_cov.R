@@ -6,13 +6,15 @@
 #' Simulate covariates
 #'
 #' This function generates continuous and binary covariates through simulating from a multivariate normal distribution. Outcomes are further converted to binary variables using quantiles of the normal distribution calculated from the probability provided. Then the covariates are added to the external trial and treatment arm indicators.
-#'
+#' @name simu_cov
+#' @aliases simu_cov,matrix-method
+#' 
 #' @param ssObj an object of class \code{.covClass} generated in \code{\link{set_n}}
 #' @param covObj an object of class \code{.covClass} generated in \code{\link{set_cov}}
 #' @param driftHR hazard ratio of external control and internal control arms
 #' @param HR a list of hazard ratio of treatment and control arms
 #' @param nsim number of simulation. Default is 5
-#' @param seed the seed of R‘s random number generator. Default is 47
+#' @param seed the seed of random number generator. Default is 47
 #' @param path file name for saving the output including folder path
 #' @return a list of \code{matrix} containing simulated covariates information
 #'

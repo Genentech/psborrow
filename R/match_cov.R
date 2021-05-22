@@ -1,5 +1,7 @@
 #' Match
-#'
+#' 
+#' @param dt  a list of \code{matrix}
+#' @param match A vector of covariates name to match on
 #'
 #' @export
 #' @keywords constructor

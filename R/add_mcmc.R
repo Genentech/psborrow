@@ -82,7 +82,8 @@ set_prior <- function(pred, prior, r0, alpha, sigma) {
 
 #' Concatenate multiple \code{.priorClasss} class
 #'
-#' @param priorObj A \code{.priorClasss} class with prior distribution information generated in \code{\link{set_prior}}
+#' @param x A \code{.priorClasss} class with prior distribution information generated in \code{\link{set_prior}}
+#' @param ... A \code{.priorClasss} class with prior distribution information generated in \code{\link{set_prior}}
 #' @return A vector of \code{.priorClasss} classes
 #'
 #' @export

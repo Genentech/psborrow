@@ -13,9 +13,10 @@ vignette: >
   
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-collapse = TRUE,
-comment = "#>", eval = TRUE, warning = FALSE, message = FALSE, echo = TRUE, cache = FALSE, results='hide'
-, fig.height = 6, fig.width=8)
+  collapse = TRUE,
+  comment = "#>", eval = TRUE, warning = FALSE, message = FALSE, echo = TRUE, cache = FALSE, results='hide', 
+  # eval = FALSE,
+  fig.height = 6, fig.width=8)
 ```
 
 This `psborrow` package aims to evaluate the effect of external borrowing using an integrated approach that combines propensity score and Bayesian dynamic borrowing methods. Users are encouraged to check the helper page for each function to understand the requirements for parameter inputs and the format of the outputs.

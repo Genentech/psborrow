@@ -7,7 +7,9 @@
 \S4method{c}{.priorClass}(x, ...)
 }
 \arguments{
-\item{priorObj}{A \code{.priorClasss} class with prior distribution information generated in \code{\link{set_prior}}}
+\item{x}{A \code{.priorClasss} class with prior distribution information generated in \code{\link{set_prior}}}
+
+\item{...}{A \code{.priorClasss} class with prior distribution information generated in \code{\link{set_prior}}}
 }
 \value{
 A vector of \code{.priorClasss} classes

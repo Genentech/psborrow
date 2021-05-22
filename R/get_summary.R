@@ -169,6 +169,7 @@ plot_hr <- function(dt, HR = 0.67, driftHR = 1, pred = "none") {
 #' Plot bias
 #'
 #' @param dt a \code{data.frame} containing summary statistics for the posterior samples from each simulation generated with \code{\link{get_summary}}
+#' @param HR pre-specified HR between treatment and control arm in the internal trial
 #' @param driftHR pre-specified HR between external control arm and internal control arm
 #' @param pred predictors to use when fitting exponential distribution in MCMC
 #'
@@ -204,6 +205,7 @@ plot_bias <- function(dt, HR = 1, driftHR = 1, pred = "none"){
 #' Plot MSE
 #'
 #' @param dt a \code{data.frame} containing summary statistics for the posterior samples from each simulation generated with \code{\link{get_summary}}
+#' @param HR pre-specified HR between treatment and control arm in the internal trial
 #' @param driftHR pre-specified HR between external control arm and internal control arm
 #' @param pred predictors to use when fitting exponential distribution in MCMC
 #'

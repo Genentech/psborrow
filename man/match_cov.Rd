@@ -6,6 +6,11 @@
 \usage{
 match_cov(dt, match)
 }
+\arguments{
+\item{dt}{a list of \code{matrix}}
+
+\item{match}{A vector of covariates name to match on}
+}
 \description{
 Match
 }

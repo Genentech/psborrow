@@ -9,6 +9,8 @@ plot_mse(dt, HR = 1, driftHR = 1, pred = "none")
 \arguments{
 \item{dt}{a \code{data.frame} containing summary statistics for the posterior samples from each simulation generated with \code{\link{get_summary}}}
 
+\item{HR}{pre-specified HR between treatment and control arm in the internal trial}
+
 \item{driftHR}{pre-specified HR between external control arm and internal control arm}
 
 \item{pred}{predictors to use when fitting exponential distribution in MCMC}

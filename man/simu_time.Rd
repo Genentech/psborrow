@@ -2,6 +2,7 @@
 % Please edit documentation in R/simu_time.R
 \name{simu_time}
 \alias{simu_time}
+\alias{simu_time,matrix,.eventClass-method}
 \title{Simulate time-to-events for multiple scenarios}
 \usage{
 simu_time(dt, eventObj, clinInt, clinExt, seed, path)
@@ -15,7 +16,7 @@ simu_time(dt, eventObj, clinInt, clinExt, seed, path)
 
 \item{clinExt}{an object of class \code{.clinClass} generated in \code{\link{set_clin}} including external trial information}
 
-\item{seed}{the seed of R‘s random number generator. Default is 47}
+\item{seed}{the seed of random number generator. Default is 47}
 
 \item{path}{file name for saving the output including folder path}
 }
