@@ -1,6 +1,6 @@
 
 #' Simulate time-to-events for multiple scenarios
-#' @namesimu_time
+#' @name simu_time
 #' @aliases simu_time,matrix,.eventClass-method
 #' 
 #' @param dt a list of \code{matrix} generated in \code{\link{simu_cov}} containing simulated covariates information

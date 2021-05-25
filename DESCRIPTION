@@ -30,7 +30,8 @@ Imports:
     MatchIt,
     survival,
     futile.logger,
-    methods
+    methods,
+    utils
 Suggests: 
     knitr,
     rmarkdown,
@@ -46,5 +47,6 @@ Collate:
     'run_mcmc.R'
     'get_summary.R'
     'utils.R'
+    'globals.R'
 Depends: 
     R (>= 3.5.0)
