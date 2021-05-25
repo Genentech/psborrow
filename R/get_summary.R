@@ -3,6 +3,8 @@
 
 #' @import ggplot2
 #' @import survival
+#' @importFrom stats as.formula binomial glm qnorm rbinom rexp rnorm rweibull time update var
+
 `%notin%` <- Negate(`%in%`)
 
 thm <-  theme(axis.title.x = element_blank(),
