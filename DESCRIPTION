@@ -11,10 +11,9 @@ Authors@R:
            family = "Lin",
            role = c("ctb","cre"),
            email = "lina21@gene.com"))      
-Description: This package aims to evaluate the effect of external borrowing using an integrated approach that combines propensity score and Bayesian dynamic borrowing methods.
+Description: A tool which aims to help evaluate the effect of external borrowing using an integrated approach that combines propensity score and Bayesian dynamic borrowing methods.
 License: GPL (>= 3)
 Encoding: UTF-8
-LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Imports: 
@@ -30,12 +29,12 @@ Imports:
     parallel,
     MatchIt,
     survival,
-    futile.logger
+    futile.logger,
+    methods
 Suggests: 
     knitr,
     rmarkdown,
-    testthat,
-    methods
+    testthat
 VignetteBuilder: knitr
 Collate: 
     'add_cov.R'
