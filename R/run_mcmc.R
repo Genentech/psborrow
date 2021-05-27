@@ -11,7 +11,7 @@
 #' @param n.adapt number of iterations for adaptation
 #' @param n.burn number of iterations discarded as burn-in
 #' @param n.iter number of iterations to monitor
-#' @param seed the seed of R‘s random number generator. Default is the first element of .Random.seed
+#' @param seed the seed of random number generator. Default is the first element of .Random.seed
 #' @param path file name for saving the output including folder path
 #' @return a \code{data.frame} containing summary statistics of the posterior distribution for each simulation
 #'
@@ -80,7 +80,7 @@ run_mcmc <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, path
 #' @param n.adapt number of iterations for adaptation
 #' @param n.burn number of iterations discarded as burn-in
 #' @param n.iter number of iterations to monitor
-#' @param seed the seed of R‘s random number generator. Default is the first element of .Random.seed
+#' @param seed the seed of random number generator. Default is the first element of .Random.seed
 #' @param path file name for saving the output including folder path
 #' @return a \code{data.frame} containing summary statistics of the posterior distribution for each simulation
 #'
@@ -104,7 +104,8 @@ run_mcmc_p <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, pa
 
   flog.debug(cat("seed_list:", seed_list, "number of dataset", length(dt), "\n"))
 
-  nCluster <- parallel::detectCores()
+  # nCluster <- parallel::detectCores()
+  nCluster <- 2 # switch to 2 cluster per CRAN's requirement
   print(paste(nCluster, "clusters are being used"))
   cl <- parallel::makeCluster(nCluster)
   doParallel::registerDoParallel(cl)
