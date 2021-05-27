@@ -8,18 +8,25 @@
 #' @param path file name for saving the output including folder path
 #' @return a list of \code{matrix} containing simulated time-to-events information
 #'
-#' @example
-#' # simulate patient-level data without covariates and simulate survival time
-#' sample = set_n(ssC = 140, ssE = 275, ssExt = 100)
-#' sample_cov <- simu_cov(ssObj = sample, HR = c(0.67, 1), driftHR=c(1,1.2), nsim = 100)
-
-#' # Enrollment pattern, drop-out, analysis start time
-#'c_int = set_clin(gamma = 10, e_itv = 415/10, etaC = -log(1-0.04/12),  CCOD = "fixed-first", CCOD_t = 64)
-#'c_ext = set_clin(gamma = 100/18, e_itv = 18, etaC = -log(1-0.01/12),  CCOD = "fixed-first", CCOD_t = 64)
 #'
-#' # Time-to-event distribution
-#' evt <- set_event(event = "weibull", shape = 0.9, lambdaC = 0.0135)
-#' simu_time(dt = sample_cov, eventObj = evt, clinInt = c_int, clinExt = c_ext)
+#' @examples
+#' # simulate patient-level data without covariates and simulate survival time following weibull distribution
+#' 
+#' # simulate trial indicator and set hazard ratios
+#' sample = set_n(ssC = 10, ssE = 20, ssExt = 40)
+#' sample_hr <- simu_cov(ssObj = sample, HR = 1, driftHR=c(1,1.2), nsim = 10)
+#' 
+#' # enrollment pattern, drop-out, analysis start time
+#' c_int = set_clin(gamma = 2, e_itv = 10, etaC = 0.5,  CCOD = "fixed-first", CCOD_t = 64)
+#' c_ext = c_int
+#'
+#' # simulate time-to-event with a weibull distribution
+#' evt1 <- set_event(event = "weibull", shape = 0.8, lambdaC = 0.01)
+#' simu_time(dt = sample_hr, eventObj = evt1, clinInt = c_int, clinExt = c_ext)
+#' 
+#' # simulate time-to-event with an exponential distribution
+#' evt2 <- set_event(event = "pwexp", t_itv = 1, lambdaC = c(0.1, 0.02))
+#' simu_time(dt = sample_hr, eventObj = evt2, clinInt = c_int, clinExt = c_int)
 #' 
 #' 
 #' @export

@@ -18,6 +18,18 @@
 #' @param path file name for saving the output including folder path
 #' @return a list of \code{matrix} containing simulated covariates information
 #'
+#'
+#' @examples
+#' # simulate patient-level data with 1 continuous covariate
+#' sample = set_n(ssC = 10, ssE = 20, ssExt = 40)
+#' cov1 = set_cov(n_cat = 0, n_cont = 1, mu_int = 0, mu_ext = 0, var = 1)
+#' simu_cov(ssObj = sample, covObj = cov1, HR = 0.5, driftHR = 1, nsim = 2)
+#' 
+#' # simulate patient-level data with 1 binary and 2 continuous covariate
+#' cov2 = set_cov(n_cat = 1, n_cont = 2, mu_int = 0, mu_ext = 0, var = 1, cov = 0.3, prob_int = 0.2, prob_ext = 0.3)
+#' simu_cov(ssObj = sample, covObj = cov2, HR = 0.5, driftHR = 1, nsim = 2)
+#'
+#'
 #' @export
 #' @keywords simulator
 simu_cov=function(ssObj, covObj, driftHR, HR, nsim, seed, path){

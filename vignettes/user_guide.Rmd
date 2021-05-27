@@ -15,7 +15,6 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>", eval = TRUE, warning = FALSE, message = FALSE, echo = TRUE, cache = FALSE, results='hide', 
-  # eval = FALSE,
   fig.height = 6, fig.width=8)
 ```
 
@@ -90,7 +89,7 @@ The number of simulations `nsim` and seed parameters `seed` are included in the 
 
 ```{r}
 cov_list <- c(covset1, covset2)
-sample_cov <- simu_cov(ssObj = ss, covObj = cov_list, HR = c(0.67, 1), driftHR = c(1, 1.2), nsim = 10, seed = 47)
+sample_cov <- simu_cov(ssObj = ss, covObj = cov_list, HR = c(0.67, 1), driftHR = c(1, 1.2), nsim = 2, seed = 47)
 ```
 
 *Example of one simulated dataset (matrix) with covariates and treatment arm information from output `sample_cov`:*

@@ -27,4 +27,14 @@ A \code{.clinClass} class containing information on enrollment time, drop-out pa
 \description{
 This function allows user to specify the enrollment and drop-out rate, and the type of clinical cut-off Date. Both enrollment times and drop-out times follow piece-wise exponential distribution.
 }
+\examples{
+# set the operational parameter values for the trial
+# analysis starts at64 time units after first patient in
+set_clin(gamma = 10, e_itv = 4, etaC = 0.003,  CCOD = "fixed-first", CCOD_t = 64)
+
+# analysis starts at 12 time units after last patient in
+set_clin(gamma = 2, e_itv = 18, etaC = 0.005,  CCOD = "fixed-last", CCOD_t = 12)
+
+
+}
 \keyword{constructor}

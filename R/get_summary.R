@@ -1,9 +1,4 @@
 # Methods for calculating summary statistics for MCMC
-# Last update on 120320
-
-#' @import ggplot2
-#' @import survival
-#' @importFrom stats as.formula binomial glm qnorm rbinom rexp rnorm rweibull time update var
 
 `%notin%` <- Negate(`%in%`)
 
@@ -44,7 +39,7 @@ rej_est = function(samples){
 #'
 #' @param dt a \code{data.frame} containing summary statistics for the posterior samples from each simulation
 #' @return a \code{data.frame} containing the mean and sd of posterior HR between treatment and control arm, the posterior mean and sd of HR between internal control and external control arm, reject rate, variance, bias and mse of the simulation set
-#'
+#' 
 #' @export
 #' @keywords method
 get_summary = function(dt){

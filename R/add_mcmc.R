@@ -1,8 +1,5 @@
 # S4 class, constructors and methods for generating posterior samples from MCMC
 # Call function from utils.R
-# Last update on 082320
-
-#' @import futile.logger
 
 setClassUnion("charORNULL", c("character", "NULL"))
 setClassUnion("numericORNULL", c("numeric", "NULL"))
@@ -24,7 +21,22 @@ setClassUnion("matrixORNULL", c("matrix", "NULL"))
 #' @param alpha Initial values for log of baseline hazard rate for external and internal control arms. Length of \code{alpha} should be 1 if \code{prior = "full_ext"} or \code{prior = "no_ext"}, and equal to 2 otherwise
 #' @param sigma Initial values for precision parameter if \code{prior = "cauchy"}. If left \code{NULL}, default value 0.03 is used
 #' @return a \code{.priorClass} class containing survival data and prior information
-#'
+#' 
+#' 
+#' @examples 
+#' # hierachical Bayesian model with precision parameter follows a half-cauchy distribution
+#' set_prior(pred = "none", prior = "cauchy", r0 = 1, alpha = c(0, 0), sigma = 0.03)
+#' 
+#' # hierachical Bayesian model with precision parameter follows a gamma distribution
+#' set_prior(pred = "none", prior = "gamma", r0 = 1, alpha = c(0, 0))
+#' 
+#' # conventional Bayesian model to not borrow from external control arm
+#' set_prior(pred = "none", prior = "no_ext", alpha = 0)
+#' 
+#' # conventional Bayesian model to fully borrow from external control arm
+#' set_prior(pred = "none", prior = "full_ext", alpha = 0)
+#' 
+#' 
 #' @export
 #' @keywords constructor
 set_prior <- function(pred, prior, r0, alpha, sigma) {
@@ -85,6 +97,9 @@ set_prior <- function(pred, prior, r0, alpha, sigma) {
 #' @param x A \code{.priorClasss} class with prior distribution information generated in \code{\link{set_prior}}
 #' @param ... A \code{.priorClasss} class with prior distribution information generated in \code{\link{set_prior}}
 #' @return A vector of \code{.priorClasss} classes
+#'
+#'
+#'
 #'
 #' @export
 #' @keywords helper method
@@ -173,6 +188,9 @@ add_mcmc = function(dt, priorObj, n.chains, n.adapt, n.burn,  n.iter, seed){
   })
 }
 
+#' validate the operational parameters for MCMC method
+#'
+#' @keywords internal method
 valid_mcmc <- function(n.chains, n.adapt, n.burn,  n.iter){
   if (missing(n.chains) || !is.numeric(n.chains)) {
     n.chains = 2

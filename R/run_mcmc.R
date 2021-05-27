@@ -1,8 +1,4 @@
 # S4 class, constructors and methods for running simulations for multiple scenarios
-# Last update on 082320
-
-#' @import doParallel
-#' @import foreach
 
 `%notin%` <- Negate(`%in%`)
 
@@ -15,10 +11,13 @@
 #' @param n.adapt number of iterations for adaptation
 #' @param n.burn number of iterations discarded as burn-in
 #' @param n.iter number of iterations to monitor
-#' @param seed the seed of R‘s random number generator. Default is 47
+#' @param seed the seed of random number generator. Default is 47
 #' @param path file name for saving the output including folder path
 #' @return a \code{data.frame} containing summary statistics of the posterior distribution for each simulation
-#'
+#' 
+#' @examples 
+#' 
+#' 
 #' @export
 #' @keywords simulator
 run_mcmc <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, path){
@@ -81,9 +80,13 @@ run_mcmc <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, path
 #' @param n.adapt number of iterations for adaptation
 #' @param n.burn number of iterations discarded as burn-in
 #' @param n.iter number of iterations to monitor
-#' @param seed the seed of R‘s random number generator. Default is 47
+#' @param seed the seed of random number generator. Default is 47
 #' @param path file name for saving the output including folder path
 #' @return a \code{data.frame} containing summary statistics of the posterior distribution for each simulation
+#'
+#' @examples
+#' # similar to run_mcmc
+#' 
 #'
 #' @export
 #' @keywords simulator

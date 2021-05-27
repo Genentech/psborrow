@@ -2,8 +2,6 @@
 # Call function from utils.R
 # Last update on 082320
 
-#' @import futile.logger
-
 setClassUnion("numericORNULL", c("numeric", "NULL"))
 setClassUnion("charORNULL", c("character", "NULL"))
 setClassUnion("listORNULL", c("list", "NULL"))
@@ -29,7 +27,17 @@ setClassUnion("listORNULL", c("list", "NULL"))
 #' @param etaE A vector for dropout rate per unit time for experimental arm. If left \code{NULL}, it uses the same dropout rate as eta.
 #' @param d_itv A vector of duration of time periods for dropping out the study with rates specified in \code{etaC} and \code{etaE}. Note that the length of \code{d_itv} should be same length as \code{etaC} or 1 less.
 #' @return A \code{.clinClass} class containing information on enrollment time, drop-out pattern and analysis start time
-#'
+#' 
+#' 
+#' @examples
+#' # set the operational parameter values for the trial
+#' # analysis starts at64 time units after first patient in
+#' set_clin(gamma = 10, e_itv = 4, etaC = 0.003,  CCOD = "fixed-first", CCOD_t = 64)
+#' 
+#' # analysis starts at 12 time units after last patient in
+#' set_clin(gamma = 2, e_itv = 18, etaC = 0.005,  CCOD = "fixed-last", CCOD_t = 12)
+#' 
+#' 
 #' @export
 #' @keywords constructor
 set_clin <- function(gamma, e_itv, CCOD, CCOD_t, etaC, etaE, d_itv) {
@@ -78,6 +86,15 @@ set_clin <- function(gamma, e_itv, CCOD, CCOD_t, etaC, etaE, d_itv) {
 #' @param keep original covariates to keep when simulate time-to-events
 #' @return a \code{.eventClass} class containing time-to-events information
 #'
+#'
+#' @examples 
+#' # time-to-event follows a weibull distribution
+#' set_event(event = "weibull", shape = 0.9, lambdaC = 0.0135)
+#' 
+#' # time-to-event follows a piece-wise exponential distribution
+#' set_event(event = "pwexp", t_itv = 1, lambdaC = c(0.1, 0.02))
+#' 
+#' 
 #' @export
 #' @keywords constructor
 set_event <- function(event, lambdaC, beta, shape, t_itv, change, keep) {

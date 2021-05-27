@@ -1,12 +1,18 @@
 # Helper functions
-# Last update on 031721
 
 #' @import dplyr
-#' @import data.table
 #' @import rjags
 #' @import mvtnorm
 #' @import MatchIt
+#' @import ggplot2
+#' @import survival
 #' @import futile.logger
+#' @import doParallel
+#' @import foreach
+#' @importFrom data.table data.table :=
+#' @importFrom methods new slot
+#' @importFrom stats as.formula binomial glm qnorm rbinom rexp rnorm rweibull time update var
+
 
 `%notin%` <- Negate(`%in%`)
 

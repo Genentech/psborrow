@@ -23,4 +23,19 @@ a \code{.priorClass} class containing survival data and prior information
 \description{
 Specify prior distributions and predictors for MCMC methods
 }
+\examples{
+# hierachical Bayesian model with precision parameter follows a half-cauchy distribution
+set_prior(pred = "none", prior = "cauchy", r0 = 1, alpha = c(0, 0), sigma = 0.03)
+
+# hierachical Bayesian model with precision parameter follows a gamma distribution
+set_prior(pred = "none", prior = "gamma", r0 = 1, alpha = c(0, 0))
+
+# conventional Bayesian model to not borrow from external control arm
+set_prior(pred = "none", prior = "no_ext", alpha = 0)
+
+# conventional Bayesian model to fully borrow from external control arm
+set_prior(pred = "none", prior = "full_ext", alpha = 0)
+
+
+}
 \keyword{constructor}

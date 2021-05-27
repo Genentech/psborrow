@@ -2,9 +2,6 @@
 # Call function from utils.R
 # Last update on 082320
 
-#' @import futile.logger
-#' @importFrom methods new slot
-
 setClassUnion("numericORNULL", c("numeric", "NULL"))
 setClassUnion("charORNULL", c("character", "NULL"))
 setClassUnion("logicalORNULL", c("logical", "NULL"))
@@ -157,6 +154,18 @@ set_cov <- function(n_cat, n_cont, mu_int, mu_ext, var, cov, prob_int, prob_ext)
 #' @param ... Other \code{.covClasss} classes with covariate information generated in \code{\link{set_cov}}
 #' @return A vector of \code{.covClasss} classes
 #'
+#'
+#' @examples
+#' # combine two sets of covariates
+#' covset1 = set_cov(n_cat = 2, n_cont = 0, mu_int = 0, mu_ext = 0, var = 1, cov = 0.5, prob_int = c(0.8, 0.6))
+#' covset2 = set_cov(n_cat = 0, n_cont = 1, mu_int = 62, mu_ext = 65, var = 11)
+#' cov_list = c(covset1, covset2)
+#' 
+#' # further combineone more set of covariates
+#' covset3 = set_cov(n_cat = 2, n_cont = 0, mu_int = 0, mu_ext = 0, var = 1, cov = 0.5, prob_int = c(0.8, 0.6))
+#' cov_list2 = c(unlist(cov_list), covset3)
+#' 
+#' 
 #' @export
 #' @keywords helper method
 setMethod("c", signature(x = ".covClass"), function(x, ...){

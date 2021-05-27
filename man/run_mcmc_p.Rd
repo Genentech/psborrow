@@ -19,7 +19,7 @@ run_mcmc_p(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, path)
 
 \item{n.iter}{number of iterations to monitor}
 
-\item{seed}{the seed of R‘s random number generator. Default is 47}
+\item{seed}{the seed of random number generator. Default is 47}
 
 \item{path}{file name for saving the output including folder path}
 }
@@ -28,5 +28,10 @@ a \code{data.frame} containing summary statistics of the posterior distribution 
 }
 \description{
 Run MCMC for multiple scenarios with provided data with parallel processing
+}
+\examples{
+# similar to run_mcmc
+
+
 }
 \keyword{simulator}

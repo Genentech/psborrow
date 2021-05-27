@@ -27,4 +27,13 @@ a \code{.eventClass} class containing time-to-events information
 \description{
 Set up time-to-events
 }
+\examples{
+# time-to-event follows a weibull distribution
+set_event(event = "weibull", shape = 0.9, lambdaC = 0.0135)
+
+# time-to-event follows a piece-wise exponential distribution
+set_event(event = "pwexp", t_itv = 1, lambdaC = c(0.1, 0.02))
+
+
+}
 \keyword{constructor}
