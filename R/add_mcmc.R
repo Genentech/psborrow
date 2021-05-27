@@ -50,18 +50,18 @@ set_prior <- function(pred, prior, r0, alpha, sigma) {
   #   message(cat("Propensity score calculated based selected covariate(s)", pred[pred != "ps"],
   #               "is used as predictors in the weibull distribution.\n"))
   # }
-
+  
   if(missing(prior) || prior %notin% c("gamma", "cauchy", "no_ext", "full_ext", "unif")) {
     stop("Prior distribution for the precision parameter (prior) is not correctly specified. Options include gamma, cauchy, unif, no_ext, full_ext.")
   } else if (prior == "no_ext" & sum(grepl("ps", pred)) > 0) {
     stop("User choose to not include external information. Adjusting for propensity score is not an option.")
   }
-
+  
   if(missing(r0)) {
     r0 = 1
     message('No initial values for the shape of the weibull distribution (r0) is detected. Default value 1 is used')
   }
-
+  
   if(missing(alpha) || (prior %in% c("gamma", "cauchy", "unif") & length(alpha) != 2)) {
     alpha = c(0, 0)
     message('Values for log of baseline hazard rate for external and internal control arms (alpha) is not correctly specified. Default value 0 is used.')
@@ -105,75 +105,73 @@ setMethod("c", signature(x = ".priorClass"), function(x, ...){
 #' Generating posterior samples from MCMC
 #'
 #' @keywords internal method
-setGeneric(name = "add_mcmc", def = function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed){standardGeneric("add_mcmc")})
-setMethod(f = "add_mcmc", signature(dt = "matrix", priorObj = ".priorClass"),
-          definition = function(dt, priorObj, n.chains, n.adapt, n.burn,  n.iter, seed){
-
-            if (missing(dt)) {
-              stop ("Please provide a dataset (dt).")
-            } else {
-              cov_name = colnames(dt)[colnames(dt) %notin% c("driftHR", "HR", "trt", "ext", "time", "cnsr", "wgt")] #extract covariate names in the dataset
-              if (sum(c("driftHR", "HR", "trt", "ext", "time", "cnsr") %notin% colnames(dt)) > 0 ) stop("Please make sure the trial data contains at least trt, ext, time and cnsr.")
-              else if (sum(!grepl("cov[1234567890]", cov_name)) > 0) stop("Please make sure the covariates in the trial have the right name.")
-            }
-            flog.debug(cat("[add_mcmc] cov_name =", cov_name, "\n"))
-
-            if (missing(seed)){
-              message("Set.seed(47)")
-              seed = 47
-            }
-
-            n_mcmc <- valid_mcmc(n.chains, n.adapt, n.burn, n.iter)
-
-            if (length(priorObj) == 1) priorObj = c(priorObj)
-
-            lapply(seq(1, length(priorObj), by = 1), function(i){
-              prior = priorObj[[i]]@prior
-              pred = priorObj[[i]]@pred
-
-              #---
-              if (missing(pred)) {
-                pred = "none"
-                message("Predictors to include in the weibull distribution (pred) is not provided. No predictor is used.")
-              } else if (sum(pred %notin% c(cov_name, "none", "ps", "all")) > 0 ){
-                stop("pred is not correctly specified. Options include none, ps, all and covariate names start with cov.")
-              } else if (sum(grepl("none", pred)) > 0) {
-                pred = "none"
-                message("Input none is found in pred. Any other input is disregarded.")
-              } else if (sum(grepl("all", pred)) > 0) {
-                pred = "all"
-                message("Input all is found in pred. Any other input is disregarded.")
-              } else if (sum(grepl("ps", pred)) == 0) {
-                message(cat("Selected covariate(s)", pred, "are used as predictors in the weibull distribution.\n"))
-              } else if (sum(grepl("ps", pred)) > 0 & length(pred) == 1){ # column wgt does not exist
-                dt_ps <- c_ps(dt, cov_name)
-                message(cat("Propensity score calculated using all coariates", cov_name, "is used as predictors in the weibull distribution.\n"))
-              } else if (sum(grepl("ps", pred)) > 0 & ("wgt" %in% colnames(dt))) { # column wgt already existed
-                message("Weight already provided in the data. It is used as predictor directly. \n")
-              } else if (sum(grepl("ps", pred)) > 0 & length(pred) > 1){
-                message(cat("Propensity score calculated based selected covariate(s)", pred[pred != "ps"],
-                            "is used as predictors in the weibull distribution.\n"))
-              }
-
-              flog.debug(cat(">>> prior =", prior, ", pred = ", pred, "\n"))
-
-              mcmc_res <- r_post(dt = dt,
-                                 prior = prior, pred = pred,
-                                 r0 = priorObj[[i]]@r0, alpha = priorObj[[i]]@alpha,
-                                 sigma = priorObj[[i]]@sigma, seed = seed,
-
-                                 n.chains = n_mcmc[['n.chains']], n.adapt = n_mcmc[['n.adapt']],
-                                 n.burn = n_mcmc[['n.burn']], n.iter = n_mcmc[['n.iter']])
-
-              mcmc_sum <- rej_est(mcmc_res)
-              flog.debug(cat(">>> mcmc_sum =", mcmc_sum, "\n"))
-              list("HR" = unique(dt[, 'HR']),
-                   "driftHR" = unique(dt[, 'driftHR']),
-                   "prior" = prior,
-                   "pred" = paste(pred, collapse = " "), # print to one row
-                   "mcmc.list" = mcmc_res, "summary" = mcmc_sum)
-            })
-          })
+add_mcmc = function(dt, priorObj, n.chains, n.adapt, n.burn,  n.iter, seed){
+  
+  if (missing(dt)) {
+    stop ("Please provide a dataset (dt).")
+  } else {
+    cov_name = colnames(dt)[colnames(dt) %notin% c("driftHR", "HR", "trt", "ext", "time", "cnsr", "wgt")] #extract covariate names in the dataset
+    if (sum(c("driftHR", "HR", "trt", "ext", "time", "cnsr") %notin% colnames(dt)) > 0 ) stop("Please make sure the trial data contains at least trt, ext, time and cnsr.")
+    else if (sum(!grepl("cov[1234567890]", cov_name)) > 0) stop("Please make sure the covariates in the trial have the right name.")
+  }
+  flog.debug(cat("[add_mcmc] cov_name =", cov_name, "\n"))
+  
+  if (missing(seed)){
+    message("Set.seed(47)")
+    seed = 47
+  }
+  
+  n_mcmc <- valid_mcmc(n.chains, n.adapt, n.burn, n.iter)
+  
+  if (length(priorObj) == 1) priorObj = c(priorObj)
+  
+  lapply(seq(1, length(priorObj), by = 1), function(i){
+    prior = priorObj[[i]]@prior
+    pred = priorObj[[i]]@pred
+    
+    #---
+    if (missing(pred)) {
+      pred = "none"
+      message("Predictors to include in the weibull distribution (pred) is not provided. No predictor is used.")
+    } else if (sum(pred %notin% c(cov_name, "none", "ps", "all")) > 0 ){
+      stop("pred is not correctly specified. Options include none, ps, all and covariate names start with cov.")
+    } else if (sum(grepl("none", pred)) > 0) {
+      pred = "none"
+      message("Input none is found in pred. Any other input is disregarded.")
+    } else if (sum(grepl("all", pred)) > 0) {
+      pred = "all"
+      message("Input all is found in pred. Any other input is disregarded.")
+    } else if (sum(grepl("ps", pred)) == 0) {
+      message(cat("Selected covariate(s)", pred, "are used as predictors in the weibull distribution.\n"))
+    } else if (sum(grepl("ps", pred)) > 0 & length(pred) == 1){ # column wgt does not exist
+      dt_ps <- c_ps(dt, cov_name)
+      message(cat("Propensity score calculated using all coariates", cov_name, "is used as predictors in the weibull distribution.\n"))
+    } else if (sum(grepl("ps", pred)) > 0 & ("wgt" %in% colnames(dt))) { # column wgt already existed
+      message("Weight already provided in the data. It is used as predictor directly. \n")
+    } else if (sum(grepl("ps", pred)) > 0 & length(pred) > 1){
+      message(cat("Propensity score calculated based selected covariate(s)", pred[pred != "ps"],
+                  "is used as predictors in the weibull distribution.\n"))
+    }
+    
+    flog.debug(cat(">>> prior =", prior, ", pred = ", pred, "\n"))
+    
+    mcmc_res <- r_post(dt = dt,
+                       prior = prior, pred = pred,
+                       r0 = priorObj[[i]]@r0, alpha = priorObj[[i]]@alpha,
+                       sigma = priorObj[[i]]@sigma, seed = seed,
+                       
+                       n.chains = n_mcmc[['n.chains']], n.adapt = n_mcmc[['n.adapt']],
+                       n.burn = n_mcmc[['n.burn']], n.iter = n_mcmc[['n.iter']])
+    
+    mcmc_sum <- rej_est(mcmc_res)
+    flog.debug(cat(">>> mcmc_sum =", mcmc_sum, "\n"))
+    list("HR" = unique(dt[, 'HR']),
+         "driftHR" = unique(dt[, 'driftHR']),
+         "prior" = prior,
+         "pred" = paste(pred, collapse = " "), # print to one row
+         "mcmc.list" = mcmc_res, "summary" = mcmc_sum)
+  })
+}
 
 valid_mcmc <- function(n.chains, n.adapt, n.burn,  n.iter){
   if (missing(n.chains) || !is.numeric(n.chains)) {

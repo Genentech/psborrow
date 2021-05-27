@@ -2,7 +2,10 @@
 #' 
 #' @param dt  a list of \code{matrix}
 #' @param match A vector of covariates name to match on
-#'
+#' @example
+#' # match on internal and external trial data using covariates 1 and 2
+#' match_cov(sample_cov, c("cov1", "cov2"))
+#' 
 #' @export
 #' @keywords constructor
 match_cov <- function(dt, match) {

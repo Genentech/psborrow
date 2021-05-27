@@ -2,7 +2,6 @@
 % Please edit documentation in R/simu_time.R
 \name{simu_time}
 \alias{simu_time}
-\alias{simu_time,matrix,.eventClass-method}
 \title{Simulate time-to-events for multiple scenarios}
 \usage{
 simu_time(dt, eventObj, clinInt, clinExt, seed, path)

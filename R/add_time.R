@@ -34,10 +34,10 @@ setClassUnion("listORNULL", c("list", "NULL"))
 #' @keywords constructor
 set_clin <- function(gamma, e_itv, CCOD, CCOD_t, etaC, etaE, d_itv) {
   if (missing(gamma)) stop("Please indicate the rate of enrollment per unit of time (gamma)")
-
+  
   if (missing(e_itv)) e_itv = NULL
   if (length(e_itv) != length(gamma) & length(e_itv) != length(gamma) - 1) stop("The length of e_itv should be the same length as gamma or 1 less")
-
+  
   if (missing(CCOD) || CCOD %notin% c("fixed-first", "fixed-last", "event")){
     stop("Please indicate type of clinical cut-off date (CCOD). Options include fixed-first, fixed-last, or event")
   }
@@ -46,7 +46,7 @@ set_clin <- function(gamma, e_itv, CCOD, CCOD_t, etaC, etaE, d_itv) {
     else if (CCOD == "fixed-last") stop("Please specify the time difference between analysis start and first last's enrollment (CCOD_t)")
     else stop("Please specify the number of events observed when analysis starts (CCOD_t)")
   }
-
+  
   if (missing(etaC)) stop("Please specify dropout rate per unit time for control arm (etaC).")
   if (missing(etaE) || length(etaC) != length(etaE)) {
     message("Dropout rate per unit time for treatment arm (etaE) is not specified correcly. Disregard this warning if this is for external trial. Otherwise the same dropout rate as eta is used.")
@@ -81,18 +81,18 @@ set_clin <- function(gamma, e_itv, CCOD, CCOD_t, etaC, etaE, d_itv) {
 #' @export
 #' @keywords constructor
 set_event <- function(event, lambdaC, beta, shape, t_itv, change, keep) {
-
+  
   if (missing(event) || event %notin% c("weibull", "pwexp")) stop("Distribution of time-to-events (event) is not correctly specify. Options include weibull, and pwexp")
   if (missing(lambdaC)) stop ("Please provide the baseline hazard rate of internal control arm (lambdaC).")
   if (missing(t_itv)) t_itv = NULL
   if (missing(shape)) shape = NULL
   if (event == "weibull" & is.null(shape)) stop("Simulate time following weibull distribution. Please provide shape of the weibull distribution")
   if (event == "pwexp" & (length(t_itv) < length(lambdaC) - 1)) stop("Length of t_it should be at least 1 less than that of lambdaC")
-
+  
   if (missing(change)) change = NULL
   if (missing(keep)) keep = NULL
   if (missing(beta)) beta = NULL
-
+  
   new(".eventClass", event = event,
       lambdaC = lambdaC, shape = shape, t_itv = t_itv,
       beta = beta, change = change, keep = keep)
@@ -102,98 +102,96 @@ set_event <- function(event, lambdaC, beta, shape, t_itv, change, keep) {
 #' Simulate survival times
 #'
 #' @keywords internal method
-setGeneric(name="add_time", def=function(dt, eventObj, clinInt, clinExt, seed){standardGeneric("add_time")})
-setMethod(f="add_time", signature(dt = "matrix", eventObj = ".eventClass", clinInt = ".clinClass", clinExt = ".clinClass"),
-          definition=function(dt, eventObj, clinInt, clinExt, seed){
-            if (missing(dt))  stop("Please provide dt")
-            if (missing(eventObj))  stop("Please provide eventObj")
-            if (missing(clinInt)) stop("Please provide clinInt.")
-            if (missing(clinExt)) stop("Please provide clinExt.")
-            if (missing(seed)){
-              message("Set.seed(47)")
-              seed = 47
-            }
-
-            # checl
-            if (any(c("driftHR", "HR", "trt", "ext") %notin% colnames(dt), sum(!grepl("cov[1234567890]", colnames(dt)[colnames(dt) %notin% c("driftHR", "HR", "trt", "ext")])) > 0)) stop("Please make sure the trial data contains the correct variable names.")
-
-            new_cov_name = NULL
-            cov_name = colnames(dt)[colnames(dt) %notin% c("driftHR", "HR", "trt", "ext")]
-            flog.debug(cat("[add_time] Number of original covariates", length(cov_name), "\n"))
-
-            keep = eventObj@keep
-            if (is.null(keep)) {
-              keep = cov_name
-              message(cat("All original covariates (if any):", keep, "are used for time-to-failure."))
-            } else if (sum(grepl("none", keep)) > 0){
-              keep = NULL
-              message(cat("No original covariates are used for time-to-failure."))
-            } else if (sum(keep %notin% cov_name) > 0) {
-              stop("Please correctly specify the covariates to keep when simulating failure times.")
-            }
-
-            change = eventObj@change
-            if (!is.null(change)){ # no change to covariates
-              for (i in 1:length(change)){
-                if (length(change[[i]]) != 3) {
-                  stop(paste0("Please correctly specify the operation for the ", i, "th entry."))
-                } else if (change[[i]][2] == "^") {
-                  s = (change[[i]][1] %notin% colnames(dt)[colnames(dt) %notin% c("driftHR", "HR", "trt", "ext")]) +
-                    is.na(as.numeric(change[[i]][3]))
-                  if (s > 0) stop(paste0("Please correctly specify the ^ operation for the ", i, "th entry."))
-                } else if (change[[i]][2] %in% c("+", "*")) {
-                  s = (change[[i]][1] %notin% colnames(dt)[colnames(dt) %notin% c("driftHR", "HR", "trt", "ext")]) +
-                    (change[[i]][3] %notin% colnames(dt)[colnames(dt) %notin% c("driftHR", "HR", "trt", "ext")])
-                  if (s > 0) stop(paste0("Please correctly specify the +/* operation for the ", i, "th entry."))
-                } else {
-                  stop("Please correctly specify the operation. The second entry should be ^, + or *.")
-                }
-                new_cov_name = c(new_cov_name, paste(change[[i]],collapse=""))
-              }
-            }
-
-            flog.debug(cat("[add_time] Number of new covariates", length(new_cov_name), "\n"))
-            flog.debug(cat("[add_time] Number of original covariates to keep", length(keep), "\n"))
-
-            # flog.debug(cat("[add_time] Current dataset include origin covariates", cov_name, "and new covariates", new_cov_name, "\n"))
-
-            # n_cov = sum(grepl("cov", colnames(dt)))
-            n_cov = length(new_cov_name) + length(keep)
-            flog.debug(cat("[add_time] Number of covariates is (length of beta should be)", n_cov, "\n"))
-
-            beta = eventObj@beta
-            if (length(beta) %notin% c(1, n_cov)){
-              message("Coefficient for covariates (beta) is not recognized or correctly specified. Default value 1 is used for all covariates")
-              beta = rep(1, n_cov)
-            } else if (length(beta) == 1){
-              message("User provides one coefficient for covariate. This value is used for all covariates")
-              beta = rep(beta, n_cov)
-            }
-
-
-            hr = unique(dt[, 'HR'])
-            dr = unique(dt[, 'driftHR'])
-            flog.debug(paste("[add_time] For this dataset, HR =", hr, "driftHR =", dr, "\n"))
-            time_int = g_one_t(ext = 0, dt = dt,
-                               gamma = clinInt@gamma, e_itv = clinInt@e_itv,
-                               etaC = clinInt@etaC, etaE = clinInt@etaE, d_itv = clinInt@d_itv,
-                               CCOD = clinInt@CCOD, CCOD_t = clinInt@CCOD_t,
-                               event = eventObj@event, lambda = eventObj@lambdaC,
-                               shape = eventObj@shape, t_itv = eventObj@t_itv,
-                               HR = hr, beta = beta,
-                               change = change, keep = keep)
-
-            lambdaExt = eventObj@lambdaC * dr
-
-            time_ext = g_one_t(ext = 1, dt = dt,
-                               gamma = clinExt@gamma, e_itv = clinExt@e_itv,
-                               etaC = clinExt@etaC, etaE = clinExt@etaE, d_itv = clinExt@d_itv,
-                               CCOD = clinExt@CCOD, CCOD_t = clinExt@CCOD_t,
-                               event = eventObj@event, lambda = lambdaExt,
-                               shape = eventObj@shape, t_itv = eventObj@t_itv,
-                               HR = hr, beta = beta,
-                               change = change, keep = keep)
-
-            rbind(time_int, time_ext)
-
-          })
+add_time=function(dt, eventObj, clinInt, clinExt, seed){
+  if (missing(dt))  stop("Please provide dt")
+  if (missing(eventObj))  stop("Please provide eventObj")
+  if (missing(clinInt)) stop("Please provide clinInt.")
+  if (missing(clinExt)) stop("Please provide clinExt.")
+  if (missing(seed)){
+    message("Set.seed(47)")
+    seed = 47
+  }
+  
+  # checl
+  if (any(c("driftHR", "HR", "trt", "ext") %notin% colnames(dt), sum(!grepl("cov[1234567890]", colnames(dt)[colnames(dt) %notin% c("driftHR", "HR", "trt", "ext")])) > 0)) stop("Please make sure the trial data contains the correct variable names.")
+  
+  new_cov_name = NULL
+  cov_name = colnames(dt)[colnames(dt) %notin% c("driftHR", "HR", "trt", "ext")]
+  flog.debug(cat("[add_time] Number of original covariates", length(cov_name), "\n"))
+  
+  keep = eventObj@keep
+  if (is.null(keep)) {
+    keep = cov_name
+    message(cat("All original covariates (if any):", keep, "are used for time-to-failure."))
+  } else if (sum(grepl("none", keep)) > 0){
+    keep = NULL
+    message(cat("No original covariates are used for time-to-failure."))
+  } else if (sum(keep %notin% cov_name) > 0) {
+    stop("Please correctly specify the covariates to keep when simulating failure times.")
+  }
+  
+  change = eventObj@change
+  if (!is.null(change)){ # no change to covariates
+    for (i in 1:length(change)){
+      if (length(change[[i]]) != 3) {
+        stop(paste0("Please correctly specify the operation for the ", i, "th entry."))
+      } else if (change[[i]][2] == "^") {
+        s = (change[[i]][1] %notin% colnames(dt)[colnames(dt) %notin% c("driftHR", "HR", "trt", "ext")]) +
+          is.na(as.numeric(change[[i]][3]))
+        if (s > 0) stop(paste0("Please correctly specify the ^ operation for the ", i, "th entry."))
+      } else if (change[[i]][2] %in% c("+", "*")) {
+        s = (change[[i]][1] %notin% colnames(dt)[colnames(dt) %notin% c("driftHR", "HR", "trt", "ext")]) +
+          (change[[i]][3] %notin% colnames(dt)[colnames(dt) %notin% c("driftHR", "HR", "trt", "ext")])
+        if (s > 0) stop(paste0("Please correctly specify the +/* operation for the ", i, "th entry."))
+      } else {
+        stop("Please correctly specify the operation. The second entry should be ^, + or *.")
+      }
+      new_cov_name = c(new_cov_name, paste(change[[i]],collapse=""))
+    }
+  }
+  
+  flog.debug(cat("[add_time] Number of new covariates", length(new_cov_name), "\n"))
+  flog.debug(cat("[add_time] Number of original covariates to keep", length(keep), "\n"))
+  
+  # flog.debug(cat("[add_time] Current dataset include origin covariates", cov_name, "and new covariates", new_cov_name, "\n"))
+  
+  # n_cov = sum(grepl("cov", colnames(dt)))
+  n_cov = length(new_cov_name) + length(keep)
+  flog.debug(cat("[add_time] Number of covariates is (length of beta should be)", n_cov, "\n"))
+  
+  beta = eventObj@beta
+  if (length(beta) %notin% c(1, n_cov)){
+    message("Coefficient for covariates (beta) is not recognized or correctly specified. Default value 1 is used for all covariates")
+    beta = rep(1, n_cov)
+  } else if (length(beta) == 1){
+    message("User provides one coefficient for covariate. This value is used for all covariates")
+    beta = rep(beta, n_cov)
+  }
+  
+  
+  hr = unique(dt[, 'HR'])
+  dr = unique(dt[, 'driftHR'])
+  flog.debug(paste("[add_time] For this dataset, HR =", hr, "driftHR =", dr, "\n"))
+  time_int = g_one_t(ext = 0, dt = dt,
+                     gamma = clinInt@gamma, e_itv = clinInt@e_itv,
+                     etaC = clinInt@etaC, etaE = clinInt@etaE, d_itv = clinInt@d_itv,
+                     CCOD = clinInt@CCOD, CCOD_t = clinInt@CCOD_t,
+                     event = eventObj@event, lambda = eventObj@lambdaC,
+                     shape = eventObj@shape, t_itv = eventObj@t_itv,
+                     HR = hr, beta = beta,
+                     change = change, keep = keep)
+  
+  lambdaExt = eventObj@lambdaC * dr
+  
+  time_ext = g_one_t(ext = 1, dt = dt,
+                     gamma = clinExt@gamma, e_itv = clinExt@e_itv,
+                     etaC = clinExt@etaC, etaE = clinExt@etaE, d_itv = clinExt@d_itv,
+                     CCOD = clinExt@CCOD, CCOD_t = clinExt@CCOD_t,
+                     event = eventObj@event, lambda = lambdaExt,
+                     shape = eventObj@shape, t_itv = eventObj@t_itv,
+                     HR = hr, beta = beta,
+                     change = change, keep = keep)
+  
+  rbind(time_int, time_ext)
+  
+}

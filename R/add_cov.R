@@ -64,16 +64,16 @@ set_n <- function(ssC, ssE, ssExt){
 #' @export
 #' @keywords constructor
 set_cov <- function(n_cat, n_cont, mu_int, mu_ext, var, cov, prob_int, prob_ext) {
-
+  
   if (missing(n_cat) & missing(n_cont)) {
     stop("User provided no information on the number of covariates (n_cat, n_cont). There's no need to use this function or add_cov.")
   } else if (missing(n_cat))  {
-
+    
     message ("Number of binary covariates (n_cat) is not detected. Default value 0 is used.")
     n_cat = 0
   } else if (missing(n_cont)) {
     n_cont = 0
-
+    
     if (missing(mu_int) & missing(mu_ext) & missing(var) & missing(cov)){
       message ("User wants to simulate independent binary covariates (n_cont) only. Independent bernoulli distribution is directly used.")
       mu_int = rep(0, n_cat)
@@ -84,12 +84,12 @@ set_cov <- function(n_cat, n_cont, mu_int, mu_ext, var, cov, prob_int, prob_ext)
       message ("Number of continuous covariates (n_cont) is not detected. Default value 0 is used.")
     }
   }
-
-
+  
+  
   n_cov = n_cont + n_cat
-
+  
   # print(paste("total number of covariates", n_cov))
-
+  
   if (missing(mu_int) || length(mu_int) %notin% c(1,n_cov)){
     message("Mean of covariate in internal trials is not recognized or correctly specified. Default value 0 is used for all covariates")
     mu_int = rep(0, n_cov)
@@ -97,7 +97,7 @@ set_cov <- function(n_cat, n_cont, mu_int, mu_ext, var, cov, prob_int, prob_ext)
     message("User provides one mean of covariate in internal trials. This value is used for all covariates")
     mu_int = rep(mu_int, n_cov)
   }
-
+  
   if (missing(mu_ext) || length(mu_ext) %notin% c(1,n_cov)){
     message("Mean of covariate in external trials is not recognized or correctly specified. mu_int is used for all covariates")
     mu_ext = mu_int
@@ -105,7 +105,7 @@ set_cov <- function(n_cat, n_cont, mu_int, mu_ext, var, cov, prob_int, prob_ext)
     message("User provides one mean of covariate in external trials. This value is used for all covariates")
     mu_ext = rep(mu_ext, n_cov)
   }
-
+  
   if (missing(var) || length(var) %notin% c(1,n_cov)){
     message("Variance of covariate in external trials is not recognized or correctly specified. Default value 1 is used for all covariates")
     var = rep(1, n_cov)
@@ -113,7 +113,7 @@ set_cov <- function(n_cat, n_cont, mu_int, mu_ext, var, cov, prob_int, prob_ext)
     message("User provides one number for variance. This variance is used for all covariates")
     var = rep(var, n_cov)
   }
-
+  
   if (missing(cov)) cov = NULL
   if (n_cov > 1){
     len_cov = sum(seq(1, n_cov - 1, by = 1))
@@ -125,7 +125,7 @@ set_cov <- function(n_cat, n_cont, mu_int, mu_ext, var, cov, prob_int, prob_ext)
       cov = rep(cov, len_cov)
     }
   }
-
+  
   if (missing(prob_int)) prob_int = NULL
   if (missing(prob_ext)) prob_ext = NULL
   if (n_cat > 0){
@@ -136,7 +136,7 @@ set_cov <- function(n_cat, n_cont, mu_int, mu_ext, var, cov, prob_int, prob_ext)
       message("User provides one number for probability for the binary covariate in the internal trial. This probability is used for all binary covariates")
       prob_int = rep(prob_int, n_cat)
     }
-
+    
     if (length(prob_ext) %notin% c(1,n_cat)){
       message("Probability of binary covariate in the external trial is not recognized or correctly specified. mu_int is used.")
       prob_ext = prob_int
@@ -179,31 +179,29 @@ setMethod("c", signature(x = ".covClass"), function(x, ...){
 #' Simulate covariates with a multivariate normal distribution
 #'
 #' @keywords internal method
-setGeneric(name="add_cov", def=function(dt, covObj, seed){standardGeneric("add_cov")})
-setMethod(f="add_cov", signature(dt = "matrix", covObj = ".covClass"),
-          definition=function(dt, covObj, seed){
-
-            if (missing(seed)){
-              message("Set.seed(47)")
-              set.seed(47)
-            } else set.seed(seed)
-
-            if(length(covObj) == 1) covObj = c(covObj)
-
-            for (i in 1:length(covObj)){
-              # call function from utils.R
-              cov_int = s_cov(ext = 0, dt = dt,
-                              n_cat = covObj[[i]]@n_cat,  n_cont = covObj[[i]]@n_cont, mu = covObj[[i]]@mu_int,
-                              var = covObj[[i]]@var, cov = covObj[[i]]@cov, prob = covObj[[i]]@prob_int)
-
-              cov_ext = s_cov(ext = 1, dt = dt,
-                              n_cat = covObj[[i]]@n_cat,  n_cont = covObj[[i]]@n_cont, mu = covObj[[i]]@mu_ext,
-                              var = covObj[[i]]@var, cov = covObj[[i]]@cov, prob = covObj[[i]]@prob_ext)
-
-              # print(summary(cov_int))
-              # print(summary(cov_ext))
-              dt = cbind(dt, rbind(cov_ext, cov_int))
-            }
-            dt
-          })
+add_cov=function(dt, covObj, seed){
+  
+  if (missing(seed)){
+    message("Set.seed(47)")
+    set.seed(47)
+  } else set.seed(seed)
+  
+  if(length(covObj) == 1) covObj = c(covObj)
+  
+  for (i in 1:length(covObj)){
+    # call function from utils.R
+    cov_int = s_cov(ext = 0, dt = dt,
+                    n_cat = covObj[[i]]@n_cat,  n_cont = covObj[[i]]@n_cont, mu = covObj[[i]]@mu_int,
+                    var = covObj[[i]]@var, cov = covObj[[i]]@cov, prob = covObj[[i]]@prob_int)
+    
+    cov_ext = s_cov(ext = 1, dt = dt,
+                    n_cat = covObj[[i]]@n_cat,  n_cont = covObj[[i]]@n_cont, mu = covObj[[i]]@mu_ext,
+                    var = covObj[[i]]@var, cov = covObj[[i]]@cov, prob = covObj[[i]]@prob_ext)
+    
+    # print(summary(cov_int))
+    # print(summary(cov_ext))
+    dt = cbind(dt, rbind(cov_ext, cov_int))
+  }
+  dt
+}
 

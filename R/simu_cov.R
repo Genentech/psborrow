@@ -20,77 +20,75 @@
 #'
 #' @export
 #' @keywords simulator
-setGeneric(name="simu_cov", def=function(ssObj, covObj, driftHR, HR, nsim, seed, path){standardGeneric("simu_cov")})
-setMethod(f="simu_cov", signature(ssObj = "matrix"),
-          definition=function(ssObj, covObj, driftHR, HR, nsim, seed, path){
-
-            if (missing(ssObj)) stop("Please provide ssObj.")
-            if (missing(covObj)) {
-              message("No covObj is provided.")
-              covObj = NULL
-            }
-            if (missing(HR)){
-              HR = 1
-              message("HR values (HR) not provided. Default value 1 is used.")
-            }
-            if (missing(driftHR)){
-              driftHR = 1
-              message("driftHR values (driftHR) not provided. Default value 1 is used.")
-            }
-            if (missing(nsim)) {
-              message("Number of simulation is not provided. Default value 5 is used")
-              nsim = 5
-            }
-
-            dt0 <- ssObj # before the sample size may change
-
-            ssC <- sum(dt0[,'ext'] ==0 & dt0[,'trt'] ==0)
-            ssE <- sum(dt0[,'ext'] ==0 & dt0[,'trt'] ==1)
-            ssExt <- sum(dt0[,'ext'] ==1)
-
-            message(paste0("The sample size for internal control, internal treatment, and external control arms are ",
-                           ssC, ", ", ssE, ", and ", ssExt,", respectively."))
-
-            if (missing(seed)){
-              message("Set.seed(47)")
-              seed = 47
-            }
-
-            seed_list <- array(seq(seed, length(driftHR) * length(HR) * nsim + seed, by = 1),
-                               dim = c(nsim, length(HR), length(driftHR)))
-            flog.debug(cat("[simu_cov] seed_list:", seed_list, "\n"))
-
-            res_list <- sapply(1:length(driftHR), function(k){
-              dr <- driftHR[k]
-
-              sapply(1:length(HR), function(j) {
-                hr <- HR[j]
-
-                nsim_res <-  lapply(seq(1, nsim, by = 1), function(i){
-                  seed_i = seed_list[i, j, k]
-
-                  print(paste("-------------------", i, "of ", nsim, "simulation:",
-                              j, "of HR =", hr, ",",
-                              k, "of driftHR =", dr, "seed =", seed_i))
-
-                  samp = set_n(ssC = ssC, ssE = ssE, ssExt = ssExt)
-                  samp_cov = samp
-
-                  if (!is.null(covObj)) {
-                    samp_cov = add_cov(dt = samp, covObj = covObj, seed = seed_i)
-                  }
-
-                  flog.debug(cat("[simu_cov] seed_i:", seed_i, "\n"))
-                  cbind("driftHR" = dr, "HR" = hr, samp_cov)
-                })
-              })
-            })
-
-
-            if (missing(path)) print("Simulated covariates are not saved.") else {
-              save(res_list, file = path)
-              print(paste("Simulated covariates are saved as", path))
-            }
-            res_list
-          })
+simu_cov=function(ssObj, covObj, driftHR, HR, nsim, seed, path){
+  
+  if (missing(ssObj)) stop("Please provide ssObj.")
+  if (missing(covObj)) {
+    message("No covObj is provided.")
+    covObj = NULL
+  }
+  if (missing(HR)){
+    HR = 1
+    message("HR values (HR) not provided. Default value 1 is used.")
+  }
+  if (missing(driftHR)){
+    driftHR = 1
+    message("driftHR values (driftHR) not provided. Default value 1 is used.")
+  }
+  if (missing(nsim)) {
+    message("Number of simulation is not provided. Default value 5 is used")
+    nsim = 5
+  }
+  
+  dt0 <- ssObj # before the sample size may change
+  
+  ssC <- sum(dt0[,'ext'] ==0 & dt0[,'trt'] ==0)
+  ssE <- sum(dt0[,'ext'] ==0 & dt0[,'trt'] ==1)
+  ssExt <- sum(dt0[,'ext'] ==1)
+  
+  message(paste0("The sample size for internal control, internal treatment, and external control arms are ",
+                 ssC, ", ", ssE, ", and ", ssExt,", respectively."))
+  
+  if (missing(seed)){
+    message("Set.seed(47)")
+    seed = 47
+  }
+  
+  seed_list <- array(seq(seed, length(driftHR) * length(HR) * nsim + seed, by = 1),
+                     dim = c(nsim, length(HR), length(driftHR)))
+  flog.debug(cat("[simu_cov] seed_list:", seed_list, "\n"))
+  
+  res_list <- sapply(1:length(driftHR), function(k){
+    dr <- driftHR[k]
+    
+    sapply(1:length(HR), function(j) {
+      hr <- HR[j]
+      
+      nsim_res <-  lapply(seq(1, nsim, by = 1), function(i){
+        seed_i = seed_list[i, j, k]
+        
+        print(paste("-------------------", i, "of ", nsim, "simulation:",
+                    j, "of HR =", hr, ",",
+                    k, "of driftHR =", dr, "seed =", seed_i))
+        
+        samp = set_n(ssC = ssC, ssE = ssE, ssExt = ssExt)
+        samp_cov = samp
+        
+        if (!is.null(covObj)) {
+          samp_cov = add_cov(dt = samp, covObj = covObj, seed = seed_i)
+        }
+        
+        flog.debug(cat("[simu_cov] seed_i:", seed_i, "\n"))
+        cbind("driftHR" = dr, "HR" = hr, samp_cov)
+      })
+    })
+  })
+  
+  
+  if (missing(path)) print("Simulated covariates are not saved.") else {
+    save(res_list, file = path)
+    print(paste("Simulated covariates are saved as", path))
+  }
+  res_list
+}
 
