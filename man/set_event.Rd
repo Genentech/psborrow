@@ -23,6 +23,8 @@ set_event(event, lambdaC, beta, shape, t_itv, change, keep)
 }
 \value{
 a \code{.eventClass} class containing time-to-events information
+
+a \code{matrix} containing simulated time-to-events information
 }
 \description{
 Set up time-to-events

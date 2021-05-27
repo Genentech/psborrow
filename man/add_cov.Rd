@@ -6,6 +6,9 @@
 \usage{
 add_cov(dt, covObj, seed)
 }
+\value{
+a \code{matrix} containing simulated covariates information
+}
 \description{
 Simulate covariates with a multivariate normal distribution
 }

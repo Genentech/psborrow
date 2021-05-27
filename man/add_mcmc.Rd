@@ -6,6 +6,9 @@
 \usage{
 add_mcmc(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed)
 }
+\value{
+A \code{list} containing hazard ratio and prior information
+}
 \description{
 Generating posterior samples from MCMC
 }
