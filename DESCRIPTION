@@ -12,7 +12,7 @@ Authors@R:
            role = c("ctb","cre"),
            email = "lina21@gene.com"))      
 Description: A tool which aims to help evaluate the effect of external borrowing using an integrated approach that combines propensity score and Bayesian dynamic borrowing methods.
-License: GPL (>= 3)
+License: GPL (>= 3) + file LICENCE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
