@@ -19,10 +19,12 @@ Match
 }
 \examples{
 # match internal and external trial data using different covariates
-sample = set_n(ssC = 140, ssE = 275, ssExt = 100)
-covset1 = set_cov(n_cat = 2, n_cont = 0, mu_int = 0, mu_ext = 0, var = 1, cov = 0.5, prob_int = c(0.8, 0.6))
+smp = set_n(ssC = 140, ssE = 275, ssExt = 100)
+covset1 = set_cov(n_cat = 2, n_cont = 0, mu_int = 0, mu_ext = 0, var = 1)
 covset2 = set_cov(n_cat = 0, n_cont = 1, mu_int = 62, mu_ext = 65, var = 11)
-sample_cov <- simu_cov(ssObj = sample, covObj = c(covset1, covset2), HR = 1, driftHR = 1.2, nsim = 2)
+cObj = c(covset1, covset2)
+sample_cov <-
+  simu_cov(ssObj = smp, covObj = cObj, HR = 1, driftHR = 1.2, nsim = 2)
 
 # match on covariates 1 and 2
 match_cov(dt = sample_cov, match = c("cov1", "cov2"))

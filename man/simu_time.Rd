@@ -26,7 +26,8 @@ a list of \code{matrix} containing simulated time-to-events information
 Simulate time-to-events for multiple scenarios
 }
 \examples{
-# simulate patient-level data without covariates and simulate survival time following weibull distribution
+# simulate patient-level data without covariates
+# simulate survival time following weibull distribution
 
 # simulate trial indicator and set hazard ratios
 sample = set_n(ssC = 10, ssE = 20, ssExt = 40)

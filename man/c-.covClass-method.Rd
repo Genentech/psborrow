@@ -19,13 +19,10 @@ Concatenate multiple \code{.covClasss} classes
 }
 \examples{
 # combine two sets of covariates
-covset1 = set_cov(n_cat = 2, n_cont = 0, mu_int = 0, mu_ext = 0, var = 1, cov = 0.5, prob_int = c(0.8, 0.6))
+covset1 = set_cov(n_cat = 2, n_cont = 0, mu_int = 0, mu_ext = 0, var = 1)
 covset2 = set_cov(n_cat = 0, n_cont = 1, mu_int = 62, mu_ext = 65, var = 11)
 cov_list = c(covset1, covset2)
 
-# further combineone more set of covariates
-covset3 = set_cov(n_cat = 2, n_cont = 0, mu_int = 0, mu_ext = 0, var = 1, cov = 0.5, prob_int = c(0.8, 0.6))
-cov_list2 = c(unlist(cov_list), covset3)
 
 
 }
