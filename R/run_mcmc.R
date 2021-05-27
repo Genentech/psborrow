@@ -11,13 +11,13 @@
 #' @param n.adapt number of iterations for adaptation
 #' @param n.burn number of iterations discarded as burn-in
 #' @param n.iter number of iterations to monitor
-#' @param seed the seed of random number generator. Default is 47
+#' @param seed the seed of R‘s random number generator. Default is the first element of .Random.seed
 #' @param path file name for saving the output including folder path
 #' @return a \code{data.frame} containing summary statistics of the posterior distribution for each simulation
-#' 
-#' @examples 
-#' 
-#' 
+#'
+#' @examples
+#'
+#'
 #' @export
 #' @keywords simulator
 run_mcmc <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, path){
@@ -27,9 +27,9 @@ run_mcmc <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, path
   n_mcmc <- valid_mcmc(n.chains, n.adapt, n.burn, n.iter)
 
   if (missing(seed)){
-    message("Set.seed(47)")
-    seed = 47
-  }
+    message(paste0("Set seed to ",.Random.seed[1]))
+    seed = .Random.seed[1]
+  } else set.seed(seed)
   seed_list <- seq(seed, seed + length(dt), by = 1)
 
   flog.debug(cat("seed_list:", seed_list, "number of dataset", length(dt), "\n"))
@@ -80,13 +80,13 @@ run_mcmc <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, path
 #' @param n.adapt number of iterations for adaptation
 #' @param n.burn number of iterations discarded as burn-in
 #' @param n.iter number of iterations to monitor
-#' @param seed the seed of random number generator. Default is 47
+#' @param seed the seed of R‘s random number generator. Default is the first element of .Random.seed
 #' @param path file name for saving the output including folder path
 #' @return a \code{data.frame} containing summary statistics of the posterior distribution for each simulation
 #'
 #' @examples
 #' # similar to run_mcmc
-#' 
+#'
 #'
 #' @export
 #' @keywords simulator
@@ -97,9 +97,9 @@ run_mcmc_p <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, pa
   n_mcmc <- valid_mcmc(n.chains, n.adapt, n.burn, n.iter)
 
   if (missing(seed)){
-    message("Set.seed(47)")
-    seed = 47
-  }
+    message(paste0("Set seed to ",.Random.seed[1]))
+    seed = .Random.seed[1]
+  } else set.seed(seed)
   seed_list <- seq(seed, seed + length(dt), by = 1)
 
   flog.debug(cat("seed_list:", seed_list, "number of dataset", length(dt), "\n"))

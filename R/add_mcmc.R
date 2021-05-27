@@ -21,22 +21,22 @@ setClassUnion("matrixORNULL", c("matrix", "NULL"))
 #' @param alpha Initial values for log of baseline hazard rate for external and internal control arms. Length of \code{alpha} should be 1 if \code{prior = "full_ext"} or \code{prior = "no_ext"}, and equal to 2 otherwise
 #' @param sigma Initial values for precision parameter if \code{prior = "cauchy"}. If left \code{NULL}, default value 0.03 is used
 #' @return a \code{.priorClass} class containing survival data and prior information
-#' 
-#' 
-#' @examples 
+#'
+#'
+#' @examples
 #' # hierachical Bayesian model with precision parameter follows a half-cauchy distribution
 #' set_prior(pred = "none", prior = "cauchy", r0 = 1, alpha = c(0, 0), sigma = 0.03)
-#' 
+#'
 #' # hierachical Bayesian model with precision parameter follows a gamma distribution
 #' set_prior(pred = "none", prior = "gamma", r0 = 1, alpha = c(0, 0))
-#' 
+#'
 #' # conventional Bayesian model to not borrow from external control arm
 #' set_prior(pred = "none", prior = "no_ext", alpha = 0)
-#' 
+#'
 #' # conventional Bayesian model to fully borrow from external control arm
 #' set_prior(pred = "none", prior = "full_ext", alpha = 0)
-#' 
-#' 
+#'
+#'
 #' @export
 #' @keywords constructor
 set_prior <- function(pred, prior, r0, alpha, sigma) {
@@ -62,18 +62,18 @@ set_prior <- function(pred, prior, r0, alpha, sigma) {
   #   message(cat("Propensity score calculated based selected covariate(s)", pred[pred != "ps"],
   #               "is used as predictors in the weibull distribution.\n"))
   # }
-  
+
   if(missing(prior) || prior %notin% c("gamma", "cauchy", "no_ext", "full_ext", "unif")) {
     stop("Prior distribution for the precision parameter (prior) is not correctly specified. Options include gamma, cauchy, unif, no_ext, full_ext.")
   } else if (prior == "no_ext" & sum(grepl("ps", pred)) > 0) {
     stop("User choose to not include external information. Adjusting for propensity score is not an option.")
   }
-  
+
   if(missing(r0)) {
     r0 = 1
     message('No initial values for the shape of the weibull distribution (r0) is detected. Default value 1 is used')
   }
-  
+
   if(missing(alpha) || (prior %in% c("gamma", "cauchy", "unif") & length(alpha) != 2)) {
     alpha = c(0, 0)
     message('Values for log of baseline hazard rate for external and internal control arms (alpha) is not correctly specified. Default value 0 is used.')
@@ -120,8 +120,10 @@ setMethod("c", signature(x = ".priorClass"), function(x, ...){
 #' Generating posterior samples from MCMC
 #'
 #' @keywords internal method
+#' @importfrom base .Random.seed paste0
+#' @return A \code{list} containing hazard ratio and prior information
 add_mcmc = function(dt, priorObj, n.chains, n.adapt, n.burn,  n.iter, seed){
-  
+
   if (missing(dt)) {
     stop ("Please provide a dataset (dt).")
   } else {
@@ -130,20 +132,20 @@ add_mcmc = function(dt, priorObj, n.chains, n.adapt, n.burn,  n.iter, seed){
     else if (sum(!grepl("cov[1234567890]", cov_name)) > 0) stop("Please make sure the covariates in the trial have the right name.")
   }
   flog.debug(cat("[add_mcmc] cov_name =", cov_name, "\n"))
-  
+
   if (missing(seed)){
-    message("Set.seed(47)")
-    seed = 47
-  }
-  
+    message(paste0("Set seed to ",.Random.seed[1]))
+    seed = .Random.seed[1]
+  } else set.seed(seed)
+
   n_mcmc <- valid_mcmc(n.chains, n.adapt, n.burn, n.iter)
-  
+
   if (length(priorObj) == 1) priorObj = c(priorObj)
-  
+
   lapply(seq(1, length(priorObj), by = 1), function(i){
     prior = priorObj[[i]]@prior
     pred = priorObj[[i]]@pred
-    
+
     #---
     if (missing(pred)) {
       pred = "none"
@@ -167,17 +169,17 @@ add_mcmc = function(dt, priorObj, n.chains, n.adapt, n.burn,  n.iter, seed){
       message(cat("Propensity score calculated based selected covariate(s)", pred[pred != "ps"],
                   "is used as predictors in the weibull distribution.\n"))
     }
-    
+
     flog.debug(cat(">>> prior =", prior, ", pred = ", pred, "\n"))
-    
+
     mcmc_res <- r_post(dt = dt,
                        prior = prior, pred = pred,
                        r0 = priorObj[[i]]@r0, alpha = priorObj[[i]]@alpha,
                        sigma = priorObj[[i]]@sigma, seed = seed,
-                       
+
                        n.chains = n_mcmc[['n.chains']], n.adapt = n_mcmc[['n.adapt']],
                        n.burn = n_mcmc[['n.burn']], n.iter = n_mcmc[['n.iter']])
-    
+
     mcmc_sum <- rej_est(mcmc_res)
     flog.debug(cat(">>> mcmc_sum =", mcmc_sum, "\n"))
     list("HR" = unique(dt[, 'HR']),

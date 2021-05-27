@@ -27,25 +27,25 @@ setClassUnion("listORNULL", c("list", "NULL"))
 #' @param etaE A vector for dropout rate per unit time for experimental arm. If left \code{NULL}, it uses the same dropout rate as eta.
 #' @param d_itv A vector of duration of time periods for dropping out the study with rates specified in \code{etaC} and \code{etaE}. Note that the length of \code{d_itv} should be same length as \code{etaC} or 1 less.
 #' @return A \code{.clinClass} class containing information on enrollment time, drop-out pattern and analysis start time
-#' 
-#' 
+#'
+#'
 #' @examples
 #' # set the operational parameter values for the trial
 #' # analysis starts at64 time units after first patient in
 #' set_clin(gamma = 10, e_itv = 4, etaC = 0.003,  CCOD = "fixed-first", CCOD_t = 64)
-#' 
+#'
 #' # analysis starts at 12 time units after last patient in
 #' set_clin(gamma = 2, e_itv = 18, etaC = 0.005,  CCOD = "fixed-last", CCOD_t = 12)
-#' 
-#' 
+#'
+#'
 #' @export
 #' @keywords constructor
 set_clin <- function(gamma, e_itv, CCOD, CCOD_t, etaC, etaE, d_itv) {
   if (missing(gamma)) stop("Please indicate the rate of enrollment per unit of time (gamma)")
-  
+
   if (missing(e_itv)) e_itv = NULL
   if (length(e_itv) != length(gamma) & length(e_itv) != length(gamma) - 1) stop("The length of e_itv should be the same length as gamma or 1 less")
-  
+
   if (missing(CCOD) || CCOD %notin% c("fixed-first", "fixed-last", "event")){
     stop("Please indicate type of clinical cut-off date (CCOD). Options include fixed-first, fixed-last, or event")
   }
@@ -54,7 +54,7 @@ set_clin <- function(gamma, e_itv, CCOD, CCOD_t, etaC, etaE, d_itv) {
     else if (CCOD == "fixed-last") stop("Please specify the time difference between analysis start and first last's enrollment (CCOD_t)")
     else stop("Please specify the number of events observed when analysis starts (CCOD_t)")
   }
-  
+
   if (missing(etaC)) stop("Please specify dropout rate per unit time for control arm (etaC).")
   if (missing(etaE) || length(etaC) != length(etaE)) {
     message("Dropout rate per unit time for treatment arm (etaE) is not specified correcly. Disregard this warning if this is for external trial. Otherwise the same dropout rate as eta is used.")
@@ -87,29 +87,30 @@ set_clin <- function(gamma, e_itv, CCOD, CCOD_t, etaC, etaE, d_itv) {
 #' @return a \code{.eventClass} class containing time-to-events information
 #'
 #'
-#' @examples 
+#' @examples
 #' # time-to-event follows a weibull distribution
 #' set_event(event = "weibull", shape = 0.9, lambdaC = 0.0135)
-#' 
+#'
 #' # time-to-event follows a piece-wise exponential distribution
 #' set_event(event = "pwexp", t_itv = 1, lambdaC = c(0.1, 0.02))
-#' 
-#' 
+#'
+#'
 #' @export
 #' @keywords constructor
+#' @return a \code{matrix} containing simulated time-to-events information
 set_event <- function(event, lambdaC, beta, shape, t_itv, change, keep) {
-  
+
   if (missing(event) || event %notin% c("weibull", "pwexp")) stop("Distribution of time-to-events (event) is not correctly specify. Options include weibull, and pwexp")
   if (missing(lambdaC)) stop ("Please provide the baseline hazard rate of internal control arm (lambdaC).")
   if (missing(t_itv)) t_itv = NULL
   if (missing(shape)) shape = NULL
   if (event == "weibull" & is.null(shape)) stop("Simulate time following weibull distribution. Please provide shape of the weibull distribution")
   if (event == "pwexp" & (length(t_itv) < length(lambdaC) - 1)) stop("Length of t_it should be at least 1 less than that of lambdaC")
-  
+
   if (missing(change)) change = NULL
   if (missing(keep)) keep = NULL
   if (missing(beta)) beta = NULL
-  
+
   new(".eventClass", event = event,
       lambdaC = lambdaC, shape = shape, t_itv = t_itv,
       beta = beta, change = change, keep = keep)
@@ -125,17 +126,17 @@ add_time=function(dt, eventObj, clinInt, clinExt, seed){
   if (missing(clinInt)) stop("Please provide clinInt.")
   if (missing(clinExt)) stop("Please provide clinExt.")
   if (missing(seed)){
-    message("Set.seed(47)")
-    seed = 47
-  }
-  
+    message(paste0("Set seed to ",.Random.seed[1]))
+    seed = .Random.seed[1]
+  } else set.seed(seed)
+
   # checl
   if (any(c("driftHR", "HR", "trt", "ext") %notin% colnames(dt), sum(!grepl("cov[1234567890]", colnames(dt)[colnames(dt) %notin% c("driftHR", "HR", "trt", "ext")])) > 0)) stop("Please make sure the trial data contains the correct variable names.")
-  
+
   new_cov_name = NULL
   cov_name = colnames(dt)[colnames(dt) %notin% c("driftHR", "HR", "trt", "ext")]
   flog.debug(cat("[add_time] Number of original covariates", length(cov_name), "\n"))
-  
+
   keep = eventObj@keep
   if (is.null(keep)) {
     keep = cov_name
@@ -146,7 +147,7 @@ add_time=function(dt, eventObj, clinInt, clinExt, seed){
   } else if (sum(keep %notin% cov_name) > 0) {
     stop("Please correctly specify the covariates to keep when simulating failure times.")
   }
-  
+
   change = eventObj@change
   if (!is.null(change)){ # no change to covariates
     for (i in 1:length(change)){
@@ -166,16 +167,16 @@ add_time=function(dt, eventObj, clinInt, clinExt, seed){
       new_cov_name = c(new_cov_name, paste(change[[i]],collapse=""))
     }
   }
-  
+
   flog.debug(cat("[add_time] Number of new covariates", length(new_cov_name), "\n"))
   flog.debug(cat("[add_time] Number of original covariates to keep", length(keep), "\n"))
-  
+
   # flog.debug(cat("[add_time] Current dataset include origin covariates", cov_name, "and new covariates", new_cov_name, "\n"))
-  
+
   # n_cov = sum(grepl("cov", colnames(dt)))
   n_cov = length(new_cov_name) + length(keep)
   flog.debug(cat("[add_time] Number of covariates is (length of beta should be)", n_cov, "\n"))
-  
+
   beta = eventObj@beta
   if (length(beta) %notin% c(1, n_cov)){
     message("Coefficient for covariates (beta) is not recognized or correctly specified. Default value 1 is used for all covariates")
@@ -184,8 +185,8 @@ add_time=function(dt, eventObj, clinInt, clinExt, seed){
     message("User provides one coefficient for covariate. This value is used for all covariates")
     beta = rep(beta, n_cov)
   }
-  
-  
+
+
   hr = unique(dt[, 'HR'])
   dr = unique(dt[, 'driftHR'])
   flog.debug(paste("[add_time] For this dataset, HR =", hr, "driftHR =", dr, "\n"))
@@ -197,9 +198,9 @@ add_time=function(dt, eventObj, clinInt, clinExt, seed){
                      shape = eventObj@shape, t_itv = eventObj@t_itv,
                      HR = hr, beta = beta,
                      change = change, keep = keep)
-  
+
   lambdaExt = eventObj@lambdaC * dr
-  
+
   time_ext = g_one_t(ext = 1, dt = dt,
                      gamma = clinExt@gamma, e_itv = clinExt@e_itv,
                      etaC = clinExt@etaC, etaE = clinExt@etaE, d_itv = clinExt@d_itv,
@@ -208,7 +209,7 @@ add_time=function(dt, eventObj, clinInt, clinExt, seed){
                      shape = eventObj@shape, t_itv = eventObj@t_itv,
                      HR = hr, beta = beta,
                      change = change, keep = keep)
-  
+
   rbind(time_int, time_ext)
-  
+
 }
