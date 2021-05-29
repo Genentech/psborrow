@@ -110,7 +110,9 @@ run_mcmc_p <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, pa
   cl <- parallel::makeCluster(nCluster)
   doParallel::registerDoParallel(cl)
 
-
+  # set i to NULL to avoid CRAN warnings
+  i <- NULL
+  
   res_list <- foreach(i = 1:length(dt), .combine='c', .multicombine=TRUE,.packages = c("psborrow"),
                       # .export = c("format_number", "format_date_time", "add_direction_data"),
                       # .packages = c("tidyverse", "data.table", "dplyr", "rjags"),
