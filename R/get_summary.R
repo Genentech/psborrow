@@ -26,9 +26,9 @@ rej_est = function(samples){
   # post_median_hr_trt_cc = quantiles["HR_trt_cc","50%"]
   mean_driftHR  =  summ["HR_cc_hc", "Mean"]
   sd_driftHR = summ["HR_cc_hc","SD"]
-  print(paste("reject", reject,
-              "mean_HR", mean_HR, "sd_HR", sd_HR,
-              "mean_driftHR", mean_driftHR,  "sd_driftHR", sd_driftHR))
+  # print(paste("reject", reject,
+  #             "mean_HR", mean_HR, "sd_HR", sd_HR,
+  #             "mean_driftHR", mean_driftHR,  "sd_driftHR", sd_driftHR))
   c("reject" = reject,
     "mean_HR" = mean_HR, "sd_HR" = sd_HR,
     "mean_driftHR"  = mean_driftHR,  "sd_driftHR"  = sd_driftHR)

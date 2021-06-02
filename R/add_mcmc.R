@@ -140,7 +140,7 @@ add_mcmc = function(dt, priorObj, n.chains, n.adapt, n.burn,  n.iter, seed){
   flog.debug(cat("[add_mcmc] cov_name =", cov_name, "\n"))
 
   if (missing(seed)){
-    message(paste0("Set seed to ",.Random.seed[1]))
+    message("Setting up MCMC... Set seed to ",.Random.seed[1])
     seed = .Random.seed[1]
   } else set.seed(seed)
 

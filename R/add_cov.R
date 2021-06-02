@@ -118,7 +118,7 @@ set_cov <- function(n_cat, n_cont, mu_int, mu_ext, var, cov, prob_int, prob_ext)
       message("Covariance for covariate (cov) is not recognized. Default value 0 is used for all covariates")
       cov = rep(0, len_cov)
     } else if (length(cov) == 1){
-      message(paste("User provides one number:", cov, "for covariance. This covariance is used for all covariates"))
+      message("User provides one number: ", cov, " for covariance. This covariance is used for all covariates")
       cov = rep(cov, len_cov)
     }
   }
@@ -192,7 +192,7 @@ setMethod("c", signature(x = ".covClass"), function(x, ...){
 add_cov=function(dt, covObj, seed){
 
   if (missing(seed)){
-    message(paste0("Set seed to ",.Random.seed[1]))
+    message("Setting up covariance... Set seed to ",.Random.seed[1])
     seed = .Random.seed[1]
   } else set.seed(seed)
 

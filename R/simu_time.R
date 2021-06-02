@@ -39,7 +39,7 @@ simu_time = function(dt, eventObj, clinInt, clinExt, seed, path){
   if (missing(clinInt)) stop("Please provide clinInt.")
   if (missing(clinExt)) stop("Please provide clinExt.")
   if (missing(seed)){
-    message(paste0("Set seed to ",.Random.seed[1]))
+    message("Simulating survival time... Set seed to ",.Random.seed[1])
     seed = .Random.seed[1]
   } else set.seed(seed)
 
@@ -47,13 +47,13 @@ simu_time = function(dt, eventObj, clinInt, clinExt, seed, path){
 
   res_list <- lapply(seq(1, length(dt), by = 1), function(i){
     seed_i = seed_list[i]
-    print(paste("seed =", seed_i))
+    # print(paste("seed =", seed_i))
     add_time(dt = dt[[i]], eventObj = eventObj, clinInt = clinInt, clinExt = clinExt, seed = seed_i)
   }) #loop foreach
 
-  if (missing(path)) print("Simulated time are not saved.") else {
+  if (missing(path)) message("Simulated time are not saved.") else {
     save(res_list, file = path)
-    print(paste("Simulated time are saved as", path))
+    message("Simulated time are saved as", path)
   }
   res_list
 }

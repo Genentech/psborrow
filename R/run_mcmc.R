@@ -21,29 +21,29 @@
 #' @export
 #' @keywords simulator
 run_mcmc <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, path){
-
+  
   if (missing(dt)) stop("Please provide a list of simulated time (dt).")
   if (missing(priorObj)) stop("Please provide .priorObj (priorObj).")
   n_mcmc <- valid_mcmc(n.chains, n.adapt, n.burn, n.iter)
-
+  
   if (missing(seed)){
-    message(paste0("Set seed to ",.Random.seed[1]))
+    message("Setting up Bayes model... Set seed to ",.Random.seed[1])
     seed = .Random.seed[1]
   } else set.seed(seed)
   seed_list <- seq(seed, seed + length(dt), by = 1)
-
+  
   flog.debug(cat("seed_list:", seed_list, "number of dataset", length(dt), "\n"))
-
+  
   res_list <- sapply(seq(1, length(dt), by = 1), function(i){
     seed_i = seed_list[i]
-
-    print(paste("-------------------", i, "of ", length(dt), "simulated dataset with seed =", seed_i))
-
+    
+    message("------------------- Running MCMC: #", i, " of ", length(dt), " simulated dataset with seed = ", seed_i)
+    
     add_mcmc(dt = dt[[i]], priorObj = priorObj,
              n.chains = n.chains, n.adapt = n.adapt,
              n.burn = n.burn, n.iter = n.iter, seed = seed_i)
   }) #loop foreach
-
+  
   sum_list <- lapply(res_list, function(i) {
     cbind("HR" = i[['HR']], "driftHR" = i[['driftHR']],
           "prior" = i[['prior']], "pred" = i[['pred']],
@@ -61,12 +61,12 @@ run_mcmc <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, path
   sum_dt$sd_HR = as.numeric(sum_dt$sd_HR)
   sum_dt$mean_driftHR = as.numeric(sum_dt$mean_driftHR)
   sum_dt$sd_driftHR = as.numeric(sum_dt$sd_driftHR)
-
-  if (missing(path)) print("Samples from the posterior distribution from MCMC are not saved.") else {
+  
+  if (missing(path)) message("Samples from the posterior distribution from MCMC are not saved.") else {
     save(sum_dt, file = path)
-    print(paste("Results the posterior distribution from MCMC are saved as", path))
+    message("Results the posterior distribution from MCMC are saved as ", path)
   }
-
+  
   sum_dt
 }
 
@@ -91,25 +91,25 @@ run_mcmc <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, path
 #' @export
 #' @keywords simulator
 run_mcmc_p <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, path){
-
+  
   if (missing(dt)) stop("Please provide a list of simulated time (dt).")
   if (missing(priorObj)) stop("Please provide .priorObj (priorObj).")
   n_mcmc <- valid_mcmc(n.chains, n.adapt, n.burn, n.iter)
-
+  
   if (missing(seed)){
-    message(paste0("Set seed to ",.Random.seed[1]))
+    message("Running MCMC... Set seed to ", .Random.seed[1])
     seed = .Random.seed[1]
   } else set.seed(seed)
   seed_list <- seq(seed, seed + length(dt), by = 1)
-
+  
   flog.debug(cat("seed_list:", seed_list, "number of dataset", length(dt), "\n"))
-
+  
   # nCluster <- parallel::detectCores()
   nCluster <- 2 # switch to 2 cluster per CRAN's requirement
-  print(paste(nCluster, "clusters are being used"))
+  message(nCluster, " clusters are being used")
   cl <- parallel::makeCluster(nCluster)
   doParallel::registerDoParallel(cl)
-
+  
   # set i to NULL to avoid CRAN warnings
   i <- NULL
   
@@ -117,16 +117,16 @@ run_mcmc_p <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, pa
                       # .export = c("format_number", "format_date_time", "add_direction_data"),
                       # .packages = c("tidyverse", "data.table", "dplyr", "rjags"),
                       .verbose=FALSE) %dopar% {
-
+                        
                         seed_i = seed_list[i]
-
-                        print(paste("-------------------", i, "of ", length(dt), "simulated dataset with seed =", seed_i))
-
+                        
+                        message("------------------- Running MCMC: #", i, " of ", length(dt), " simulated dataset with seed = ", seed_i)
+                        
                         add_mcmc(dt = dt[[i]], priorObj = priorObj,
                                  n.chains = n.chains, n.adapt = n.adapt,
                                  n.burn = n.burn, n.iter = n.iter, seed = seed_i)
                       } #loop foreach
-
+  
   parallel::stopCluster(cl)
   sum_list <- lapply(res_list, function(i) {
     cbind("HR" = i[['HR']], "driftHR" = i[['driftHR']],
@@ -145,10 +145,10 @@ run_mcmc_p <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, pa
   sum_dt$sd_HR = as.numeric(sum_dt$sd_HR)
   sum_dt$mean_driftHR = as.numeric(sum_dt$mean_driftHR)
   sum_dt$sd_driftHR = as.numeric(sum_dt$sd_driftHR)
-
-  if (missing(path)) print("Samples from the posterior distribution from MCMC are not saved.") else {
+  
+  if (missing(path)) message("Samples from the posterior distribution from MCMC are not saved.") else {
     save(sum_dt, file = path)
-    print(paste("Results the posterior distribution from MCMC are saved as", path))
+    message("Results the posterior distribution from MCMC are saved as ", path)
   }
   sum_dt
 }

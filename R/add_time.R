@@ -133,7 +133,7 @@ add_time=function(dt, eventObj, clinInt, clinExt, seed){
   if (missing(clinInt)) stop("Please provide clinInt.")
   if (missing(clinExt)) stop("Please provide clinExt.")
   if (missing(seed)){
-    message(paste0("Set seed to ",.Random.seed[1]))
+    message("Setting up survival time... Set seed to ",.Random.seed[1])
     seed = .Random.seed[1]
   } else set.seed(seed)
 
@@ -150,7 +150,7 @@ add_time=function(dt, eventObj, clinInt, clinExt, seed){
     message(cat("All original covariates (if any):", keep, "are used for time-to-failure."))
   } else if (sum(grepl("none", keep)) > 0){
     keep = NULL
-    message(cat("No original covariates are used for time-to-failure."))
+    message("No original covariates are used for time-to-failure.")
   } else if (sum(keep %notin% cov_name) > 0) {
     stop("Please correctly specify the covariates to keep when simulating failure times.")
   }
@@ -159,15 +159,15 @@ add_time=function(dt, eventObj, clinInt, clinExt, seed){
   if (!is.null(change)){ # no change to covariates
     for (i in 1:length(change)){
       if (length(change[[i]]) != 3) {
-        stop(paste0("Please correctly specify the operation for the ", i, "th entry."))
+        stop("Please correctly specify the operation for the #", i, " entry.")
       } else if (change[[i]][2] == "^") {
         s = (change[[i]][1] %notin% colnames(dt)[colnames(dt) %notin% c("driftHR", "HR", "trt", "ext")]) +
           is.na(as.numeric(change[[i]][3]))
-        if (s > 0) stop(paste0("Please correctly specify the ^ operation for the ", i, "th entry."))
+        if (s > 0) stop("Please correctly specify the ^ operation for the #", i, " entry.")
       } else if (change[[i]][2] %in% c("+", "*")) {
         s = (change[[i]][1] %notin% colnames(dt)[colnames(dt) %notin% c("driftHR", "HR", "trt", "ext")]) +
           (change[[i]][3] %notin% colnames(dt)[colnames(dt) %notin% c("driftHR", "HR", "trt", "ext")])
-        if (s > 0) stop(paste0("Please correctly specify the +/* operation for the ", i, "th entry."))
+        if (s > 0) stop("Please correctly specify the +/* operation for the #", i, " entry.")
       } else {
         stop("Please correctly specify the operation. The second entry should be ^, + or *.")
       }

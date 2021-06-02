@@ -30,7 +30,7 @@ match_cov <- function(dt, match) {
     stop("Please make sure the trial data contains the correct variable names.")
   }
   match.formula <- paste("int ~", paste0(match, collapse=' + '))
-  print(match.formula)
+  # print(match.formula)
   res_list <- lapply(seq(1, length(dt), by = 1), function(i){
     m_cov(dt[[i]], match.formula)
   }) #loop foreach

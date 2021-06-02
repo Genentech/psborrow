@@ -80,9 +80,9 @@ simu_cov=function(ssObj, covObj, driftHR, HR, nsim, seed, path){
       nsim_res <-  lapply(seq(1, nsim, by = 1), function(i){
         seed_i = seed_list[i, j, k]
 
-        print(paste("-------------------", i, "of ", nsim, "simulation:",
-                    j, "of HR =", hr, ",",
-                    k, "of driftHR =", dr, "seed =", seed_i))
+        message("------------------- #", i, "of ", nsim, "simulation: #",
+                    j, "of HR =", hr, ", #",
+                    k, "of driftHR = ", dr, ", seed =", seed_i)
 
         samp = set_n(ssC = ssC, ssE = ssE, ssExt = ssExt)
         samp_cov = samp
@@ -98,9 +98,9 @@ simu_cov=function(ssObj, covObj, driftHR, HR, nsim, seed, path){
   })
 
 
-  if (missing(path)) print("Simulated covariates are not saved.") else {
+  if (missing(path)) message("Simulated covariates are not saved.") else {
     save(res_list, file = path)
-    print(paste("Simulated covariates are saved as", path))
+    message("Simulated covariates are saved as ", path)
   }
   res_list
 }
