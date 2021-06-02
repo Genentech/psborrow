@@ -6,6 +6,13 @@
 \usage{
 add_cov(dt, covObj, seed)
 }
+\arguments{
+\item{dt}{a \code{matrix} generated in \code{\link{set_n}}}
+
+\item{covObj}{an object of class \code{.covClass} generated in \code{\link{set_cov}}}
+
+\item{seed}{the seed of R‘s random number generator. Default is the first element of .Random.seed}
+}
 \value{
 a \code{matrix} containing simulated covariates information
 }

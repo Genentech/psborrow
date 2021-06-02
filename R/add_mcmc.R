@@ -118,7 +118,14 @@ setMethod("c", signature(x = ".priorClass"), function(x, ...){
 
 
 #' Generating posterior samples from MCMC
-#'
+#' @param dt a list of \code{matrix} containing simulated time-to-events information
+#' @param priorObj an object of class \code{.priorClass} generated in \code{\link{set_prior}}
+#' @param n.chains number of parallel chains for the model
+#' @param n.adapt number of iterations for adaptation
+#' @param n.burn number of iterations discarded as burn-in
+#' @param n.iter number of iterations to monitor
+#' @param seed the seed of random number generator. Default is the first element of .Random.seed
+
 #' @keywords internal method
 #' @return A \code{list} containing hazard ratio and prior information
 add_mcmc = function(dt, priorObj, n.chains, n.adapt, n.burn,  n.iter, seed){
@@ -190,8 +197,13 @@ add_mcmc = function(dt, priorObj, n.chains, n.adapt, n.burn,  n.iter, seed){
 }
 
 #' validate the operational parameters for MCMC method
-#'
+#' @param n.chains number of parallel chains for the model
+#' @param n.adapt number of iterations for adaptation
+#' @param n.burn number of iterations discarded as burn-in
+#' @param n.iter number of iterations to monitor
 #' @keywords internal method
+#'
+#' @return A \code{list} containing numbers of parallel chains and iterations
 valid_mcmc <- function(n.chains, n.adapt, n.burn,  n.iter){
   if (missing(n.chains) || !is.numeric(n.chains)) {
     n.chains = 2

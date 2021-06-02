@@ -6,6 +6,18 @@
 \usage{
 valid_mcmc(n.chains, n.adapt, n.burn, n.iter)
 }
+\arguments{
+\item{n.chains}{number of parallel chains for the model}
+
+\item{n.adapt}{number of iterations for adaptation}
+
+\item{n.burn}{number of iterations discarded as burn-in}
+
+\item{n.iter}{number of iterations to monitor}
+}
+\value{
+A \code{list} containing numbers of parallel chains and iterations
+}
 \description{
 validate the operational parameters for MCMC method
 }

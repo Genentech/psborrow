@@ -118,6 +118,13 @@ set_event <- function(event, lambdaC, beta, shape, t_itv, change, keep) {
 
 
 #' Simulate survival times
+#' @param dt a list of \code{matrix} generated in \code{\link{simu_cov}} containing simulated covariates information
+#' @param eventObj an object of class \code{.eventClass} generated in \code{\link{set_event}} including event information
+#' @param clinInt an object of class \code{.clinClass} generated in \code{\link{set_clin}} including internal trial information
+#' @param clinExt an object of class \code{.clinClass} generated in \code{\link{set_clin}} including external trial information
+#' @param seed the seed of R‘s random number generator. Default is the first element of .Random.seed
+#'
+#' @return a list of \code{matrix} containing simulated time-to-events information
 #'
 #' @keywords internal method
 add_time=function(dt, eventObj, clinInt, clinExt, seed){

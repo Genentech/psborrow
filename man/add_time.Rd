@@ -6,6 +6,20 @@
 \usage{
 add_time(dt, eventObj, clinInt, clinExt, seed)
 }
+\arguments{
+\item{dt}{a list of \code{matrix} generated in \code{\link{simu_cov}} containing simulated covariates information}
+
+\item{eventObj}{an object of class \code{.eventClass} generated in \code{\link{set_event}} including event information}
+
+\item{clinInt}{an object of class \code{.clinClass} generated in \code{\link{set_clin}} including internal trial information}
+
+\item{clinExt}{an object of class \code{.clinClass} generated in \code{\link{set_clin}} including external trial information}
+
+\item{seed}{the seed of R‘s random number generator. Default is the first element of .Random.seed}
+}
+\value{
+a list of \code{matrix} containing simulated time-to-events information
+}
 \description{
 Simulate survival times
 }

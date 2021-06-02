@@ -183,6 +183,9 @@ setMethod("c", signature(x = ".covClass"), function(x, ...){
 
 
 #' Simulate covariates with a multivariate normal distribution
+#' @param dt a \code{matrix} generated in \code{\link{set_n}}
+#' @param covObj an object of class \code{.covClass} generated in \code{\link{set_cov}}
+#' @param seed the seed of R‘s random number generator. Default is the first element of .Random.seed
 #'
 #' @keywords internal method
 #' @return a \code{matrix} containing simulated covariates information
