@@ -43,9 +43,13 @@ rej_est = function(samples){
 #' @export
 #' @keywords method
 get_summary = function(dt){
-  dt %>% group_by(HR, driftHR, prior, pred) %>%
+  # set new variables to NULL to avoid CRAN warnings
+  reject <- mean_HR <- sd_HR <- HR <- mean_driftHR <- sd_driftHR <- NULL
+  bias <- mean_HR_trt_cc <- mean_reject <- nsim <- NULL
+  
+  dt %>% group_by(dt$HR, dt$driftHR, dt$prior, dt$pred,) %>%
     summarize(nsim = n(),
-              reject = mean(reject),
+              mean_reject = mean(reject),
               mean_HR_trt_cc = mean(mean_HR),
               sd_HR_trt_cc = mean(sd_HR),
               bias =  mean_HR_trt_cc - mean(HR),
@@ -53,7 +57,10 @@ get_summary = function(dt){
               sd = sqrt(var),
               mse = var + bias^2,
               mean_HR_cc_hc = mean(mean_driftHR),
-              sd_HR_cc_hc = mean(sd_driftHR))
+              sd_HR_cc_hc = mean(sd_driftHR)) %>%
+    rename(HR = 'dt$HR', driftHR = 'dt$driftHR', prior = 'dt$prior', pred = 'dt$pred',
+           reject = mean_reject)
+  
 }
 
 #' Plot type 1 error
@@ -68,23 +75,23 @@ get_summary = function(dt){
 #' @keywords method
 plot_type1error <- function(dt, driftHR = 1, pred = "none"){
   dt$prior <- factor(dt$prior, levels = c("no_ext", "cauchy", "gamma", "full_ext"))
-
+  
   dt2 = dt[dt$HR == 1 & dt$driftHR == driftHR & dt$pred == pred & dt$prior != "no_ext",]
   ref = dt[dt$HR == 1 & dt$driftHR == driftHR & dt$pred == pred & dt$prior == "no_ext",
            "reject", drop = TRUE]
-
-  p1 <- ggplot(dt2, aes(y = reject, x = prior, fill = prior)) +
+  
+  p1 <- ggplot(dt2, aes(y = dt2$reject, x = dt2$prior, fill = dt2$prior)) +
     geom_bar(position = position_dodge2(width = 1.2, preserve = "single"), stat="identity") +
     labs(title = "Summarizing posterior distributions: Type 1 Error",
          subtitle = paste0("pre-specified HR = 1, driftHR =", driftHR)) +
     ylab("Type 1 error") +
-    geom_text(aes(y = reject, label = round(reject, 4)), vjust = -0.8) +
+    geom_text(aes(y = dt2$reject, label = round(dt2$reject, 4)), vjust = -0.8) +
     scale_x_discrete(breaks=c("no_ext", "cauchy", "gamma", "full_ext"),
                      labels=c("No borrow", "Half-Cauchy", "Gamma", "Full borrow")) +
-
+    
     scale_linetype_manual(name = "No Borrowing", values = "solid", labels = "") +
     scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9")) + thm
-
+  
   if(length(ref) == 0){
     p1
   } else {
@@ -107,18 +114,18 @@ plot_power <- function(dt, HR = 0.67, driftHR = 1, pred = "none") {
   dt2 = dt[dt$HR == HR & dt$driftHR == driftHR & dt$pred == pred & dt$prior != "no_ext",]
   ref = dt[dt$HR == HR & dt$driftHR == driftHR & dt$pred == pred & dt$prior == "no_ext",
            "reject", drop = TRUE]
-
-  p1 <- ggplot(dt2, aes(y = reject, x = prior, fill = prior)) +
+  
+  p1 <- ggplot(dt2, aes(y = dt2$reject, x = dt2$prior, fill = dt2$prior)) +
     geom_bar(position = position_dodge2(width = 1.2, preserve = "single"), stat="identity") +
     labs(title = "Summarizing posterior distributions: Power",
          subtitle = paste0("HR = ", HR, ", driftHR = ", driftHR)) +
     ylab("Power") +
-    geom_text(aes(y = reject, label = round(reject, 4)), vjust = -0.8) +
+    geom_text(aes(y = dt2$reject, label = round(dt2$reject, 4)), vjust = -0.8) +
     scale_x_discrete(breaks=c("cauchy", "gamma", "full_ext"),
                      labels=c("Half-Cauchy", "Gamma", "Full borrow")) +
     scale_linetype_manual(name = "No Borrowing", values = "solid", labels = "") +
     scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9")) + thm
-
+  
   if(length(ref) == 0){
     p1
   } else {
@@ -139,22 +146,22 @@ plot_hr <- function(dt, HR = 0.67, driftHR = 1, pred = "none") {
   dt$prior <- factor(dt$prior, levels = c("no_ext", "cauchy", "gamma", "full_ext"))
   dt2 = dt[dt$HR == HR & dt$driftHR == driftHR & dt$pred == pred & dt$prior != "no_ext",]
   ref = dt[dt$HR == HR & dt$driftHR == driftHR & dt$pred == pred & dt$prior == "no_ext", "mean_HR_trt_cc", drop = TRUE]
-
-  p1 <- ggplot(dt2, aes(y = mean_HR_trt_cc, x = prior, fill = prior)) +
+  
+  p1 <- ggplot(dt2, aes(y = dt2$mean_HR_trt_cc, x = dt2$prior, fill = dt2$prior)) +
     geom_point() +
-    geom_errorbar(dt2, mapping=aes(x = prior,
-                                   ymin = mean_HR_trt_cc - sd_HR_trt_cc,
-                                   ymax = mean_HR_trt_cc + sd_HR_trt_cc), width=0.2, color="orange") +
+    geom_errorbar(dt2, mapping=aes(x = dt2$prior,
+                                   ymin = dt2$mean_HR_trt_cc - dt2$sd_HR_trt_cc,
+                                   ymax = dt2$mean_HR_trt_cc + dt2$sd_HR_trt_cc), width=0.2, color="orange") +
     labs(title = "Summarizing posterior distributions: hazard ratio",
          subtitle = paste0("Pre-specified HR = ", HR, ", driftHR = ", driftHR)) +
     ylab("Posterior HR") +
-    geom_text(aes(y = mean_HR_trt_cc, label = round(mean_HR_trt_cc, 4)), vjust = -0.8) +
+    geom_text(aes(y = dt2$mean_HR_trt_cc, label = round(dt2$mean_HR_trt_cc, 4)), vjust = -0.8) +
     scale_x_discrete(breaks=c("cauchy", "gamma", "full_ext"),
                      labels=c("Half-Cauchy", "Gamma", "Full borrow")) +
-
+    
     scale_linetype_manual(name = "No Borrowing", values = "solid", labels = "") +
     scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9")) + thm
-
+  
   if(length(ref) == 0){
     p1
   } else {
@@ -179,19 +186,19 @@ plot_bias <- function(dt, HR = 1, driftHR = 1, pred = "none"){
   dt2 = dt[dt$HR == HR & dt$driftHR == driftHR & dt$pred == pred & dt$prior != "no_ext",]
   ref = dt[dt$HR == HR & dt$driftHR == driftHR & dt$pred == pred & dt$prior == "no_ext",
            "bias", drop = TRUE]
-
-  p1 <- ggplot(dt2, aes(y = bias, x = prior, fill = prior)) +
+  
+  p1 <- ggplot(dt2, aes(y = dt2$bias, x = dt2$prior, fill = dt2$prior)) +
     geom_bar(position = position_dodge2(width = 1.2, preserve = "single"), stat="identity") +
     labs(title = "Summarizing posterior distributions: Bias",
          subtitle = paste0("Pre-specified HR = ", HR, ", driftHR = ", driftHR)) +
     ylab("Bias") +
-    geom_text(aes(y = bias, label = round(bias, 4)), vjust = -0.8) +
+    geom_text(aes(y = dt2$bias, label = round(dt2$bias, 4)), vjust = -0.8) +
     scale_x_discrete(breaks=c("cauchy", "gamma", "full_ext"),
                      labels=c("Half-Cauchy", "Gamma", "Full borrow")) +
-
+    
     scale_linetype_manual(name = "No Borrowing", values = "solid", labels = "") +
     scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9")) + thm
-
+  
   if(length(ref) == 0){
     p1
   } else {
@@ -215,17 +222,17 @@ plot_mse <- function(dt, HR = 1, driftHR = 1, pred = "none"){
   dt2 = dt[dt$HR == HR & dt$driftHR == driftHR & dt$pred == pred & dt$prior != "no_ext",]
   ref = dt[dt$HR == HR & dt$driftHR == driftHR & dt$pred == pred & dt$prior == "no_ext",
            "mse", drop = TRUE]
-  p1 <- ggplot(dt2, aes(y = mse, x = prior, fill = prior)) +
+  p1 <- ggplot(dt2, aes(y = dt2$mse, x = dt2$prior, fill = dt2$prior)) +
     geom_bar(position = position_dodge2(width = 1.2, preserve = "single"), stat="identity") +
     labs(title = "Summarizing posterior distributions: MSE",
          subtitle = paste0("Pre-specified HR = ", HR, ", driftHR = ", driftHR)) +
     ylab("MSE") +
-    geom_text(aes(y = mse, label = round(mse, 4)), vjust = -0.8) +
+    geom_text(aes(y = dt2$mse, label = round(dt2$mse, 4)), vjust = -0.8) +
     scale_x_discrete(breaks=c("cauchy", "gamma", "full_ext"),
                      labels=c("Half-Cauchy", "Gamma", "Full borrow")) +
     scale_linetype_manual(name = "No Borrowing", values = "solid", labels = "") +
     scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9")) + thm
-
+  
   if(length(ref) == 0){
     p1
   } else {

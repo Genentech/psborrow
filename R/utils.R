@@ -13,7 +13,6 @@
 #' @importFrom methods new slot
 #' @importFrom stats as.formula binomial glm qnorm rbinom rexp rnorm rweibull time update var
 
-
 `%notin%` <- Negate(`%in%`)
 
 # The piecewise exponential distribution useful for conditions where failure rates change or simulations with a delayed or changing treatment effect
@@ -207,7 +206,9 @@ g_one_t <- function(ext, dt,
                     CCOD, CCOD_t, # CCOD
                     change, keep){
 
-
+  # set new variables to NULL to avoid CRAN warnings
+  time0 <- time1 <- cnsr <- cnsr1 <- ct <- enterT <- ltfuT <- NULL
+  
   # print("lambda");print(lambda)
   d <- dt[dt[, "ext"] == ext,] # matrix
   flog.debug(cat("[g_one_t] We are simulating covariates for ext =", ext, "All covariates include", colnames(d), "\n"))

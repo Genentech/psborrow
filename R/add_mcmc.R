@@ -120,7 +120,6 @@ setMethod("c", signature(x = ".priorClass"), function(x, ...){
 #' Generating posterior samples from MCMC
 #'
 #' @keywords internal method
-#' @importfrom base .Random.seed paste0
 #' @return A \code{list} containing hazard ratio and prior information
 add_mcmc = function(dt, priorObj, n.chains, n.adapt, n.burn,  n.iter, seed){
 
