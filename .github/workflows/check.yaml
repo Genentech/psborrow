@@ -1,0 +1,19 @@
+
+name: Check 
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  r-cmd:
+    name: R CMD Check 
+    uses: insightsengineering/r.pkg.template/.github/workflows/build-check-install.yaml@main
+    secrets:
+      REPO_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    with:
+      install-system-dependencies: true
