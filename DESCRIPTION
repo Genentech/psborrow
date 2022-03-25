@@ -35,7 +35,9 @@ Imports:
 Suggests: 
     knitr,
     rmarkdown,
-    testthat
+    testthat,
+    Matrix,
+    assertthat
 VignetteBuilder: knitr
 Collate: 
     'add_cov.R'
