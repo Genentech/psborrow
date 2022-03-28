@@ -4,3 +4,8 @@
 .Ruserdata
 .DS_store
 .DS_Store
+
+
+## Folder to put local/personal content
+local/
+

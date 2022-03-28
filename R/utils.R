@@ -85,7 +85,7 @@ s_cov = function(ext, dt, n_cat, n_cont, mu, var, cov, prob){
         cut_val = qnorm(prob[i], mean = mu[i], sd = sqrt(var[i]))
         flog.debug(cat("User chose to simulate", n_cov, "correlated binary covariate(s) with cut_val =", cut_val, "\n"))
         
-        (covariate[, i] > cut_val)
+        (covariate[, i] < cut_val)
       })
     }
   }
