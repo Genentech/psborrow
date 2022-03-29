@@ -39,15 +39,15 @@ rej_est = function(samples){
 #'
 #' @param dt a \code{data.frame} containing summary statistics for the posterior samples from each simulation
 #' @return a \code{data.frame} containing the mean and sd of posterior HR between treatment and control arm, the posterior mean and sd of HR between internal control and external control arm, reject rate, variance, bias and mse of the simulation set
-#' 
+#'
 #' @export
 #' @keywords method
 get_summary = function(dt){
   # set new variables to NULL to avoid CRAN warnings
   reject <- mean_HR <- sd_HR <- HR <- mean_driftHR <- sd_driftHR <- NULL
   bias <- mean_HR_trt_cc <- mean_reject <- nsim <- NULL
-  
-  dt %>% group_by(dt$HR, dt$driftHR, dt$prior, dt$pred,) %>%
+
+  dt %>% group_by(dt$HR, dt$driftHR, dt$prior, dt$pred) %>%
     summarize(nsim = n(),
               mean_reject = mean(reject),
               mean_HR_trt_cc = mean(mean_HR),
@@ -57,45 +57,75 @@ get_summary = function(dt){
               sd = sqrt(var),
               mse = var + bias^2,
               mean_HR_cc_hc = mean(mean_driftHR),
-              sd_HR_cc_hc = mean(sd_driftHR)) %>%
+              sd_HR_cc_hc = mean(sd_driftHR),
+              .groups = 'drop') %>%
     rename(HR = 'dt$HR', driftHR = 'dt$driftHR', prior = 'dt$prior', pred = 'dt$pred',
            reject = mean_reject)
-  
+
 }
 
 #' Plot type 1 error
 #'
-#' @param dt a \code{data.frame} containing summary statistics for the posterior samples from each simulation generated with \code{\link{get_summary}}
-#' @param driftHR pre-specified HR between external control arm and internal control arm
-#' @param pred predictors to use when fitting exponential distribution in MCMC
+#' @description Plot type 1 error proportions for each prior distribution using simulations in which the true HR between internal treatment and control arms is 1.0.
 #'
-#' @return a \code{ggplot} which is a bar plot containing type 1 error implications corresponding to each prior, the pre-specified HR between internal treatment and control arms is 1
+#' @param dt a \code{data.frame} containing summary statistics for the posterior samples from each simulation generated with \code{\link{get_summary()}}. Must contain simulations for HR = 1.0.
+#' @param driftHR the driftHR between the external and internal control arms for which the type 1 error should be plotted. Must be within \code{unique(dt$driftHR)}.
+#' @param pred the predictors used when fitting the exponential distribution in MCMC for which the type 1 error should be plotted. Must be within \code{unique(dt$pred)}.
+#'
+#' @return a bar plot of class \code{ggplot} containing type 1 error proportions for each prior distribution.
 #'
 #' @export
 #' @keywords method
 plot_type1error <- function(dt, driftHR = 1, pred = "none"){
+
+  # Verify inputs are valid
+  ## Check that HR = 1 is included
+  if (1.0 %notin% unique(dt$HR)) {
+    stop("dt does not include HR = 1.0, so type 1 error cannot be calculated.
+    Ensure that a true HR of 1.0 is included as an option in simu_cov().")
+  }
+
+  ## Check that the selected driftHR is included
+  if (driftHR %notin% unique(dt$driftHR)) {
+    stop(paste0("dt does not include a driftHR of ", driftHR,".
+    Acceptable arguments to driftHR are c(", paste0(unique(dt$driftHR),collapse=", "), ").
+    Did you include driftHR = ", driftHR, " as an option in simu_cov()?"))
+  }
+
+  ## Check that the selected pred is included
+  if (pred %notin% unique(dt$pred)) {
+    stop(paste0("dt does not include a pred of '", pred,"'.
+    Acceptable arguments to pred are c('", paste0(unique(dt$pred), collapse = "', '"), "').
+    Did you include pred = '", pred, "' as an option in set_prior()?"))
+  }
+
+  # Set factor levels for plotting
   dt$prior <- factor(dt$prior, levels = c("no_ext", "cauchy", "gamma", "full_ext"))
-  
+
+  # Filter results for driftHR and pred, and separate models with no ext
   dt2 = dt[dt$HR == 1 & dt$driftHR == driftHR & dt$pred == pred & dt$prior != "no_ext",]
   ref = dt[dt$HR == 1 & dt$driftHR == driftHR & dt$pred == pred & dt$prior == "no_ext",
            "reject", drop = TRUE]
-  
-  p1 <- ggplot(dt2, aes(y = dt2$reject, x = dt2$prior, fill = dt2$prior)) +
+
+  p1 <- ggplot(dt2, aes(y = reject, x = prior, fill = prior)) +
     geom_bar(position = position_dodge2(width = 1.2, preserve = "single"), stat="identity") +
     labs(title = "Summarizing posterior distributions: Type 1 Error",
          subtitle = paste0("pre-specified HR = 1, driftHR =", driftHR)) +
     ylab("Type 1 error") +
-    geom_text(aes(y = dt2$reject, label = round(dt2$reject, 4)), vjust = -0.8) +
+    geom_text(aes(y = reject, label = round(reject, 4)), vjust = -0.8) +
     scale_x_discrete(breaks=c("no_ext", "cauchy", "gamma", "full_ext"),
                      labels=c("No borrow", "Half-Cauchy", "Gamma", "Full borrow")) +
-    
+
     scale_linetype_manual(name = "No Borrowing", values = "solid", labels = "") +
     scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9")) + thm
-  
+
   if(length(ref) == 0){
     p1
   } else {
-    p1 + geom_hline(aes(yintercept = ref, linetype=factor(ref)), colour = "purple")
+    p1 +
+      geom_hline(aes(yintercept = ref, linetype=factor(ref)), colour = "purple") +
+      labs(caption = paste0("Horizontal purple line refers to the type 1 error without any external arm (", round(ref,4),")"))+
+      theme(plot.caption=element_text(size=10))
   }
 }
 
@@ -114,7 +144,7 @@ plot_power <- function(dt, HR = 0.67, driftHR = 1, pred = "none") {
   dt2 = dt[dt$HR == HR & dt$driftHR == driftHR & dt$pred == pred & dt$prior != "no_ext",]
   ref = dt[dt$HR == HR & dt$driftHR == driftHR & dt$pred == pred & dt$prior == "no_ext",
            "reject", drop = TRUE]
-  
+
   p1 <- ggplot(dt2, aes(y = dt2$reject, x = dt2$prior, fill = dt2$prior)) +
     geom_bar(position = position_dodge2(width = 1.2, preserve = "single"), stat="identity") +
     labs(title = "Summarizing posterior distributions: Power",
@@ -125,7 +155,7 @@ plot_power <- function(dt, HR = 0.67, driftHR = 1, pred = "none") {
                      labels=c("Half-Cauchy", "Gamma", "Full borrow")) +
     scale_linetype_manual(name = "No Borrowing", values = "solid", labels = "") +
     scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9")) + thm
-  
+
   if(length(ref) == 0){
     p1
   } else {
@@ -146,7 +176,7 @@ plot_hr <- function(dt, HR = 0.67, driftHR = 1, pred = "none") {
   dt$prior <- factor(dt$prior, levels = c("no_ext", "cauchy", "gamma", "full_ext"))
   dt2 = dt[dt$HR == HR & dt$driftHR == driftHR & dt$pred == pred & dt$prior != "no_ext",]
   ref = dt[dt$HR == HR & dt$driftHR == driftHR & dt$pred == pred & dt$prior == "no_ext", "mean_HR_trt_cc", drop = TRUE]
-  
+
   p1 <- ggplot(dt2, aes(y = dt2$mean_HR_trt_cc, x = dt2$prior, fill = dt2$prior)) +
     geom_point() +
     geom_errorbar(dt2, mapping=aes(x = dt2$prior,
@@ -158,10 +188,10 @@ plot_hr <- function(dt, HR = 0.67, driftHR = 1, pred = "none") {
     geom_text(aes(y = dt2$mean_HR_trt_cc, label = round(dt2$mean_HR_trt_cc, 4)), vjust = -0.8) +
     scale_x_discrete(breaks=c("cauchy", "gamma", "full_ext"),
                      labels=c("Half-Cauchy", "Gamma", "Full borrow")) +
-    
+
     scale_linetype_manual(name = "No Borrowing", values = "solid", labels = "") +
     scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9")) + thm
-  
+
   if(length(ref) == 0){
     p1
   } else {
@@ -186,7 +216,7 @@ plot_bias <- function(dt, HR = 1, driftHR = 1, pred = "none"){
   dt2 = dt[dt$HR == HR & dt$driftHR == driftHR & dt$pred == pred & dt$prior != "no_ext",]
   ref = dt[dt$HR == HR & dt$driftHR == driftHR & dt$pred == pred & dt$prior == "no_ext",
            "bias", drop = TRUE]
-  
+
   p1 <- ggplot(dt2, aes(y = dt2$bias, x = dt2$prior, fill = dt2$prior)) +
     geom_bar(position = position_dodge2(width = 1.2, preserve = "single"), stat="identity") +
     labs(title = "Summarizing posterior distributions: Bias",
@@ -195,10 +225,10 @@ plot_bias <- function(dt, HR = 1, driftHR = 1, pred = "none"){
     geom_text(aes(y = dt2$bias, label = round(dt2$bias, 4)), vjust = -0.8) +
     scale_x_discrete(breaks=c("cauchy", "gamma", "full_ext"),
                      labels=c("Half-Cauchy", "Gamma", "Full borrow")) +
-    
+
     scale_linetype_manual(name = "No Borrowing", values = "solid", labels = "") +
     scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9")) + thm
-  
+
   if(length(ref) == 0){
     p1
   } else {
@@ -232,7 +262,7 @@ plot_mse <- function(dt, HR = 1, driftHR = 1, pred = "none"){
                      labels=c("Half-Cauchy", "Gamma", "Full borrow")) +
     scale_linetype_manual(name = "No Borrowing", values = "solid", labels = "") +
     scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9")) + thm
-  
+
   if(length(ref) == 0){
     p1
   } else {
