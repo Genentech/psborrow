@@ -68,7 +68,7 @@ get_summary = function(dt){
 #'
 #' @description Plot type 1 error proportions for each prior distribution using simulations in which the true HR between internal treatment and control arms is 1.0.
 #'
-#' @param dt a \code{data.frame} containing summary statistics for the posterior samples from each simulation generated with \code{\link{get_summary()}}. Must contain simulations for HR = 1.0.
+#' @param dt a \code{data.frame} containing summary statistics for the posterior samples from each simulation generated with \code{get_summary()}. Must contain simulations for HR = 1.0.
 #' @param driftHR the driftHR between the external and internal control arms for which the type 1 error should be plotted. Must be within \code{unique(dt$driftHR)}.
 #' @param pred the predictors used when fitting the exponential distribution in MCMC for which the type 1 error should be plotted. Must be within \code{unique(dt$pred)}.
 #'

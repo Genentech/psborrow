@@ -7,7 +7,7 @@
 plot_type1error(dt, driftHR = 1, pred = "none")
 }
 \arguments{
-\item{dt}{a \code{data.frame} containing summary statistics for the posterior samples from each simulation generated with \code{\link{get_summary()}}. Must contain simulations for HR = 1.0.}
+\item{dt}{a \code{data.frame} containing summary statistics for the posterior samples from each simulation generated with \code{get_summary()}. Must contain simulations for HR = 1.0.}
 
 \item{driftHR}{the driftHR between the external and internal control arms for which the type 1 error should be plotted. Must be within \code{unique(dt$driftHR)}.}
 
