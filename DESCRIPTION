@@ -18,11 +18,9 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Imports: 
     dplyr,
-    tidyr,
     data.table,
     rjags,
     mvtnorm,
-    matrixcalc,
     ggplot2,
     foreach,
     doParallel,
@@ -30,8 +28,7 @@ Imports:
     MatchIt,
     survival,
     futile.logger,
-    methods,
-    utils
+    methods
 Suggests: 
     knitr,
     rmarkdown,
