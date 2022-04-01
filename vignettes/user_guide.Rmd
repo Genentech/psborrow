@@ -34,6 +34,7 @@ Here we demonstrate the usage of the package with an example. The goal is to:
 library(psborrow)
 ```
 
+
 ## Simulate covariates
 
 We start with making the sample size for internal control, internal treatment, and external control arms to be 200, 180 and 400 respectively.
@@ -297,3 +298,13 @@ plot_hr(summ, HR = 0.67, driftHR = 1.2, pred = "all")
 plot_bias(summ, HR = 1, driftHR = 1.2, pred = "all")
 plot_mse(summ, HR = 0.67, driftHR = 1, pred = "all")
 ```
+
+## Package Options
+
+By default `psborrow` is quite chatty informing the user explicitly about what assumptions it is making.
+If you want to suppress these messages simply specify:
+
+```
+options("psborrow.quiet" = TRUE)
+```
+
