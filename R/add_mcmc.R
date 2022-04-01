@@ -42,24 +42,24 @@ setClassUnion("matrixORNULL", c("matrix", "NULL"))
 set_prior <- function(pred, prior, r0, alpha, sigma) {
   # if (missing(pred)) {
   #   pred = "none"
-  #   message("Predictors to include in the weibull distribution (pred) is not provided. No predictor is used.")
+  #   ps_message("Predictors to include in the weibull distribution (pred) is not provided. No predictor is used.")
   #
   # }  else if (sum(grepl("none", pred)) > 0) {
   #   pred = "none"
-  #   message("Input none is found in pred. Any other input is disregarded.")
+  #   ps_message("Input none is found in pred. Any other input is disregarded.")
   # } else if (sum(grepl("all", pred)) > 0) {
   #   pred = "all"
-  #   message("Input all is found in pred. Any other input is disregarded.")
+  #   ps_message("Input all is found in pred. Any other input is disregarded.")
   # } else if (sum(grepl("ps", pred)) == 0) {
-  #   message(cat("Selected covariate(s)", pred, "are used as predictors in the weibull distribution. Any other input is disregarded. \n"))
+  #   ps_message(cat("Selected covariate(s)", pred, "are used as predictors in the weibull distribution. Any other input is disregarded. \n"))
   # } else if (sum(grepl("ps", pred)) > 0 & ("wgt" %in% colnames(dt))) { # column wgt already existed
-  #   message("Weight already provided in the data. It is used as predictor directly. \n")
+  #   ps_message("Weight already provided in the data. It is used as predictor directly. \n")
   #
   # } else if (sum(grepl("ps", pred)) > 0 & length(pred) == 1){ # column wgt does not exist
   #   # dt_ps <- c_ps(dt, cov_name)
-  #   message(cat("Propensity score calculated based on all covariates is used as predictors in the weibull distribution.\n"))
+  #   ps_message(cat("Propensity score calculated based on all covariates is used as predictors in the weibull distribution.\n"))
   # } else if (sum(grepl("ps", pred)) > 0 & length(pred) > 1){
-  #   message(cat("Propensity score calculated based selected covariate(s)", pred[pred != "ps"],
+  #   ps_message(cat("Propensity score calculated based selected covariate(s)", pred[pred != "ps"],
   #               "is used as predictors in the weibull distribution.\n"))
   # }
 
@@ -71,21 +71,21 @@ set_prior <- function(pred, prior, r0, alpha, sigma) {
 
   if(missing(r0)) {
     r0 = 1
-    message('No initial values for the shape of the weibull distribution (r0) is detected. Default value 1 is used')
+    ps_message('No initial values for the shape of the weibull distribution (r0) is detected. Default value 1 is used')
   }
 
   if(missing(alpha) || (prior %in% c("gamma", "cauchy", "unif") & length(alpha) != 2)) {
     alpha = c(0, 0)
-    message('Values for log of baseline hazard rate for external and internal control arms (alpha) is not correctly specified. Default value 0 is used.')
+    ps_message('Values for log of baseline hazard rate for external and internal control arms (alpha) is not correctly specified. Default value 0 is used.')
   }
   if (missing(alpha) || (prior %in% c("no_ext", "full_ext") & length(alpha) != 1)){
     alpha = 0
-    message('Values for log of baseline hazard rate for external and internal control arms (alpha) is not correctly specified. Default value 0 is used.')
+    ps_message('Values for log of baseline hazard rate for external and internal control arms (alpha) is not correctly specified. Default value 0 is used.')
   }
   if (missing(sigma)) sigma = NULL
   if (prior %in% c("cauchy", "unif") & length(sigma) != 1) {
     sigma = 0.03
-    message("Initial value for precision parameter (sigma) is missing or not correctly specified. Default value 0.03 is used.")
+    ps_message("Initial value for precision parameter (sigma) is missing or not correctly specified. Default value 0.03 is used.")
   }
   new(".priorClass", pred = pred, prior = prior, r0 = r0, alpha = alpha, sigma = sigma)
 }
@@ -140,7 +140,7 @@ add_mcmc = function(dt, priorObj, n.chains, n.adapt, n.burn,  n.iter, seed){
   flog.debug(cat("[add_mcmc] cov_name =", cov_name, "\n"))
 
   if (missing(seed)){
-    message("Setting up MCMC... Set seed to ",.Random.seed[1])
+    ps_message("Setting up MCMC... Set seed to ",.Random.seed[1])
     seed = .Random.seed[1]
   } else set.seed(seed)
 
@@ -155,24 +155,24 @@ add_mcmc = function(dt, priorObj, n.chains, n.adapt, n.burn,  n.iter, seed){
     #---
     if (missing(pred)) {
       pred = "none"
-      message("Predictors to include in the weibull distribution (pred) is not provided. No predictor is used.")
+      ps_message("Predictors to include in the weibull distribution (pred) is not provided. No predictor is used.")
     } else if (sum(pred %notin% c(cov_name, "none", "ps", "all")) > 0 ){
       stop("pred is not correctly specified. Options include none, ps, all and covariate names start with cov.")
     } else if (sum(grepl("none", pred)) > 0) {
       pred = "none"
-      message("Input none is found in pred. Any other input is disregarded.")
+      ps_message("Input none is found in pred. Any other input is disregarded.")
     } else if (sum(grepl("all", pred)) > 0) {
       pred = "all"
-      message("Input all is found in pred. Any other input is disregarded.")
+      ps_message("Input all is found in pred. Any other input is disregarded.")
     } else if (sum(grepl("ps", pred)) == 0) {
-      message(cat("Selected covariate(s)", pred, "are used as predictors in the weibull distribution.\n"))
+      ps_message(cat("Selected covariate(s)", pred, "are used as predictors in the weibull distribution.\n"))
     } else if (sum(grepl("ps", pred)) > 0 & length(pred) == 1){ # column wgt does not exist
       dt_ps <- c_ps(dt, cov_name)
-      message(cat("Propensity score calculated using all coariates", cov_name, "is used as predictors in the weibull distribution.\n"))
+      ps_message(cat("Propensity score calculated using all coariates", cov_name, "is used as predictors in the weibull distribution.\n"))
     } else if (sum(grepl("ps", pred)) > 0 & ("wgt" %in% colnames(dt))) { # column wgt already existed
-      message("Weight already provided in the data. It is used as predictor directly. \n")
+      ps_message("Weight already provided in the data. It is used as predictor directly. \n")
     } else if (sum(grepl("ps", pred)) > 0 & length(pred) > 1){
-      message(cat("Propensity score calculated based selected covariate(s)", pred[pred != "ps"],
+      ps_message(cat("Propensity score calculated based selected covariate(s)", pred[pred != "ps"],
                   "is used as predictors in the weibull distribution.\n"))
     }
 
@@ -207,19 +207,19 @@ add_mcmc = function(dt, priorObj, n.chains, n.adapt, n.burn,  n.iter, seed){
 valid_mcmc <- function(n.chains, n.adapt, n.burn,  n.iter){
   if (missing(n.chains) || !is.numeric(n.chains)) {
     n.chains = 2
-    message("No number of parallel chains for the model is provided. Default value 2 is used")
+    ps_message("No number of parallel chains for the model is provided. Default value 2 is used")
   }
   if (missing(n.adapt) || !is.numeric(n.chains)) {
     n.adapt = 1000
-    message("No Number of iterations for adaptation (n.adapt) is provided. Default value 1000 is used")
+    ps_message("No Number of iterations for adaptation (n.adapt) is provided. Default value 1000 is used")
   }
   if (missing(n.burn) || !is.numeric(n.burn)) {
     n.burn = 0
-    message("No mumber of iterations discarded as burn-in (n.burn) is provided. No iteration will be discarded.")
+    ps_message("No mumber of iterations discarded as burn-in (n.burn) is provided. No iteration will be discarded.")
   }
   if (missing(n.iter) || !is.numeric(n.iter)) {
     n.iter = 10000
-    message("No number of iterations to monitor is provided. Default value 10000 is used")
+    ps_message("No number of iterations to monitor is provided. Default value 10000 is used")
   }
   return(list("n.chains" = n.chains, "n.adapt" = n.adapt, "n.burn" = n.burn, "n.iter" = n.iter))
 }
