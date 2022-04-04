@@ -103,6 +103,12 @@ set_n <- function(ssC, ssE, ssExt) {
 #' Please note that this means that the value of `mu_int` & `mu_ext` has no impact on categorical
 #' covariates and thus can be set to any value
 #'
+#' As an example of how this process works assume `n_cat=3` and `n_cont=2`. First 5 variables are
+#' sampled from the multivariate normal distribution as specified by `mu_int`/`mu_ext`, `var` &
+#' `cov`. Then, the first 3 of these variables are converted to binary based on the probabilities
+#' specified by `prob_int` and `prob_ext`. This means that that the 2 continious variables will
+#' take their mean and sd from the last 2 entries in the vectors `mu_int`/`mu_ext` and `var`. 
+#'
 #' @return A \code{.covClass} class containing covariate information
 #'
 #' @export
