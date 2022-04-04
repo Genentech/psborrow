@@ -27,7 +27,7 @@ run_mcmc <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, path
   n_mcmc <- valid_mcmc(n.chains, n.adapt, n.burn, n.iter)
   
   if (missing(seed)){
-    message("Setting up Bayes model... Set seed to ",.Random.seed[1])
+    ps_message("Setting up Bayes model... Set seed to ",.Random.seed[1])
     seed = .Random.seed[1]
   } else set.seed(seed)
   seed_list <- seq(seed, seed + length(dt), by = 1)
@@ -37,7 +37,7 @@ run_mcmc <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, path
   res_list <- sapply(seq(1, length(dt), by = 1), function(i){
     seed_i = seed_list[i]
     
-    message("------------------- Running MCMC: #", i, " of ", length(dt), " simulated dataset with seed = ", seed_i)
+    ps_message("------------------- Running MCMC: #", i, " of ", length(dt), " simulated dataset with seed = ", seed_i)
     
     add_mcmc(dt = dt[[i]], priorObj = priorObj,
              n.chains = n.chains, n.adapt = n.adapt,
@@ -62,9 +62,9 @@ run_mcmc <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, path
   sum_dt$mean_driftHR = as.numeric(sum_dt$mean_driftHR)
   sum_dt$sd_driftHR = as.numeric(sum_dt$sd_driftHR)
   
-  if (missing(path)) message("Samples from the posterior distribution from MCMC are not saved.") else {
+  if (missing(path)) ps_message("Samples from the posterior distribution from MCMC are not saved.") else {
     save(sum_dt, file = path)
-    message("Results the posterior distribution from MCMC are saved as ", path)
+    ps_message("Results the posterior distribution from MCMC are saved as ", path)
   }
   
   sum_dt
@@ -97,6 +97,7 @@ run_mcmc_p <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, pa
   if (missing(priorObj)) stop("Please provide .priorObj (priorObj).")
   n_mcmc <- valid_mcmc(n.chains, n.adapt, n.burn, n.iter)
 
+
   if (missing(seed)) {
     message("Running MCMC... Set seed to ", .Random.seed[1])
     seed <- .Random.seed[1]
@@ -115,6 +116,7 @@ run_mcmc_p <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, pa
 
   # set i to NULL to avoid CRAN warnings
   i <- NULL
+
 
   res_list <- foreach(
     i = seq_len(length(dt)),
@@ -168,7 +170,7 @@ run_mcmc_p <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, pa
     message("Samples from the posterior distribution from MCMC are not saved.")
   } else {
     save(sum_dt, file = path)
-    message("Results the posterior distribution from MCMC are saved as ", path)
+    ps_message("Results the posterior distribution from MCMC are saved as ", path)
   }
   sum_dt
 }

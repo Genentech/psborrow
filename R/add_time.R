@@ -57,7 +57,7 @@ set_clin <- function(gamma, e_itv, CCOD, CCOD_t, etaC, etaE, d_itv) {
 
   if (missing(etaC)) stop("Please specify dropout rate per unit time for control arm (etaC).")
   if (missing(etaE) || length(etaC) != length(etaE)) {
-    message("Dropout rate per unit time for treatment arm (etaE) is not specified correcly. Disregard this warning if this is for external trial. Otherwise the same dropout rate as eta is used.")
+    ps_message("Dropout rate per unit time for treatment arm (etaE) is not specified correcly. Disregard this warning if this is for external trial. Otherwise the same dropout rate as eta is used.")
     etaE = etaC
   }
   if(missing(d_itv)) d_itv = NULL
@@ -133,7 +133,7 @@ add_time=function(dt, eventObj, clinInt, clinExt, seed){
   if (missing(clinInt)) stop("Please provide clinInt.")
   if (missing(clinExt)) stop("Please provide clinExt.")
   if (missing(seed)){
-    message("Setting up survival time... Set seed to ",.Random.seed[1])
+    ps_message("Setting up survival time... Set seed to ",.Random.seed[1])
     seed = .Random.seed[1]
   } else set.seed(seed)
 
@@ -151,7 +151,7 @@ add_time=function(dt, eventObj, clinInt, clinExt, seed){
     message(msg)
   } else if (sum(grepl("none", keep)) > 0){
     keep = NULL
-    message("No original covariates are used for time-to-failure.")
+    ps_message("No original covariates are used for time-to-failure.")
   } else if (sum(keep %notin% cov_name) > 0) {
     stop("Please correctly specify the covariates to keep when simulating failure times.")
   }
@@ -187,10 +187,10 @@ add_time=function(dt, eventObj, clinInt, clinExt, seed){
 
   beta = eventObj@beta
   if (length(beta) %notin% c(1, n_cov)){
-    message("Coefficient for covariates (beta) is not recognized or correctly specified. Default value 1 is used for all covariates")
+    ps_message("Coefficient for covariates (beta) is not recognized or correctly specified. Default value 1 is used for all covariates")
     beta = rep(1, n_cov)
   } else if (length(beta) == 1){
-    message("User provides one coefficient for covariate. This value is used for all covariates")
+    ps_message("User provides one coefficient for covariate. This value is used for all covariates")
     beta = rep(beta, n_cov)
   }
 

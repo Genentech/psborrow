@@ -134,14 +134,14 @@ m_cov <- function(dt, match.formula){
   
   dt.match <- match.data(m.out)
   
-  message(nrow(dt2[dt2$ext == 1,]) - nrow(dt.match[dt.match$ext == 1,]), " patients from the external arm are excluded. ",
+  ps_message(nrow(dt2[dt2$ext == 1,]) - nrow(dt.match[dt.match$ext == 1,]), " patients from the external arm are excluded. ",
           nrow(dt2[dt2$int == 1,]) - nrow(dt.match[dt.match$int == 1,]), " patients from the internal trial are excluded.")
   
   dt.match_ext <- dt.match[dt.match$ext == 1, colnames(dt.match) %notin% c("distance", "weights", "subclass")]
   
   dt_int = dt2[dt2$ext == 0,]
   match.all <- as.matrix(rbind(dt.match_ext, dt_int) %>% select(-"int"))
-  message("After matching, we have ", nrow(match.all), " patients in total.")
+  ps_message("After matching, we have ", nrow(match.all), " patients in total.")
   return(match.all)
 }
 
@@ -246,7 +246,7 @@ g_one_t <- function(ext, dt,
   if (CCOD == "fixed-first") { #pre-fixed, calculate from enrollment of first patients
     x[, time := ifelse(ct > CCOD_t, CCOD_t - enterT, x$time1)]
     x[, cnsr := ifelse(ct > CCOD_t, 1, x$cnsr1)]
-    message(paste(sum(x$time < 0), "patients enrolled after", CCOD_t,
+    ps_message(paste(sum(x$time < 0), "patients enrolled after", CCOD_t,
                   "days after the study started were excluded from the analysis."))
     x = x[x$time >= 0, ]
   } else if (CCOD == "fixed-last") {
@@ -254,7 +254,7 @@ g_one_t <- function(ext, dt,
     x[, time := ifelse(ct > st, st - enterT, x$time1)]
     x[, cnsr := ifelse(ct > st, 1, x$cnsr1)]
     x[, cnsr := ifelse(ct > CCOD_t, 1, x$cnsr1)]
-    message(paste(sum(x$time < 0), "patients enrolled after", CCOD_t,
+    ps_message(paste(sum(x$time < 0), "patients enrolled after", CCOD_t,
                   "days after the enrollment of last patient were excluded from the analysis."))
   }
   else { # analysis starts when st events have been observed
@@ -264,7 +264,7 @@ g_one_t <- function(ext, dt,
     
     x[, cnsr := ifelse(ct > st, 1, x$cnsr1)]
     
-    message("User chooses to let number of events drive the CCOD", sum(x$time < 0),
+    ps_message("User chooses to let number of events drive the CCOD", sum(x$time < 0),
             "patients were enrolled in the trial after ", st,
             "days and were excluded from the analysis")
     
@@ -372,16 +372,50 @@ r_post <- function(dt,
                  "sigma =", ifelse(is.null(inits_list[['sigma']]), NA, inits_list[['sigma']]),
                  ".RNG.seed = ", seed, "\n"
   ))
-  
-  jags.out <- jags.model(prior_txt,
-                         data = data_list,
-                         inits = inits_list,
-                         n.chains = n.chains, n.adapt = n.adapt, quiet=TRUE)
-  
-  # set.seed(314)
+
+  jags.out <- jags.model(
+    prior_txt,
+    data = data_list,
+    inits = inits_list,
+    n.chains = n.chains,
+    n.adapt = n.adapt,
+    quiet = TRUE
+  )
+
   update(jags.out, n.burn = n.burn)
-  jags.sample <- coda.samples(jags.out, out_list, n.iter = n.iter)
-  # print(summary(jags.sample))
+
+  # If user has asked for psborrow to be quiet then we set progress bar to be
+  # "none" instead of using the default JAGS argument specified by "jags.pb"
+  progress_bar <- ifelse(
+    options("psborrow.quiet")[[1]],
+    "none",
+    options("jags.pb")[[1]]
+  )
+
+  jags.sample <- coda.samples(
+    jags.out,
+    out_list,
+    n.iter = n.iter,
+    progress.bar = progress_bar
+  )
+
   jags.sample
 }
 
+
+
+#' Conditional Message
+#'
+#' Simple wrapper function around [message()] that will supress
+#' printing messages if the option `psborrow.quiet` is set to `TRUE`
+#' i.e.
+#' ```
+#' options("psborrow.quiet" = TRUE)
+#' ```
+#'
+#' @param ... Values passed onto [message()]
+ps_message <- function(...){
+  if (!getOption("psborrow.quiet")) {
+    message(...)
+  }
+}
