@@ -64,7 +64,7 @@ set_n <- function(ssC, ssE, ssExt) {
 #' This function saves the mean, variance and covariance among covariates. For technical
 #' details, see the vignette:
 #'
-#' @param n_cat Number of binary variable
+#' @param n_cat Number of binary variable. See details
 #'
 #' @param n_cont Number of continuous variable
 #'
@@ -89,6 +89,20 @@ set_n <- function(ssC, ssE, ssExt) {
 #'
 #' @param prob_ext Probability of binary covaraite equaling 1 in the external trial. If
 #' left \code{NULL}, it uses the same probability as prob_int
+#'
+#' @details
+#'
+#' Categorical variables are created by sampling a continious variable from the multivariate
+#' normal
+#' distribution (thus respecting the correlation to other covariates specified by `cov`)
+#' and then applying a cut point derived from the `prob_int` or prob_ext` quantile
+#' of said distribution i.e. for a univariate variable it would be derived as:
+#' ```
+#' binvar <- as.numeric(rnorm(n, mu, sqrt(var)) < qnorm(prob, mu, sqrt(var)))
+#' ```
+#' Please note that this means that the value of `mu_int` & `mu_ext` has no impact on categorical
+#' covariates and thus can be set to any value
+#'
 #' @return A \code{.covClass} class containing covariate information
 #'
 #' @export
