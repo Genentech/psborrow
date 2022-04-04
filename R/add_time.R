@@ -147,7 +147,8 @@ add_time=function(dt, eventObj, clinInt, clinExt, seed){
   keep = eventObj@keep
   if (is.null(keep)) {
     keep = cov_name
-    ps_message(cat("All original covariates (if any):", keep, "are used for time-to-failure."))
+    msg <- paste("All original covariates (if any):", paste(keep, collapse = " "), "are used for time-to-failure.")
+    message(msg)
   } else if (sum(grepl("none", keep)) > 0){
     keep = NULL
     ps_message("No original covariates are used for time-to-failure.")
