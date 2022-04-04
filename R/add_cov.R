@@ -17,10 +17,10 @@ setClassUnion("matrixORNULL", c("matrix", "NULL"))
 #'
 #' @param ssC Number of observations in the internal control arm. Default is 100
 #' @param ssE Number of observations in the internal experiment arm. Default is the same number
-#' of observations as ssC
+#' of observations as `ssC`
 #'
 #' @param ssExt Number of observations in the external control arm. Default is the same number
-#' of observations as ssC
+#' of observations as `ssC`
 #'
 #' @return A \code{matrix} containing external trial indicator and treatment indicator
 #'
@@ -73,7 +73,7 @@ set_n <- function(ssC, ssE, ssExt) {
 #' covariates. If provided one value, this value is used for all covariates
 #'
 #' @param mu_ext Mean of covariates in the external trial. If left \code{NULL}, it uses the same
-#' mean as mu_int
+#' mean as `mu_int`
 #'
 #' @param var Variance of covariates. If left \code{NULL}, it uses default value 0 for all
 #' covariates. If provided one value, it uses this value for all covariates
@@ -83,19 +83,19 @@ set_n <- function(ssC, ssE, ssExt) {
 #' left \code{NULL}, it uses default value 0 for all covariates. If provided one value, it
 #' uses this value for every pair of covariates
 #'
-#' @param prob_int Probability of binary covaraite equaling 1 in the internal trial. If left
+#' @param prob_int Probability of binary covariate equalling 1 in the internal trial. If left
 #' \code{NULL}, it uses default value 0.5 for all covariates. If provided one value, it uses
 #' this value for all covariates
 #'
-#' @param prob_ext Probability of binary covaraite equaling 1 in the external trial. If
-#' left \code{NULL}, it uses the same probability as prob_int
+#' @param prob_ext Probability of binary covariate equalling 1 in the external trial. If
+#' left \code{NULL}, it uses the same probability as `prob_int`
 #'
 #' @details
 #'
-#' Categorical variables are created by sampling a continious variable from the multivariate
+#' Categorical variables are created by sampling a continuous variable from the multivariate
 #' normal
 #' distribution (thus respecting the correlation to other covariates specified by `cov`)
-#' and then applying a cut point derived from the `prob_int` or prob_ext` quantile
+#' and then applying a cut point derived from the `prob_int` or `prob_ext` quantile
 #' of said distribution i.e. for a univariate variable it would be derived as:
 #' ```
 #' binvar <- as.numeric(rnorm(n, mu, sqrt(var)) < qnorm(prob, mu, sqrt(var)))
@@ -106,8 +106,8 @@ set_n <- function(ssC, ssE, ssExt) {
 #' As an example of how this process works assume `n_cat=3` and `n_cont=2`. First 5 variables are
 #' sampled from the multivariate normal distribution as specified by `mu_int`/`mu_ext`, `var` &
 #' `cov`. Then, the first 3 of these variables are converted to binary based on the probabilities
-#' specified by `prob_int` and `prob_ext`. This means that that the 2 continious variables will
-#' take their mean and sd from the last 2 entries in the vectors `mu_int`/`mu_ext` and `var`. 
+#' specified by `prob_int` and `prob_ext`. This means that that the 2 continuous variables will
+#' take their mean and sd from the last 2 entries in the vectors `mu_int`/`mu_ext` and `var`.
 #'
 #' @return A \code{.covClass} class containing covariate information
 #'
