@@ -240,7 +240,7 @@ set_cov <- function(n_cat, n_cont, mu_int, mu_ext, var, cov, prob_int, prob_ext)
         )
       )
       prob_int <- rep(0.5, n_cat)
-    } else if (length(prob_int) == 1) {
+    } else if (length(prob_int) == 1 & !n_cat == 1) {
       message(
         paste(
           "User provides one number for probability for the binary covariate in the",
@@ -258,7 +258,7 @@ set_cov <- function(n_cat, n_cont, mu_int, mu_ext, var, cov, prob_int, prob_ext)
         )
       )
       prob_ext <- prob_int
-    } else if (length(prob_ext) == 1) {
+    } else if (length(prob_ext) == 1 & !n_cat == 1) {
       message(
         paste(
           "User provides one number for probability for the binary covariate in",
