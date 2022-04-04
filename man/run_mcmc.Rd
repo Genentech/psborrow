@@ -19,7 +19,7 @@ run_mcmc(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, path)
 
 \item{n.iter}{number of iterations to monitor}
 
-\item{seed}{the seed of random number generator. Default is the first element of .Random.seed}
+\item{seed}{the seed of random number generator. Default is 123}
 
 \item{path}{file name for saving the output including folder path}
 }

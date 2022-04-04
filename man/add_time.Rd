@@ -15,7 +15,7 @@ add_time(dt, eventObj, clinInt, clinExt, seed)
 
 \item{clinExt}{an object of class \code{.clinClass} generated in \code{\link{set_clin}} including external trial information}
 
-\item{seed}{the seed of R‘s random number generator. Default is the first element of .Random.seed}
+\item{seed}{the seed of R‘s random number generator. Default is 123}
 }
 \value{
 a list of \code{matrix} containing simulated time-to-events information

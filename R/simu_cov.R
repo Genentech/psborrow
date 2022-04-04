@@ -14,7 +14,7 @@
 #' @param driftHR hazard ratio of external control and internal control arms
 #' @param HR a list of hazard ratio of treatment and control arms
 #' @param nsim number of simulation. Default is 5
-#' @param seed the seed of R‘s random number generator. Default is the first element of .Random.seed
+#' @param seed the seed of R‘s random number generator. Default is 123
 #' @param path file name for saving the output including folder path
 #' @return a list of \code{matrix} containing simulated covariates information
 #'
@@ -63,8 +63,8 @@ simu_cov=function(ssObj, covObj, driftHR, HR, nsim, seed, path){
                  ssC, ", ", ssE, ", and ", ssExt,", respectively."))
 
   if (missing(seed)){
-    message(paste0("Set seed to ",.Random.seed[1]))
-    seed = .Random.seed[1]
+    message(paste0("Set seed to ",123))
+    seed = 123
   } else set.seed(seed)
 
   seed_list <- array(seq(seed, length(driftHR) * length(HR) * nsim + seed, by = 1),

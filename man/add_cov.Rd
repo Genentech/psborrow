@@ -11,7 +11,7 @@ add_cov(dt, covObj, seed)
 
 \item{covObj}{an object of class \code{.covClass} generated in \code{\link{set_cov}}}
 
-\item{seed}{the seed of R‘s random number generator. Default is the first element of .Random.seed}
+\item{seed}{the seed of R‘s random number generator. Default is 123}
 }
 \value{
 a \code{matrix} containing simulated covariates information
