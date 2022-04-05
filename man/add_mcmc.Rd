@@ -19,7 +19,7 @@ add_mcmc(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed)
 
 \item{n.iter}{number of iterations to monitor}
 
-\item{seed}{the seed of random number generator. Default is 123}
+\item{seed}{the seed of random number generator. Default is the first element of .Random.seed}
 }
 \value{
 A \code{list} containing hazard ratio and prior information

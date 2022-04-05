@@ -124,7 +124,7 @@ setMethod("c", signature(x = ".priorClass"), function(x, ...){
 #' @param n.adapt number of iterations for adaptation
 #' @param n.burn number of iterations discarded as burn-in
 #' @param n.iter number of iterations to monitor
-#' @param seed the seed of random number generator. Default is 123
+#' @param seed the seed of random number generator. Default is the first element of .Random.seed
 
 #' @keywords internal method
 #' @return A \code{list} containing hazard ratio and prior information
@@ -140,8 +140,8 @@ add_mcmc = function(dt, priorObj, n.chains, n.adapt, n.burn,  n.iter, seed){
   flog.debug(cat("[add_mcmc] cov_name =", cov_name, "\n"))
 
   if (missing(seed)){
-    message("Setting up MCMC... Set seed to ",123)
-    seed = 123
+    message("Setting up MCMC... Set seed to ",.Random.seed[1])
+    seed = .Random.seed[1]
   } else set.seed(seed)
 
   n_mcmc <- valid_mcmc(n.chains, n.adapt, n.burn, n.iter)

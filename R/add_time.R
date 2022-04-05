@@ -122,7 +122,7 @@ set_event <- function(event, lambdaC, beta, shape, t_itv, change, keep) {
 #' @param eventObj an object of class \code{.eventClass} generated in \code{\link{set_event}} including event information
 #' @param clinInt an object of class \code{.clinClass} generated in \code{\link{set_clin}} including internal trial information
 #' @param clinExt an object of class \code{.clinClass} generated in \code{\link{set_clin}} including external trial information
-#' @param seed the seed of R‘s random number generator. Default is 123
+#' @param seed the seed of R‘s random number generator. Default is the first element of .Random.seed
 #'
 #' @return a list of \code{matrix} containing simulated time-to-events information
 #'
@@ -133,8 +133,8 @@ add_time=function(dt, eventObj, clinInt, clinExt, seed){
   if (missing(clinInt)) stop("Please provide clinInt.")
   if (missing(clinExt)) stop("Please provide clinExt.")
   if (missing(seed)){
-    message("Setting up survival time... Set seed to ",123)
-    seed = 123
+    message("Setting up survival time... Set seed to ",.Random.seed[1])
+    seed = .Random.seed[1]
   } else set.seed(seed)
 
   # checl

@@ -4,7 +4,7 @@
 #' @param eventObj an object of class \code{.eventClass} generated in \code{\link{set_event}} including event information
 #' @param clinInt an object of class \code{.clinClass} generated in \code{\link{set_clin}} including internal trial information
 #' @param clinExt an object of class \code{.clinClass} generated in \code{\link{set_clin}} including external trial information
-#' @param seed the seed of R‘s random number generator. Default is 123
+#' @param seed the seed of R‘s random number generator. Default is the first element of .Random.seed
 #' @param path file name for saving the output including folder path
 #' @return a list of \code{matrix} containing simulated time-to-events information
 #'
@@ -39,8 +39,8 @@ simu_time = function(dt, eventObj, clinInt, clinExt, seed, path){
   if (missing(clinInt)) stop("Please provide clinInt.")
   if (missing(clinExt)) stop("Please provide clinExt.")
   if (missing(seed)){
-    message("Simulating survival time... Set seed to ",123)
-    seed = 123
+    message("Simulating survival time... Set seed to ",.Random.seed[1])
+    seed = .Random.seed[1]
   } else set.seed(seed)
 
   seed_list <- seq(seed, seed + length(dt), by = 1)

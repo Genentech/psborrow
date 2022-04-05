@@ -185,15 +185,15 @@ setMethod("c", signature(x = ".covClass"), function(x, ...){
 #' Simulate covariates with a multivariate normal distribution
 #' @param dt a \code{matrix} generated in \code{\link{set_n}}
 #' @param covObj an object of class \code{.covClass} generated in \code{\link{set_cov}}
-#' @param seed the seed of R‘s random number generator. Default is 123
+#' @param seed the seed of R‘s random number generator. Default is the first element of .Random.seed
 #'
 #' @keywords internal method
 #' @return a \code{matrix} containing simulated covariates information
 add_cov=function(dt, covObj, seed){
 
   if (missing(seed)){
-    message("Setting up covariance... Set seed to ",123)
-    seed = 123
+    message("Setting up covariance... Set seed to ",.Random.seed[1])
+    seed = .Random.seed[1]
   } else set.seed(seed)
 
   if(length(covObj) == 1) covObj = c(covObj)
