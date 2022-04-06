@@ -24,13 +24,13 @@ setClassUnion("matrixORNULL", c("matrix", "NULL"))
 #' @keywords constructor
 set_n <- function(ssC, ssE, ssExt){
   if (missing(ssC) || !is.numeric(ssC)) {
-    message("ssC is not correctly specified. Default value 100 is used"); ssC = 100
+    ps_message("ssC is not correctly specified. Default value 100 is used"); ssC = 100
   }
   if (missing(ssE) || !is.numeric(ssE)) {
-    message("ssE is not recognized. ssC is used"); ssE = ssC
+    ps_message("ssE is not recognized. ssC is used"); ssE = ssC
   }
   if (missing(ssExt) || !is.numeric(ssExt)) {
-    message("ssExt is not recognized. ssC is used"); ssExt = ssC
+    ps_message("ssExt is not recognized. ssC is used"); ssExt = ssC
   }
   s_trt(ssC, ssE, ssExt) # call function from utils.R
 }
@@ -88,26 +88,26 @@ set_cov <- function(n_cat, n_cont, mu_int, mu_ext, var, cov, prob_int, prob_ext)
   # print(paste("total number of covariates", n_cov))
 
   if (missing(mu_int) || length(mu_int) %notin% c(1,n_cov)){
-    message("Mean of covariate in internal trials is not recognized or correctly specified. Default value 0 is used for all covariates")
+    ps_message("Mean of covariate in internal trials is not recognized or correctly specified. Default value 0 is used for all covariates")
     mu_int = rep(0, n_cov)
   } else if (n_cov != 1 & length(mu_int) == 1){
-    message("User provides one mean of covariate in internal trials. This value is used for all covariates")
+    ps_message("User provides one mean of covariate in internal trials. This value is used for all covariates")
     mu_int = rep(mu_int, n_cov)
   }
 
   if (missing(mu_ext) || length(mu_ext) %notin% c(1,n_cov)){
-    message("Mean of covariate in external trials is not recognized or correctly specified. mu_int is used for all covariates")
+    ps_message("Mean of covariate in external trials is not recognized or correctly specified. mu_int is used for all covariates")
     mu_ext = mu_int
   } else if (n_cov != 1 & length(mu_ext) == 1){
-    message("User provides one mean of covariate in external trials. This value is used for all covariates")
+    ps_message("User provides one mean of covariate in external trials. This value is used for all covariates")
     mu_ext = rep(mu_ext, n_cov)
   }
 
   if (missing(var) || length(var) %notin% c(1,n_cov)){
-    message("Variance of covariate in external trials is not recognized or correctly specified. Default value 1 is used for all covariates")
+    ps_message("Variance of covariate in external trials is not recognized or correctly specified. Default value 1 is used for all covariates")
     var = rep(1, n_cov)
   } else if (n_cov != 1 & length(var) == 1){
-    message("User provides one number for variance. This variance is used for all covariates")
+    ps_message("User provides one number for variance. This variance is used for all covariates")
     var = rep(var, n_cov)
   }
 
@@ -115,10 +115,10 @@ set_cov <- function(n_cat, n_cont, mu_int, mu_ext, var, cov, prob_int, prob_ext)
   if (n_cov > 1){
     len_cov = sum(seq(1, n_cov - 1, by = 1))
     if (length(cov) %notin% c(1, len_cov)) {
-      message("Covariance for covariate (cov) is not recognized. Default value 0 is used for all covariates")
+      ps_message("Covariance for covariate (cov) is not recognized. Default value 0 is used for all covariates")
       cov = rep(0, len_cov)
     } else if (length(cov) == 1){
-      message("User provides one number: ", cov, " for covariance. This covariance is used for all covariates")
+      ps_message("User provides one number: ", cov, " for covariance. This covariance is used for all covariates")
       cov = rep(cov, len_cov)
     }
   }
@@ -127,18 +127,18 @@ set_cov <- function(n_cat, n_cont, mu_int, mu_ext, var, cov, prob_int, prob_ext)
   if (missing(prob_ext)) prob_ext = NULL
   if (n_cat > 0){
     if (length(prob_int) %notin% c(1,n_cat)){
-      message("Probability of binary covariate in the internal trial is not recognized or correctly specified. Default value 0.5 is used for all binary covariates")
+      ps_message("Probability of binary covariate in the internal trial is not recognized or correctly specified. Default value 0.5 is used for all binary covariates")
       prob_int = rep(0.5, n_cat)
     } else if (length(prob_int) == 1){
-      message("User provides one number for probability for the binary covariate in the internal trial. This probability is used for all binary covariates")
+      ps_message("User provides one number for probability for the binary covariate in the internal trial. This probability is used for all binary covariates")
       prob_int = rep(prob_int, n_cat)
     }
 
     if (length(prob_ext) %notin% c(1,n_cat)){
-      message("Probability of binary covariate in the external trial is not recognized or correctly specified. mu_int is used.")
+      ps_message("Probability of binary covariate in the external trial is not recognized or correctly specified. mu_int is used.")
       prob_ext = prob_int
     } else if (length(prob_ext) == 1){
-      message("User provides one number for probability for the binary covariate in the external trial. This probability is used for all binary covariates")
+      ps_message("User provides one number for probability for the binary covariate in the external trial. This probability is used for all binary covariates")
       prob_ext = rep(prob_ext, n_cat)
     }
   }
@@ -192,7 +192,7 @@ setMethod("c", signature(x = ".covClass"), function(x, ...){
 add_cov=function(dt, covObj, seed){
 
   if (missing(seed)){
-    message("Setting up covariance... Set seed to ",.Random.seed[1])
+    ps_message("Setting up covariance... Set seed to ",.Random.seed[1])
     seed = .Random.seed[1]
   } else set.seed(seed)
 
