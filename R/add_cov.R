@@ -29,7 +29,7 @@ setClassUnion("matrixORNULL", c("matrix", "NULL"))
 set_n <- function(ssC, ssE, ssExt) {
   if (missing(ssC) || !is.numeric(ssC)) {
     ps_message("ssC is not correctly specified. Default value 100 is used")
-    ssC >= 100
+    ssC <- 100
   }
   if (missing(ssE) || !is.numeric(ssE)) {
     ps_message("ssE is not recognized. ssC is used")
@@ -62,7 +62,7 @@ set_n <- function(ssC, ssE, ssExt) {
 #' Set up covariates
 #'
 #' This function saves the mean, variance and covariance among covariates. For technical
-#' details, see the vignette:
+#' details, see the vignette.
 #'
 #' @param n_cat Number of binary variable. See details
 #'
@@ -101,7 +101,7 @@ set_n <- function(ssC, ssE, ssExt) {
 #' binvar <- as.numeric(rnorm(n, mu, sqrt(var)) < qnorm(prob, mu, sqrt(var)))
 #' ```
 #' Please note that this means that the value of `mu_int` & `mu_ext` has no impact on categorical
-#' covariates and thus can be set to any value
+#' covariates and thus can be set to any value.
 #'
 #' As an example of how this process works assume `n_cat=3` and `n_cont=2`. First 5 variables are
 #' sampled from the multivariate normal distribution as specified by `mu_int`/`mu_ext`, `var` &
