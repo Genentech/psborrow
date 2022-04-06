@@ -21,29 +21,29 @@
 #' @export
 #' @keywords simulator
 run_mcmc <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, path){
-  
+
   if (missing(dt)) stop("Please provide a list of simulated time (dt).")
   if (missing(priorObj)) stop("Please provide .priorObj (priorObj).")
   n_mcmc <- valid_mcmc(n.chains, n.adapt, n.burn, n.iter)
-  
+
   if (missing(seed)){
     ps_message("Setting up Bayes model... Set seed to ",.Random.seed[1])
     seed = .Random.seed[1]
   } else set.seed(seed)
   seed_list <- seq(seed, seed + length(dt), by = 1)
-  
+
   flog.debug(cat("seed_list:", seed_list, "number of dataset", length(dt), "\n"))
-  
+
   res_list <- sapply(seq(1, length(dt), by = 1), function(i){
     seed_i = seed_list[i]
-    
+
     ps_message("------------------- Running MCMC: #", i, " of ", length(dt), " simulated dataset with seed = ", seed_i)
-    
+
     add_mcmc(dt = dt[[i]], priorObj = priorObj,
              n.chains = n.chains, n.adapt = n.adapt,
              n.burn = n.burn, n.iter = n.iter, seed = seed_i)
   }) #loop foreach
-  
+
   sum_list <- lapply(res_list, function(i) {
     cbind("HR" = i[['HR']], "driftHR" = i[['driftHR']],
           "prior" = i[['prior']], "pred" = i[['pred']],
@@ -52,7 +52,7 @@ run_mcmc <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, path
           "sd_HR" = i[['summary']]['sd_HR'],
           "mean_driftHR" = i[['summary']]['mean_driftHR'],
           "sd_driftHR" = i[['summary']]['sd_driftHR'])})
-  sum_dt <- as.data.frame(do.call(rbind, sum_list))
+  sum_dt <- as.data.frame(do.call(rbind, sum_list),stringsAsFactors=FALSE)
   rownames(sum_dt) <- NULL
   sum_dt$HR = as.numeric(sum_dt$HR)
   sum_dt$driftHR = as.numeric(sum_dt$driftHR)
@@ -61,12 +61,12 @@ run_mcmc <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, path
   sum_dt$sd_HR = as.numeric(sum_dt$sd_HR)
   sum_dt$mean_driftHR = as.numeric(sum_dt$mean_driftHR)
   sum_dt$sd_driftHR = as.numeric(sum_dt$sd_driftHR)
-  
+
   if (missing(path)) ps_message("Samples from the posterior distribution from MCMC are not saved.") else {
     save(sum_dt, file = path)
     ps_message("Results the posterior distribution from MCMC are saved as ", path)
   }
-  
+
   sum_dt
 }
 
@@ -156,7 +156,7 @@ run_mcmc_p <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, pa
       "sd_driftHR" = i[["summary"]]["sd_driftHR"]
     )
   })
-  sum_dt <- as.data.frame(do.call(rbind, sum_list))
+  sum_dt <- as.data.frame(do.call(rbind, sum_list), stringsAsFactors = FALSE)
   rownames(sum_dt) <- NULL
   sum_dt$HR <- as.numeric(sum_dt$HR)
   sum_dt$driftHR <- as.numeric(sum_dt$driftHR)
