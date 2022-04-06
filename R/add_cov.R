@@ -124,13 +124,13 @@ set_cov <- function(n_cat, n_cont, mu_int, mu_ext, var, cov, prob_int, prob_ext)
     )
   } else if (missing(n_cat))  {
 
-    message("Number of binary covariates (n_cat) is not detected. Default value 0 is used.")
+    ps_message("Number of binary covariates (n_cat) is not detected. Default value 0 is used.")
     n_cat <- 0
   } else if (missing(n_cont)) {
     n_cont <- 0
 
     if (missing(mu_int) & missing(mu_ext) & missing(var) & missing(cov)) {
-      message(
+      ps_message(
         paste(
           "User wants to simulate independent binary covariates (n_cont) only.",
           "Independent bernoulli distribution is directly used."
@@ -145,7 +145,7 @@ set_cov <- function(n_cat, n_cont, mu_int, mu_ext, var, cov, prob_int, prob_ext)
         cov <- rep(0, sum(seq(1, n_cat - 1, by = 1)))
       }
     } else {
-      message("Number of continuous covariates (n_cont) is not detected. Default value 0 is used.")
+      ps_message("Number of continuous covariates (n_cont) is not detected. Default value 0 is used.")
     }
   }
 
