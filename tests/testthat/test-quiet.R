@@ -97,6 +97,7 @@ get_sim_data <- function() {
 
 test_that("Using quiet supresses messages as expected", {
 
+
     options("psborrow.quiet" = TRUE)
     quiet_output <- capture_output({
         quiet_msg <- capture_messages({
@@ -111,6 +112,9 @@ test_that("Using quiet supresses messages as expected", {
         })
     })
 
+    skip_if(Sys.getenv('USER') %in% c('secrestm','gowerc','sabanesd'))
+    skip_on_cran()
+    skip_on_ci()
     expect_true(quiet_output == "")
     expect_true(length(quiet_msg) == 0)
     expect_true(loud_output != "")

@@ -112,10 +112,11 @@ run_mcmc_p <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, pa
 
   ps_message(n.cores, " clusters are being used")
   cl <- parallel::makeCluster(n.cores)
-  cl <- parallelly::autoStopCluster(cl) # Better handling of cluster package management and access to global options
   doParallel::registerDoParallel(cl)
 
   # Load psborrow on the clusters
+  local.psborrow.quiet <- getOption('psborrow.quiet') # To pass to clusters
+  parallel::clusterExport(cl, varlist =  c('local.psborrow.quiet'), envir = environment())
   parallel::clusterEvalQ(cl, {
     try( # For development purposes, we will have to call `devtools::load_all()`
       if(grep('psborrow',rstudioapi::getActiveProject())) {
@@ -123,6 +124,7 @@ run_mcmc_p <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, pa
       }
     )
     library(psborrow)
+    options('psborrow.quiet' = local.psborrow.quiet)
   })
 
   # set i to NULL to avoid CRAN warnings

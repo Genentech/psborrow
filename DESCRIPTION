@@ -25,7 +25,6 @@ Imports:
     foreach,
     doParallel,
     parallel,
-    parallelly,
     MatchIt,
     survival,
     futile.logger,
