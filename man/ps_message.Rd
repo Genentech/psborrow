@@ -4,7 +4,7 @@
 \alias{ps_message}
 \title{Conditional Message}
 \usage{
-ps_message(..., psborrow.quiet = getOption("psborrow.quiet"))
+ps_message(...)
 }
 \arguments{
 \item{...}{Values passed onto \code{\link[=message]{message()}}}
