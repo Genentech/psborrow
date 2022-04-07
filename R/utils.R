@@ -414,9 +414,8 @@ r_post <- function(dt,
 #' ```
 #'
 #' @param ... Values passed onto [message()]
-ps_message <- function(...,
-                       psborrow.quiet = getOption('psborrow.quiet')){
-  if (!psborrow.quiet) {
+ps_message <- function(...){
+  if (!getOption("psborrow.quiet")) {
     message(...)
   }
 }

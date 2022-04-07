@@ -112,7 +112,7 @@ run_mcmc_p <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, pa
 
   ps_message(n.cores, " clusters are being used")
   cl <- parallel::makeCluster(n.cores)
-  cl <- parallelly::autoStopCluster(cl) # Better handling of cluster package management
+  cl <- parallelly::autoStopCluster(cl) # Better handling of cluster package management and access to global options
   doParallel::registerDoParallel(cl)
 
   # Load psborrow on the clusters
@@ -125,45 +125,32 @@ run_mcmc_p <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, pa
     library(psborrow)
   })
 
-  # Functionlize for better control of environment
-  return_res_list <- function(input,
-                              psborrow.quiet) {
-    foreach(
-      i = seq_len(length(input$dt)),
-      .combine = "c",
-      .multicombine = TRUE,
-      .packages = c("psborrow"),
-      .verbose = FALSE
-    ) %dopar% {
+  # set i to NULL to avoid CRAN warnings
+  i <- NULL
 
-      seed_i <- input$seed_list[i]
+  res_list <- foreach(
+    i = seq_len(length(dt)),
+    .combine = "c",
+    .multicombine = TRUE,
+    .packages = c("psborrow"),
+    # .export = c("format_number", "format_date_time", "add_direction_data"),
+    # .packages = c("tidyverse", "data.table", "dplyr", "rjags"),
+    .verbose = FALSE
+  ) %dopar% {
 
-      ps_message(
-        "------------------- Running MCMC: #",
-        i, " of ", length(input$dt),
-        " simulated dataset with seed = ",
-        seed_i,
-        psborrow.quiet=psborrow.quiet
-      )
+    seed_i <- seed_list[i]
 
-      add_mcmc(dt = input$dt[[i]], priorObj = input$priorObj,
-               n.chains = input$n.chains, n.adapt = input$n.adapt,
-               n.burn = input$n.burn, n.iter = input$n.iter, seed = seed_i)
-    }
+    ps_message(
+      "------------------- Running MCMC: #",
+      i, " of ", length(dt),
+      " simulated dataset with seed = ",
+      seed_i
+    )
+
+    add_mcmc(dt = dt[[i]], priorObj = priorObj,
+              n.chains = n.chains, n.adapt = n.adapt,
+              n.burn = n.burn, n.iter = n.iter, seed = seed_i)
   }
-
-  res_list <- return_res_list(
-    input = list(
-      dt=dt,
-      priorObj=priorObj,
-      n.chains=n.chains,
-      n.adapt=n.adapt,
-      n.burn=n.burn,
-      n.iter=n.iter,
-      seed_list=seed_list
-    ),
-    psborrow.quiet=getOption('psborrow.quiet')
-  )
 
   parallel::stopCluster(cl)
   sum_list <- lapply(res_list, function(i) {
