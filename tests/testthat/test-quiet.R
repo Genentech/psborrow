@@ -73,8 +73,24 @@ get_sim_data <- function() {
         seed = 47
     )
 
+    res2 <- run_mcmc_p(
+      dt = sample_time,
+      set_prior(pred = "all", prior = "gamma", r0 = 1,  alpha = c(0, 0)),
+      n.chains = 2,
+      n.adapt = 100,
+      n.burn = 100,
+      n.iter = 200,
+      seed = 47,
+      n.cores = 2
+    )
+
     summ <- get_summary(res)
-    return(summ)
+    summ2 <- get_summary(res2)
+
+    return(list(
+      summ,
+      summ2
+    ))
 }
 
 
