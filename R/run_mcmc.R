@@ -115,12 +115,23 @@ run_mcmc_p <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, pa
   doParallel::registerDoParallel(cl)
 
   # Load psborrow on the clusters
-  local.psborrow.quiet <- getOption('psborrow.quiet') # To pass to clusters
-  parallel::clusterExport(cl, varlist =  c('local.psborrow.quiet'), envir = environment())
+  ## Function to see whether psborrow is being used in a development context
+  is_psborrow_dev <- function() {
+    desc <- file.path("DESCRIPTION")
+    if (file.exists(desc)) {
+      content <- read.dcf(desc)
+      pkg <- content[1, ][["Package"]]
+      return(pkg == "psborrow")
+    }
+    return(FALSE)
+  }
+  ## Flag for global options to pass to clusters
+  local.psborrow.quiet <- getOption('psborrow.quiet')
+  parallel::clusterExport(cl, varlist =  c('local.psborrow.quiet','is_psborrow_dev'), envir = environment())
   parallel::clusterEvalQ(cl, {
-    try( # For development purposes, we will have to call `devtools::load_all()`
-      if(grep('psborrow',rstudioapi::getActiveProject())) {
-        devtools::load_all()
+    try(
+      if(is_psborrow_dev()) {
+        pkgload::load_all()
       }
     )
     library(psborrow)
