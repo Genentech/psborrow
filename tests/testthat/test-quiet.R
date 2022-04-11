@@ -112,8 +112,8 @@ test_that("Using quiet supresses messages as expected", {
         })
     })
 
-    skip_if(  ! Sys.getenv("RUN_ALL_TESTS") == TRUE)
-    skip_on_cran()
+    skip_if(!Sys.getenv("RUN_ALL_TESTS") == TRUE)
+    skip_on_cran
     expect_true(quiet_output == "")
     expect_true(length(quiet_msg) == 0)
     expect_true(loud_output != "")

@@ -419,3 +419,22 @@ ps_message <- function(...){
     message(...)
   }
 }
+
+
+
+#' Check if user is in psborrow development environment
+#'
+#' Simple function which leverages the DESCRIPTION file
+#' to check if the user is in a development environment
+#' for psborrow.
+#'
+#' @return TRUE/FALSE flag (TRUE = in development environment)
+is_psborrow_dev <- function() {
+  desc <- file.path("DESCRIPTION")
+  if (file.exists(desc)) {
+    content <- read.dcf(desc)
+    pkg <- content[1, ][["Package"]]
+    return(pkg == "psborrow")
+  }
+  return(FALSE)
+}
