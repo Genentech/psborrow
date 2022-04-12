@@ -1,6 +1,9 @@
 
 
 test_that("Messages for set_cov are printed only when appropriate", {
+
+    options('psborrow.quiet'=FALSE)
+
     msg1 <- capture_messages({
         devnull <- set_cov(
             n_cat = 1,

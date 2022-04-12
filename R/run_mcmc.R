@@ -99,7 +99,7 @@ run_mcmc_p <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, pa
 
 
   if (missing(seed)) {
-    message("Running MCMC... Set seed to ", .Random.seed[1])
+    ps_message("Running MCMC... Set seed to ", .Random.seed[1])
     seed <- .Random.seed[1]
   } else {
     set.seed(seed)
@@ -110,13 +110,25 @@ run_mcmc_p <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, pa
     cat("seed_list:", seed_list, "number of dataset", length(dt), "\n")
   )
 
-  message(n.cores, " clusters are being used")
+  ps_message(n.cores, " clusters are being used")
   cl <- parallel::makeCluster(n.cores)
   doParallel::registerDoParallel(cl)
 
+  # Load psborrow on the clusters
+  ## Flag for global options to pass to clusters
+  local.psborrow.quiet <- getOption('psborrow.quiet')
+  parallel::clusterExport(cl, varlist =  c('local.psborrow.quiet','is_psborrow_dev'), envir = environment())
+  parallel::clusterEvalQ(cl, {
+    if(is_psborrow_dev()) {
+      pkgload::load_all()
+    } else {
+      library(psborrow)
+    }
+    options('psborrow.quiet' = local.psborrow.quiet)
+  })
+
   # set i to NULL to avoid CRAN warnings
   i <- NULL
-
 
   res_list <- foreach(
     i = seq_len(length(dt)),
@@ -130,7 +142,7 @@ run_mcmc_p <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, pa
 
     seed_i <- seed_list[i]
 
-    message(
+    ps_message(
       "------------------- Running MCMC: #",
       i, " of ", length(dt),
       " simulated dataset with seed = ",
@@ -167,7 +179,7 @@ run_mcmc_p <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, pa
   sum_dt$sd_driftHR <- as.numeric(sum_dt$sd_driftHR)
 
   if (missing(path)) {
-    message("Samples from the posterior distribution from MCMC are not saved.")
+    ps_message("Samples from the posterior distribution from MCMC are not saved.")
   } else {
     save(sum_dt, file = path)
     ps_message("Results the posterior distribution from MCMC are saved as ", path)
