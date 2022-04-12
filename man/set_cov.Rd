@@ -38,7 +38,7 @@ A \code{.covClass} class containing covariate information
 }
 \description{
 This function saves the mean, variance and covariance among covariates. For technical
-details, see the vignette:
+details, see the vignette.
 }
 \details{
 Categorical variables are created by sampling a continuous variable from the multivariate
@@ -49,7 +49,7 @@ of said distribution i.e. for a univariate variable it would be derived as:\pref
 }
 
 Please note that this means that the value of \code{mu_int} & \code{mu_ext} has no impact on categorical
-covariates and thus can be set to any value
+covariates and thus can be set to any value.
 
 As an example of how this process works assume \code{n_cat=3} and \code{n_cont=2}. First 5 variables are
 sampled from the multivariate normal distribution as specified by \code{mu_int}/\code{mu_ext}, \code{var} &

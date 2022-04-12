@@ -34,7 +34,8 @@ Suggests:
     rmarkdown,
     testthat,
     Matrix,
-    assertthat
+    assertthat,
+    pkgload
 VignetteBuilder: knitr
 Collate:
     'zzz.R'
