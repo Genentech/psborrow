@@ -107,12 +107,12 @@ plot_type1error <- function(dt, driftHR = 1, pred = "none"){
   ref = dt[dt$HR == 1 & dt$driftHR == driftHR & dt$pred == pred & dt$prior == "no_ext",
            "reject", drop = TRUE]
 
-  p1 <- ggplot(dt2, aes(y = reject, x = prior, fill = prior)) +
+  p1 <- ggplot(mapping = aes(y = dt2$reject, x = dt2$prior, fill = dt2$prior)) +
     geom_bar(position = position_dodge2(width = 1.2, preserve = "single"), stat="identity") +
     labs(title = "Summarizing posterior distributions: Type 1 Error",
-         subtitle = paste0("pre-specified HR = 1, driftHR =", driftHR)) +
+         subtitle = paste0("pre-specified HR = 1, driftHR =", dt2$driftHR)) +
     ylab("Type 1 error") +
-    geom_text(aes(y = reject, label = round(reject, 4)), vjust = -0.8) +
+    geom_text(mapping = aes(y = dt2$reject, label = round(dt2$reject, 4)), vjust = -0.8) +
     scale_x_discrete(breaks=c("no_ext", "cauchy", "gamma", "full_ext"),
                      labels=c("No borrow", "Half-Cauchy", "Gamma", "Full borrow")) +
 
@@ -123,7 +123,7 @@ plot_type1error <- function(dt, driftHR = 1, pred = "none"){
     p1
   } else {
     p1 +
-      geom_hline(aes(yintercept = ref, linetype=factor(ref)), colour = "purple") +
+      geom_hline(mapping = aes(yintercept = ref, linetype=factor(ref)), colour = "purple") +
       labs(caption = paste0("Horizontal purple line refers to the type 1 error without any external arm (", round(ref,4),")"))+
       theme(plot.caption=element_text(size=10))
   }

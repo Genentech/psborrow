@@ -39,13 +39,7 @@ test_that("Ensure output is producing a correct ggplot2 object", {
   p1 <- plot_type1error(dt3, driftHR=1, pred='all')
   p2 <- plot_type1error(dt4, driftHR=1, pred='all')
 
-  expect_equal(class(p1)[1],'gg')
-  expect_equal(class(p2)[1],'gg')
-
-  expect_equal(NROW(p1$layers), 3L)
-  expect_equal(NROW(p2$layers), 2L)
-  expect_equal(p1$labels$yintercept, 'ref')
-  expect_equal(p1$labels$caption, 'Horizontal purple line refers to the type 1 error without any external arm (0.2143)')
-  expect_equal(p2$labels$title, 'Summarizing posterior distributions: Type 1 Error')
+  expect_snapshot_file(path = save_png(p1), 'plot_type1error_p1.png')
+  expect_snapshot_file(path = save_png(p2), "plot_type1error_p2.png")
 
 })
