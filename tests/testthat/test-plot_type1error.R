@@ -16,9 +16,12 @@ test_that("Ensure errors are correct", {
     reject = c(0.2, 0.3,0.4,0.5)
   )
 
-  expect_error(plot_type1error(dt1, driftHR=1,pred='all'))
-  expect_error(plot_type1error(dt2, driftHR=1.3,pred='all'))
-  expect_error(plot_type1error(dt2, driftHR=1,pred='cov1'))
+  expect_error(plot_type1error(dt1, driftHR=1,pred='all'),
+               "dt does not include HR = 1.0")
+  expect_error(plot_type1error(dt2, driftHR=1.3,pred='all'),
+               "dt does not include a driftHR of 1.3")
+  expect_error(plot_type1error(dt2, driftHR=1,pred='cov1'),
+               "dt does not include a pred of 'cov1'")
 })
 
 test_that("Ensure output is producing a correct ggplot2 object", {
