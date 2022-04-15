@@ -17,6 +17,6 @@ plot_type1error(dt, driftHR = 1, pred = "none")
 a bar plot of class \code{ggplot} containing type 1 error proportions for each prior distribution.
 }
 \description{
-Plot type 1 error proportions for each prior distribution using simulations in which the true HR between internal treatment and control arms is 1.0.
+Plot type 1 error for each prior distribution according to selected simulation parameters
 }
 \keyword{method}
