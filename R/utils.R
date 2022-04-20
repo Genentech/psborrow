@@ -12,6 +12,7 @@
 #' @importFrom data.table data.table :=
 #' @importFrom methods new slot
 #' @importFrom stats as.formula binomial glm qnorm rbinom rexp rnorm rweibull time update var
+#' @importFrom grDevices png dev.off
 
 `%notin%` <- Negate(`%in%`)
 
@@ -279,7 +280,7 @@ g_one_t <- function(ext, dt,
 # Function r_post below calls this
 c_ps <- function(dt, cov_name){
   flog.debug(cat("[c_ps] cov_name =", cov_name, "\n"))
-  dat = as.data.frame(dt)
+  dat = as.data.frame(dt,stringsAsFactors=FALSE)
   dat$int = 1 - dat$ext
   var_col = c(cov_name, "int")
   dat2 = dat[, var_col]
@@ -437,4 +438,24 @@ is_psborrow_dev <- function() {
     return(pkg == "psborrow")
   }
   return(FALSE)
+}
+
+
+
+#' Save .png file (for snapshot testing purposes)
+#'
+#' @param plot plot to be printed
+#' @param width in pixels
+#' @param height in pixels
+#'
+#'
+#' @return temp path to the image
+save_png <- function(plot, width = 1200, height = 800) {
+
+  path <- tempfile(fileext = ".png")
+  png(path, width = width, height = height)
+  on.exit(dev.off())
+  print(plot)
+
+  path
 }
