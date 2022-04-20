@@ -1,5 +1,4 @@
 library(dplyr)
-library(purrr)
 
 test_that("Check that binary probability is correct", {
     suppressMessages({
@@ -7,7 +6,7 @@ test_that("Check that binary probability is correct", {
             ssC = 140,
             ssE = 275,
             ssExt = 100
-        ) 
+        )
 
         covset1 <- set_cov(
             n_cat = 1,
@@ -30,7 +29,7 @@ test_that("Check that binary probability is correct", {
         )
     })
 
-    cov1_prob <- map_df(sample_cov, as_tibble) %>%
+    cov1_prob <- bind_rows(lapply(sample_cov, as_tibble)) %>%
         group_by(ext) %>%
         summarise(m = mean(cov1))
 
@@ -48,7 +47,7 @@ test_that("Check that Covariate distributions are created correctly", {
             ssC = 20000,
             ssE = 20000,
             ssExt = 40000
-        ) 
+        )
 
         vcov <- as_vcov(
             c(1, 3, 6, 8),
