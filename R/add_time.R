@@ -79,15 +79,22 @@ set_clin <- function(gamma, e_itv, CCOD, CCOD_t, etaC, etaE, d_itv) {
 
 #' Set up time-to-events
 #'
+#' @description
+#'
+#' Defines the model formula and distribution to be used when simulating time-to-events. Please
+#' see the user-guide for the model formulations
+#'
 #' @param event Distribution of time-to-events: \code{event = "pwexp"} for piece-wise exponential
-#' distribution. \code{event = "weibull"} for weibull distribution
+#' distribution. \code{event = "weibull"} for Weibull distribution
 #'
 #' @param lambdaC Baseline hazard rate of internal control arm. Specify a vector for piece-wise
 #' hazard with duration specified in \code{t_itv} if \code{event = "pwexp"}
 #'
-#' @param beta covariates' coefficients. \code{NULL} if no covariates are found in \code{ssObj}
+#' @param beta covariates' coefficients. Must be equal in length to the number of covariates
+#' created by [simu_cov()] (or less if restricted by `keep`) plus the number of covariates
+#' defined by `change`.
 #'
-#' @param shape shape of weibull distribution if \code{event = "weibull"}. \code{NULL} if
+#' @param shape the shape parameter of Weibull distribution if \code{event = "weibull"}. \code{NULL} if
 #' \code{event = "pwexp"}
 #'
 #' @param t_itv a vector indicating interval lengths where the exponential rates provided in
@@ -136,7 +143,7 @@ set_clin <- function(gamma, e_itv, CCOD, CCOD_t, etaC, etaE, d_itv) {
 #'
 #'
 #' @examples
-#' # time-to-event follows a weibull distribution
+#' # time-to-event follows a Weibull distribution
 #' set_event(event = "weibull", shape = 0.9, lambdaC = 0.0135)
 #'
 #' # time-to-event follows a piece-wise exponential distribution
@@ -146,6 +153,7 @@ set_clin <- function(gamma, e_itv, CCOD, CCOD_t, etaC, etaE, d_itv) {
 #' @export
 #' @keywords constructor
 #' @return a \code{matrix} containing simulated time-to-events information
+
 set_event <- function(event, lambdaC, beta, shape, t_itv, change, keep) {
 
   if (missing(event) || event %notin% c("weibull", "pwexp")) {
