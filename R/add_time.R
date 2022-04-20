@@ -68,10 +68,12 @@ set_clin <- function(gamma, e_itv, CCOD, CCOD_t, etaC, etaE, d_itv) {
 #' S4 Class for setting parameters for time-to-events
 #'
 #' @keywords class
-.eventClass = setClass(".eventClass", slots = list(event = "character",
-                                                   lambdaC = "numeric", shape = "numericORNULL", t_itv = "numericORNULL",
-                                                   beta = "numericORNULL",
-                                                   change = "listORNULL", keep = "charORNULL"))
+.eventClass = setClass(".eventClass", slots = list(
+  event = "character",
+  lambdaC = "numeric", shape = "numericORNULL", t_itv = "numericORNULL",
+  beta = "numericORNULL",
+  change = "listORNULL", keep = "charORNULL"
+))
 
 
 
@@ -93,11 +95,42 @@ set_clin <- function(gamma, e_itv, CCOD, CCOD_t, etaC, etaE, d_itv) {
 #' \code{lambdaC} and that the final value rate in \code{lambdaC} applies after time `sum(t_itv)`.
 #' \code{NULL} if \code{event = "weibull"}
 #'
-#' @param change operations applied to covariates for simulating time-to-events
+#' @param change A list of additional derivered covariates
+#' to be used in simulating time-to-events. See details
 #'
 #' @param keep original covariates to keep when simulate time-to-events
 #'
 #' @return a \code{.eventClass} class containing time-to-events information
+#'
+#'
+#' @details
+#'
+#' The `change` argument is used to specify additional derived covariates to be used when
+#' simulating time-to-events. For example, let’s say have 3 covariates `cov1`, `cov2` & `cov3`
+#' but that we also wish to include a new covariate that is an interaction
+#' between `cov1` and `cov2` as well as another covariate that is equal to the sum of
+#' `cov2` and `cov3`; we could implement this as follows:
+#'
+#' ```
+#' set_event(
+#'     event = "weibull",
+#'     shape = 0.9,
+#'     lambdaC = 0.0135,
+#'     beta = c(5, 3, 1, 7, 9),
+#'     change = list(
+#'         c("cov1", "*", "cov2"),
+#'         c("cov2", "+", "cov3")
+#'     )
+#' )
+#' ```
+#' Note that in the above example 5 values have been specified to beta,
+#' 3 for the original three covariates
+#' and 2 for the two additional derived covariates included via `change`.
+#'
+#' Variables derived via `change` are automatically included in the model regardless
+#' of whether they are listed in `keep` or not. Likewise, these covariates are derived
+#' separately and not via a standard R formula, that is to say including an interaction
+#' term does not automatically include the individual fixed effects.
 #'
 #'
 #' @examples
