@@ -52,7 +52,7 @@ run_mcmc <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, path
           "sd_HR" = i[['summary']]['sd_HR'],
           "mean_driftHR" = i[['summary']]['mean_driftHR'],
           "sd_driftHR" = i[['summary']]['sd_driftHR'])})
-  sum_dt <- as.data.frame(do.call(rbind, sum_list))
+  sum_dt <- as.data.frame(do.call(rbind, sum_list),stringsAsFactors=FALSE)
   rownames(sum_dt) <- NULL
   sum_dt$HR = as.numeric(sum_dt$HR)
   sum_dt$driftHR = as.numeric(sum_dt$driftHR)
@@ -168,7 +168,7 @@ run_mcmc_p <- function(dt, priorObj, n.chains, n.adapt, n.burn, n.iter, seed, pa
       "sd_driftHR" = i[["summary"]]["sd_driftHR"]
     )
   })
-  sum_dt <- as.data.frame(do.call(rbind, sum_list))
+  sum_dt <- as.data.frame(do.call(rbind, sum_list), stringsAsFactors = FALSE)
   rownames(sum_dt) <- NULL
   sum_dt$HR <- as.numeric(sum_dt$HR)
   sum_dt$driftHR <- as.numeric(sum_dt$driftHR)

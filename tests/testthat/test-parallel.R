@@ -1,7 +1,6 @@
 
 
 library(dplyr)
-library(purrr)
 
 test_that("parallisation works as expected", {
     suppressMessages({

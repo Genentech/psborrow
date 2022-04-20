@@ -280,7 +280,7 @@ g_one_t <- function(ext, dt,
 # Function r_post below calls this
 c_ps <- function(dt, cov_name){
   flog.debug(cat("[c_ps] cov_name =", cov_name, "\n"))
-  dat = as.data.frame(dt)
+  dat = as.data.frame(dt,stringsAsFactors=FALSE)
   dat$int = 1 - dat$ext
   var_col = c(cov_name, "int")
   dat2 = dat[, var_col]
