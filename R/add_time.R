@@ -98,7 +98,9 @@ set_clin <- function(gamma, e_itv, CCOD, CCOD_t, etaC, etaE, d_itv) {
 #' @param change A list of additional derivered covariates
 #' to be used in simulating time-to-events. See details
 #'
-#' @param keep original covariates to keep when simulate time-to-events
+#' @param keep A character vector specifying which of the original covariates (i.e. those not
+#' derived via the `change` argument) should be included into the model to simulate time-to-events.
+#' If left unspecified all covariates will be included.
 #'
 #' @return a \code{.eventClass} class containing time-to-events information
 #'
