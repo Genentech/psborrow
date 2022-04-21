@@ -40,28 +40,6 @@ setClassUnion("matrixORNULL", c("matrix", "NULL"))
 #' @export
 #' @keywords constructor
 set_prior <- function(pred, prior, r0, alpha, sigma) {
-  # if (missing(pred)) {
-  #   pred = "none"
-  #   ps_message("Predictors to include in the weibull distribution (pred) is not provided. No predictor is used.")
-  #
-  # }  else if (sum(grepl("none", pred)) > 0) {
-  #   pred = "none"
-  #   ps_message("Input none is found in pred. Any other input is disregarded.")
-  # } else if (sum(grepl("all", pred)) > 0) {
-  #   pred = "all"
-  #   ps_message("Input all is found in pred. Any other input is disregarded.")
-  # } else if (sum(grepl("ps", pred)) == 0) {
-  #   ps_message(cat("Selected covariate(s)", pred, "are used as predictors in the weibull distribution. Any other input is disregarded. \n"))
-  # } else if (sum(grepl("ps", pred)) > 0 & ("wgt" %in% colnames(dt))) { # column wgt already existed
-  #   ps_message("Weight already provided in the data. It is used as predictor directly. \n")
-  #
-  # } else if (sum(grepl("ps", pred)) > 0 & length(pred) == 1){ # column wgt does not exist
-  #   # dt_ps <- c_ps(dt, cov_name)
-  #   ps_message(cat("Propensity score calculated based on all covariates is used as predictors in the weibull distribution.\n"))
-  # } else if (sum(grepl("ps", pred)) > 0 & length(pred) > 1){
-  #   ps_message(cat("Propensity score calculated based selected covariate(s)", pred[pred != "ps"],
-  #               "is used as predictors in the weibull distribution.\n"))
-  # }
 
   if(missing(prior) || prior %notin% c("gamma", "cauchy", "no_ext", "full_ext", "unif")) {
     stop("Prior distribution for the precision parameter (prior) is not correctly specified. Options include gamma, cauchy, unif, no_ext, full_ext.")
@@ -165,15 +143,15 @@ add_mcmc = function(dt, priorObj, n.chains, n.adapt, n.burn,  n.iter, seed){
       pred = "all"
       ps_message("Input all is found in pred. Any other input is disregarded.")
     } else if (sum(grepl("ps", pred)) == 0) {
-      ps_message(cat("Selected covariate(s)", pred, "are used as predictors in the weibull distribution.\n"))
+      ps_message("Selected covariate(s)", pred, "are used as predictors in the weibull distribution.\n")
     } else if (sum(grepl("ps", pred)) > 0 & length(pred) == 1){ # column wgt does not exist
       dt_ps <- c_ps(dt, cov_name)
-      ps_message(cat("Propensity score calculated using all coariates", cov_name, "is used as predictors in the weibull distribution.\n"))
+      ps_message("Propensity score calculated using all coariates", cov_name, "is used as predictors in the weibull distribution.\n")
     } else if (sum(grepl("ps", pred)) > 0 & ("wgt" %in% colnames(dt))) { # column wgt already existed
       ps_message("Weight already provided in the data. It is used as predictor directly. \n")
     } else if (sum(grepl("ps", pred)) > 0 & length(pred) > 1){
-      ps_message(cat("Propensity score calculated based selected covariate(s)", pred[pred != "ps"],
-                  "is used as predictors in the weibull distribution.\n"))
+      ps_message("Propensity score calculated based selected covariate(s)", pred[pred != "ps"],
+                  "is used as predictors in the weibull distribution.\n")
     }
 
     flog.debug(cat(">>> prior =", prior, ", pred = ", pred, "\n"))

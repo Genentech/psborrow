@@ -179,9 +179,6 @@ add_time=function(dt, eventObj, clinInt, clinExt, seed){
   flog.debug(cat("[add_time] Number of new covariates", length(new_cov_name), "\n"))
   flog.debug(cat("[add_time] Number of original covariates to keep", length(keep), "\n"))
 
-  # flog.debug(cat("[add_time] Current dataset include origin covariates", cov_name, "and new covariates", new_cov_name, "\n"))
-
-  # n_cov = sum(grepl("cov", colnames(dt)))
   n_cov = length(new_cov_name) + length(keep)
   flog.debug(cat("[add_time] Number of covariates is (length of beta should be)", n_cov, "\n"))
 
