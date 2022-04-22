@@ -9,19 +9,40 @@ setClassUnion("matrixORNULL", c("matrix", "NULL"))
 #' S4 Class for specifying prior distributions and predictors for MCMC methods
 #'
 #' @keywords class
-.priorClass = setClass(".priorClass",
-                       slots=list(pred = "character", prior = "charORNULL",
-                                  r0 = "numericORNULL", alpha = "numericORNULL",  sigma = "numericORNULL" ))
+.priorClass <- setClass(
+  ".priorClass",
+  slots = list(
+    pred = "character",
+    prior = "charORNULL",
+    r0 = "numericORNULL",
+    alpha = "numericORNULL",
+    sigma = "numericORNULL"
+  )
+)
 
 #' Specify prior distributions and predictors for MCMC methods
 #'
-#' @param pred Predictors to include in the weibull distribution. No covariates except for treatment indicator is included if \code{pred = NULL}. Only propensity score generated using a logistic regression model on all covariates and treatment indicator are included if \code{pred = ps}. All covariates and treatment indicator are included if \code{pred = all}
-#' @param prior Prior distribution for the precision parameter that controls the degree of borrowing. Half-cauchy distribution if \code{prior = "cauchy"}. No external data is included in the data if \code{prior = "no_ext"}. External control arm is assumed to have the same baseline hazards as internal control arm if \code{prior = "full_ext"}. Other options include "gamma" and "unif"
-#' @param r0 Initial values for the shape of the weibull distribution for time-to-events
-#' @param alpha Initial values for log of baseline hazard rate for external and internal control arms. Length of \code{alpha} should be 1 if \code{prior = "full_ext"} or \code{prior = "no_ext"}, and equal to 2 otherwise
-#' @param sigma Initial values for precision parameter if \code{prior = "cauchy"}. If left \code{NULL}, default value 0.03 is used
-#' @return a \code{.priorClass} class containing survival data and prior information
+#' @param pred Predictors to include in the weibull distribution. No covariates except for
+#' treatment indicator is included if \code{pred = NULL}. Only propensity score generated
+#' using a logistic regression model on all covariates and treatment indicator are included
+#' if \code{pred = ps}. All covariates and treatment indicator are included if \code{pred = all}
 #'
+#' @param prior Prior distribution for the precision parameter that controls the degree of
+#' borrowing. Half-cauchy distribution if \code{prior = "cauchy"}. No external data is
+#' included in the data if \code{prior = "no_ext"}. External control arm is assumed to
+#' have the same baseline hazards as internal control arm if \code{prior = "full_ext"}.
+#' Other options include "gamma" and "unif"
+#'
+#' @param r0 Initial values for the shape of the weibull distribution for time-to-events
+#'
+#' @param alpha Initial values for log of baseline hazard rate for external and internal control
+#' arms. Length of \code{alpha} should be 1 if \code{prior = "full_ext"} or \code{prior =
+#' "no_ext"}, and equal to 2 otherwise
+#'
+#' @param sigma Initial values for precision parameter if \code{prior = "cauchy"}.
+#' If left \code{NULL}, default value 0.03 is used
+#'
+#' @return a \code{.priorClass} class containing survival data and prior information
 #'
 #' @examples
 #' # hierachical Bayesian model with precision parameter follows a half-cauchy distribution
@@ -128,14 +149,20 @@ setMethod("c", signature(x = ".priorClass"), function(x, ...){
 
 #' @keywords internal method
 #' @return A \code{list} containing hazard ratio and prior information
-add_mcmc = function(dt, priorObj, n.chains, n.adapt, n.burn,  n.iter, seed){
+add_mcmc <- function(dt, priorObj, n.chains, n.adapt, n.burn,  n.iter, seed){
 
   if (missing(dt)) {
-    stop ("Please provide a dataset (dt).")
+    stop("Please provide a dataset (dt).")
   } else {
-    cov_name = colnames(dt)[colnames(dt) %notin% c("driftHR", "HR", "trt", "ext", "time", "cnsr", "wgt")] #extract covariate names in the dataset
-    if (sum(c("driftHR", "HR", "trt", "ext", "time", "cnsr") %notin% colnames(dt)) > 0 ) stop("Please make sure the trial data contains at least trt, ext, time and cnsr.")
-    else if (sum(!grepl("cov[1234567890]", cov_name)) > 0) stop("Please make sure the covariates in the trial have the right name.")
+    #extract covariate names in the dataset
+    key_vars <- c("driftHR", "HR", "trt", "ext", "time", "cnsr", "wgt")
+    cov_name <- colnames(dt)[colnames(dt) %notin% key_vars]
+
+    if (sum(c("trt", "ext", "time", "cnsr") %notin% colnames(dt)) > 0) {
+      stop("Please make sure the trial data contains at least trt, ext, time and cnsr.")
+    } else if (sum(!grepl("cov[1234567890]", cov_name)) > 0) {
+      stop("Please make sure the covariates in the trial have the right name.")
+    }
   }
   flog.debug(cat("[add_mcmc] cov_name =", cov_name, "\n"))
 
@@ -149,8 +176,8 @@ add_mcmc = function(dt, priorObj, n.chains, n.adapt, n.burn,  n.iter, seed){
   if (length(priorObj) == 1) priorObj = c(priorObj)
 
   lapply(seq(1, length(priorObj), by = 1), function(i){
-    prior = priorObj[[i]]@prior
-    pred = priorObj[[i]]@pred
+    prior <- priorObj[[i]]@prior
+    pred <- priorObj[[i]]@pred
 
     #---
     if (missing(pred)) {
@@ -178,21 +205,38 @@ add_mcmc = function(dt, priorObj, n.chains, n.adapt, n.burn,  n.iter, seed){
 
     flog.debug(cat(">>> prior =", prior, ", pred = ", pred, "\n"))
 
-    mcmc_res <- r_post(dt = dt,
-                       prior = prior, pred = pred,
-                       r0 = priorObj[[i]]@r0, alpha = priorObj[[i]]@alpha,
-                       sigma = priorObj[[i]]@sigma, seed = seed,
-
-                       n.chains = n_mcmc[['n.chains']], n.adapt = n_mcmc[['n.adapt']],
-                       n.burn = n_mcmc[['n.burn']], n.iter = n_mcmc[['n.iter']])
+    mcmc_res <- r_post(
+      dt = dt,
+      prior = prior,
+      pred = pred,
+      r0 = priorObj[[i]]@r0,
+      alpha = priorObj[[i]]@alpha,
+      sigma = priorObj[[i]]@sigma,
+      seed = seed,
+      n.chains = n_mcmc[["n.chains"]],
+      n.adapt = n_mcmc[["n.adapt"]],
+      n.burn = n_mcmc[["n.burn"]],
+      n.iter = n_mcmc[["n.iter"]]
+    )
 
     mcmc_sum <- rej_est(mcmc_res)
+
     flog.debug(cat(">>> mcmc_sum =", mcmc_sum, "\n"))
-    list("HR" = unique(dt[, 'HR']),
-         "driftHR" = unique(dt[, 'driftHR']),
-         "prior" = prior,
-         "pred" = paste(pred, collapse = " "), # print to one row
-         "mcmc.list" = mcmc_res, "summary" = mcmc_sum)
+
+    results <- list(
+      "prior" = prior,
+      "pred" = paste(pred, collapse = " "), # print to one row
+      "mcmc.list" = mcmc_res,
+      "summary" = mcmc_sum
+    )
+
+    if ("driftHR" %in% colnames(dt)) {
+      results[["driftHR"]] <- unique(dt[, "driftHR"])
+    }
+    if ("HR" %in% colnames(dt)) {
+      results[["HR"]] <- unique(dt[, "HR"])
+    }
+    return(results)
   })
 }
 
