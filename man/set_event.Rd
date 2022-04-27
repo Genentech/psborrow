@@ -13,7 +13,7 @@ distribution. \code{event = "weibull"} for Weibull distribution}
 \item{lambdaC}{Baseline hazard rate of internal control arm. Specify a vector for piece-wise
 hazard with duration specified in \code{t_itv} if \code{event = "pwexp"}}
 
-\item{beta}{covariates' coefficients. Must be equal in length to the number of covariates
+\item{beta}{covariates' coefficients (i.e. log hazard ratios). Must be equal in length to the number of covariates
 created by \code{\link[=simu_cov]{simu_cov()}} (or less if restricted by \code{keep}) plus the number of covariates
 defined by \code{change}.}
 

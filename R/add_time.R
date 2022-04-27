@@ -90,7 +90,7 @@ set_clin <- function(gamma, e_itv, CCOD, CCOD_t, etaC, etaE, d_itv) {
 #' @param lambdaC Baseline hazard rate of internal control arm. Specify a vector for piece-wise
 #' hazard with duration specified in \code{t_itv} if \code{event = "pwexp"}
 #'
-#' @param beta covariates' coefficients. Must be equal in length to the number of covariates
+#' @param beta covariates' coefficients (i.e. log hazard ratios). Must be equal in length to the number of covariates
 #' created by [simu_cov()] (or less if restricted by `keep`) plus the number of covariates
 #' defined by `change`.
 #'
