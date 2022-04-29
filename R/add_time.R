@@ -68,27 +68,82 @@ set_clin <- function(gamma, e_itv, CCOD, CCOD_t, etaC, etaE, d_itv) {
 #' S4 Class for setting parameters for time-to-events
 #'
 #' @keywords class
-.eventClass = setClass(".eventClass", slots = list(event = "character",
-                                                   lambdaC = "numeric", shape = "numericORNULL", t_itv = "numericORNULL",
-                                                   beta = "numericORNULL",
-                                                   change = "listORNULL", keep = "charORNULL"))
+.eventClass = setClass(".eventClass", slots = list(
+  event = "character",
+  lambdaC = "numeric", shape = "numericORNULL", t_itv = "numericORNULL",
+  beta = "numericORNULL",
+  change = "listORNULL", keep = "charORNULL"
+))
 
 
 
 #' Set up time-to-events
 #'
-#' @param event Distribution of time-to-events: \code{event = "pwexp"} for piece-wise exponential distribution. \code{event = "weibull"} for weibull distribution
-#' @param lambdaC Baseline hazard rate of internal control arm. Specify a vector for piece-wise hazard with duration specified in \code{t_itv} if \code{event = "pwexp"}
-#' @param beta covariates' coefficients. \code{NULL} if no covariates are found in \code{ssObj}
-#' @param shape shape of weibull distribution if \code{event = "weibull"}. \code{NULL} if \code{event = "pwexp"}
-#' @param t_itv a vector indicating interval lengths where the exponential rates provided in \code{lambdaC} apply. Note that the length of \code{t_itv} is at least 1 less than that of \code{lambdaC} and that the final value rate in \code{lambdaC} applies after time `sum(t_itv)`. \code{NULL} if \code{event = "weibull"}
-#' @param change operations applied to covariates for simulating time-to-events
-#' @param keep original covariates to keep when simulate time-to-events
+#' @description
+#'
+#' Defines the model formula and distribution to be used when simulating time-to-events. Please
+#' see the user-guide for the model formulations
+#'
+#' @param event Distribution of time-to-events: \code{event = "pwexp"} for piece-wise exponential
+#' distribution. \code{event = "weibull"} for Weibull distribution
+#'
+#' @param lambdaC Baseline hazard rate of internal control arm. Specify a vector for piece-wise
+#' hazard with duration specified in \code{t_itv} if \code{event = "pwexp"}
+#'
+#' @param beta covariates' coefficients (i.e. log hazard ratios). Must be equal in length to the number of covariates
+#' created by [simu_cov()] (or less if restricted by `keep`) plus the number of covariates
+#' defined by `change`.
+#'
+#' @param shape the shape parameter of Weibull distribution if \code{event = "weibull"}. \code{NULL} if
+#' \code{event = "pwexp"}
+#'
+#' @param t_itv a vector indicating interval lengths where the exponential rates provided in
+#' \code{lambdaC} apply. Note that the length of \code{t_itv} is at least 1 less than that of
+#' \code{lambdaC} and that the final value rate in \code{lambdaC} applies after time `sum(t_itv)`.
+#' \code{NULL} if \code{event = "weibull"}
+#'
+#' @param change A list of additional derivered covariates
+#' to be used in simulating time-to-events. See details
+#'
+#' @param keep A character vector specifying which of the original covariates (i.e. those not
+#' derived via the `change` argument) should be included into the model to simulate time-to-events.
+#' If left unspecified all covariates will be included.
+#'
 #' @return a \code{.eventClass} class containing time-to-events information
 #'
 #'
+#' @details
+#'
+#' The `change` argument is used to specify additional derived covariates to be used when
+#' simulating time-to-events. For example, let’s say have 3 covariates `cov1`, `cov2` & `cov3`
+#' but that we also wish to include a new covariate that is an interaction
+#' between `cov1` and `cov2` as well as another covariate that is equal to the sum of
+#' `cov2` and `cov3`; we could implement this as follows:
+#'
+#' ```
+#' set_event(
+#'     event = "weibull",
+#'     shape = 0.9,
+#'     lambdaC = 0.0135,
+#'     beta = c(5, 3, 1, 7, 9),
+#'     change = list(
+#'         c("cov1", "*", "cov2"),
+#'         c("cov2", "+", "cov3")
+#'     )
+#' )
+#' ```
+#' Note that in the above example 5 values have been specified to beta,
+#' 3 for the original three covariates
+#' and 2 for the two additional derived covariates included via `change`.
+#'
+#' Variables derived via `change` are automatically included in the model regardless
+#' of whether they are listed in `keep` or not. Likewise, these covariates are derived
+#' separately and not via a standard R formula, that is to say including an interaction
+#' term does not automatically include the individual fixed effects.
+#'
+#'
 #' @examples
-#' # time-to-event follows a weibull distribution
+#' # time-to-event follows a Weibull distribution
 #' set_event(event = "weibull", shape = 0.9, lambdaC = 0.0135)
 #'
 #' # time-to-event follows a piece-wise exponential distribution
@@ -98,22 +153,65 @@ set_clin <- function(gamma, e_itv, CCOD, CCOD_t, etaC, etaE, d_itv) {
 #' @export
 #' @keywords constructor
 #' @return a \code{matrix} containing simulated time-to-events information
+
 set_event <- function(event, lambdaC, beta, shape, t_itv, change, keep) {
 
-  if (missing(event) || event %notin% c("weibull", "pwexp")) stop("Distribution of time-to-events (event) is not correctly specify. Options include weibull, and pwexp")
-  if (missing(lambdaC)) stop ("Please provide the baseline hazard rate of internal control arm (lambdaC).")
-  if (missing(t_itv)) t_itv = NULL
-  if (missing(shape)) shape = NULL
-  if (event == "weibull" & is.null(shape)) stop("Simulate time following weibull distribution. Please provide shape of the weibull distribution")
-  if (event == "pwexp" & (length(t_itv) < length(lambdaC) - 1)) stop("Length of t_it should be at least 1 less than that of lambdaC")
+  if (missing(event) || event %notin% c("weibull", "pwexp")) {
+    stop(
+      paste(
+        "Distribution of time-to-events (event) is not correctly specify.",
+        "Options include weibull, and pwexp"
+      )
+    )
+  }
 
-  if (missing(change)) change = NULL
-  if (missing(keep)) keep = NULL
-  if (missing(beta)) beta = NULL
+  if (missing(lambdaC)) {
+    stop("Please provide the baseline hazard rate of internal control arm (lambdaC).")
+  }
 
-  new(".eventClass", event = event,
-      lambdaC = lambdaC, shape = shape, t_itv = t_itv,
-      beta = beta, change = change, keep = keep)
+  if (missing(t_itv)) {
+    t_itv <- NULL
+  }
+
+  if (missing(shape)) {
+    shape <- NULL
+  }
+
+  if (event == "weibull" & is.null(shape)) {
+    stop(
+      paste(
+        "Simulate time following weibull distribution.",
+        "Please provide shape of the weibull distribution"
+      )
+    )
+  }
+
+  if (event == "pwexp" & (length(t_itv) < length(lambdaC) - 1)) {
+    stop("Length of t_it should be at least 1 less than that of lambdaC")
+  }
+
+  if (missing(change)) {
+    change <- NULL
+  }
+
+  if (missing(keep)) {
+    keep <- NULL
+  }
+
+  if (missing(beta)) {
+    beta <- NULL
+  }
+
+  new(
+    ".eventClass",
+    event = event,
+    lambdaC = lambdaC,
+    shape = shape,
+    t_itv = t_itv,
+    beta = beta,
+    change = change,
+    keep = keep
+  )
 }
 
 
