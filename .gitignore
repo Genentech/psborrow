@@ -54,3 +54,4 @@ src/*
 # Local folder for personal content
 local/
 
+inst/doc
