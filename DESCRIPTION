@@ -35,7 +35,8 @@ Suggests:
     testthat,
     Matrix,
     assertthat,
-    pkgload
+    pkgload,
+    flexsurv
 VignetteBuilder: knitr
 Collate:
     'zzz.R'

@@ -77,6 +77,7 @@
 #' historical control arm
 #'
 #' @name apply_mcmc
+#' @importFrom stats model.matrix sd quantile
 #' @export
 apply_mcmc <- function(dt, formula_cov, ...) {
     design_mat <- model.matrix(formula_cov, dt)
@@ -89,9 +90,11 @@ apply_mcmc <- function(dt, formula_cov, ...) {
 
     colnames(design_mat) <- paste0("cov", seq_len(ncol(design_mat)))
 
+    dt2 <- dt[, c("time", "ext", "trt", "cnsr")]
+
     design_df <- as.data.frame(design_mat) %>%
         as_tibble() %>%
-        bind_cols(select(dt, time, ext, trt, cnsr))
+        bind_cols(dt2)
 
     x <- add_mcmc(
         dt = as.data.frame(design_df),
