@@ -9,9 +9,9 @@ suppressPackageStartupMessages({
 
 
 test_that("apply_mcmc can recover known parameters", {
-    set.seed(1465)
+    set.seed(13465)
 
-    n <- 3600
+    n <- 4000
 
     grp_lvl <- c("CC", "TRT", "EC")
     sex_lvl <- c("Male", "Female")
@@ -67,7 +67,7 @@ test_that("apply_mcmc can recover known parameters", {
         n.chains = 1,
         n.adapt = 200,
         n.burn = 300,
-        n.iter = 600,
+        n.iter = 700,
         seed = 47
     )
 
@@ -80,8 +80,8 @@ test_that("apply_mcmc can recover known parameters", {
     expect_between <- function(x, par) {
         m <- ss[par, "mean"]
         sd <- ss[par, "sd"]
-        ui <- m + qnorm(0.998) * sd
-        li <- m - qnorm(0.998) * sd
+        ui <- m + qnorm(0.999) * sd
+        li <- m - qnorm(0.999) * sd
         expect_lte(x, ui)
         expect_gte(x, li)
     }
