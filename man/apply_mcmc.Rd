@@ -8,9 +8,9 @@
 \usage{
 apply_mcmc(dt, formula_cov, ...)
 
-extract_samples(x)
+extract_samples(object)
 
-\method{summary}{apply_mcmc}(x)
+\method{summary}{apply_mcmc}(object, ...)
 }
 \arguments{
 \item{dt}{A data.frame containing data required for modelling. See details}
@@ -21,7 +21,7 @@ be included into the model. See details}
 \item{...}{Additional arguments passed onto \code{\link[=run_mcmc]{run_mcmc()}}. Only exception being the
 \code{path} argument which is not supported by this function}
 
-\item{x}{A \code{apply_mcmc} object created by \code{\link[=apply_mcmc]{apply_mcmc()}}}
+\item{object}{A \code{apply_mcmc} object created by \code{\link[=apply_mcmc]{apply_mcmc()}}}
 }
 \description{
 Fit a dynamic borrowing Weibull MCMC model to the given dataset and extract the posterior

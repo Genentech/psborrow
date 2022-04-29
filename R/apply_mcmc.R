@@ -14,7 +14,7 @@
 #' @param formula_cov A one sided formula specifying which non-treatment covariates should
 #' be included into the model. See details
 #'
-#' @param x A `apply_mcmc` object created by [apply_mcmc()]
+#' @param object A `apply_mcmc` object created by [apply_mcmc()]
 #'
 #' @param ... Additional arguments passed onto [run_mcmc()]. Only exception being the
 #' `path` argument which is not supported by this function
@@ -109,8 +109,8 @@ apply_mcmc <- function(dt, formula_cov, ...) {
 
 #' @rdname apply_mcmc
 #' @export
-extract_samples <- function(x) {
-    df <- do.call(rbind, x$mcmc.list)
+extract_samples <- function(object) {
+    df <- do.call(rbind, object$mcmc.list)
     df
 }
 
@@ -118,8 +118,8 @@ extract_samples <- function(x) {
 
 #' @rdname apply_mcmc
 #' @export
-summary.apply_mcmc <- function(x) {
-    samples <- extract_samples(x)
+summary.apply_mcmc <- function(object, ...) {
+    samples <- extract_samples(object)
     data.frame(
         parameter = colnames(samples),
         mean = apply(samples, 2, mean),
