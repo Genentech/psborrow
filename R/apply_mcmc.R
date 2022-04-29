@@ -6,7 +6,8 @@
 #' Fit a dynamic borrowing Weibull MCMC model to the given dataset and extract the posterior
 #' samples.
 #' See the user guide for more information on the model formulation.
-#' See [run_mcmc()] for more information on the available parameters for tuning the MCMC sampling process
+#' See [run_mcmc()] for more information on the available parameters for tuning the MCMC sampling
+#' process
 #'
 #' @param dt A data.frame containing data required for modelling. See details
 #'
@@ -48,24 +49,31 @@
 #'
 #' The extracted samples can be roughly defined as follows (see the user guide for full details):
 #'
-#' - **`HR_cc_hc`** - The hazard ratio between the concurrent control arm and the historical control arm. This can be
-#' be thought of as the ratio of the scale parameter between the baseline trial distribution and the baseline
+#' - **`HR_cc_hc`** - The hazard ratio between the concurrent control arm and the historical
+#' control arm. This can be
+#' be thought of as the ratio of the scale parameter between the baseline trial distribution and
+#' the baseline
 #' external control distribution. This is equivalent to `exp(alpha[1] - alpha[2])`
 #'
-#' - **`HR_trt_cc`** - The hazard ratio between the treatment arm and the concurrent control arm. This is equivalent
+#' - **`HR_trt_cc`** - The hazard ratio between the treatment arm and the concurrent control arm.
+#' This is equivalent
 #' to `exp(beta[1])`
 #'
 #' - **`alpha[1]`** - The shape parameter for the trial's baseline distribution
 #'
 #' - **`alpha[2]`** - The shape parameter for the historical control's baseline distribution
 #'
-#' - **`beta[1]`** - The log-hazard ratio for the treatment effect. This is equivalent to `log(HR_trt_cc)`
+#' - **`beta[1]`** - The log-hazard ratio for the treatment effect. This is equivalent to
+#' `log(HR_trt_cc)`
 #'
-#' - **`beta[x]`** - The log-hazard ratio for any other covariate provided to the model via `formula_cov`
+#' - **`beta[x]`** - The log-hazard ratio for any other covariate provided to the model via
+#' `formula_cov`
 #'
-#' - **`r0`** - The scale parameter for the baseline distribution of both the trial and the historical control
+#' - **`r0`** - The scale parameter for the baseline distribution of both the trial and the
+#' historical control
 #'
-#' - **`tau/sigma`** - The precision/variance for `alpha[1]` i.e. controls how much information is borrowed from the
+#' - **`tau/sigma`** - The precision/variance for `alpha[1]` i.e. controls how much
+#' information is borrowed from the
 #' historical control arm
 #'
 #' @name apply_mcmc
