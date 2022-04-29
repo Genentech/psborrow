@@ -42,6 +42,7 @@ Collate:
     'add_cov.R'
     'add_time.R'
     'add_mcmc.R'
+    'apply_mcmc.R'
     'simu_cov.R'
     'match_cov.R'
     'simu_time.R'
