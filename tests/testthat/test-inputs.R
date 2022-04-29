@@ -1,12 +1,12 @@
 test_that("inputs are correctly carried through to outputs", {
 
   # Set inputs that will be evaluated
-  driftHRin <- c(0.12, 0.98, 1, 2, 4.1)
-  HRin <- c(.08, 0.67, 1, 1.1, 3, 4.5, 6.1,20.999)
-  ssCin <- 130
-  ssEin <- 339
-  ssExtin <- 313
-  nsimin <- 2
+  driftHRin <- c(0.12, 4.1)
+  HRin <- c(.08, 2.999)
+  ssCin <- 120
+  ssEin <- 120
+  ssExtin <- 80
+  nsimin <- 1
 
   # Run simulation analysis
   suppressMessages({
@@ -133,7 +133,7 @@ test_that("inputs are correctly carried through to outputs", {
     }
   }
 
-  # Check driftHR and HR captured correctly in MCMC outputs
+  # Check driftHR and HR captured correctly in sample of MCMC outputs
   ## run_mcmc()
   ### res
   expect_equal(
