@@ -204,8 +204,7 @@ log(k) &= - \frac{1}{v} \Bigl[ log(\lambda_c) + log(\text{driftHR}) + e^{X \beta
 \end{aligned}
 $$
 
-Since the covariate data we generate in `sample_match` contains 8 covariates, we also want to make
-sure the length of `beta` is 8.
+Since the covariate data we generated above in `sample_cov` contains 8 covariates, we also want to make sure the length of `beta` is 8.
 
 ```{r}
 evt <- set_event(
