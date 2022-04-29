@@ -62,7 +62,7 @@
       <img src="" class="logo" alt=""><h1>User Guide: Dynamic Borrowing with psborrow</h1>
                         <h4 data-toc-skip class="author">Yichen Lu</h4>
             
-            <h4 data-toc-skip class="date">2022-04-21</h4>
+            <h4 data-toc-skip class="date">2022-04-29</h4>
       
       
       <div class="d-none name"><code>user_guide.Rmd</code></div>
@@ -186,7 +186,7 @@ treatment arm information from output <code>sample_cov</code>:</em></p>
 <span class="co">#&gt;      driftHR   HR ext trt cov1 cov2         cov3 cov4 cov5        cov6</span>
 <span class="co">#&gt; [1,]       1 0.67   1   0    0    0  1.426442353    1    1  0.06551554</span>
 <span class="co">#&gt; [2,]       1 0.67   1   0    1    1  0.413408109    1    1 -0.86978705</span>
-<span class="co">#&gt; [3,]       1 0.67   1   0    1    1 -0.667792987    1    1 -0.52705950</span>
+<span class="co">#&gt; [3,]       1 0.67   1   0    1    1 -0.667792987    1    1 -0.52705951</span>
 <span class="co">#&gt; [4,]       1 0.67   1   0    0    1 -0.008703362    1    1 -0.66796308</span>
 <span class="co">#&gt; [5,]       1 0.67   1   0    1    1 -0.941826735    0    0  0.90304807</span>
 <span class="co">#&gt;             cov7        cov8</span>
@@ -260,9 +260,9 @@ log(k) &amp;= - \frac{1}{v} \Bigl[ log(\lambda_c) + log(\text{driftHR})
 + e^{X \beta} \Bigr] \\
 \end{aligned}
 \]</span></p>
-<p>Since the covariate data we generate in <code>sample_match</code>
-contains 8 covariates, we also want to make sure the length of
-<code>beta</code> is 8.</p>
+<p>Since the covariate data we generated above in
+<code>sample_cov</code> contains 8 covariates, we also want to make sure
+the length of <code>beta</code> is 8.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">evt</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/set_event.html">set_event</a></span><span class="op">(</span>
   event <span class="op">=</span> <span class="st">"pwexp"</span>,
@@ -611,8 +611,7 @@ these messages simply specify:</p>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
     </footer>
