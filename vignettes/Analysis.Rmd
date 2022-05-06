@@ -24,16 +24,17 @@ package itself, please see the user-guide vignette.
 
 ## Analysis Model
 
-The package uses Markov chain Monte Carlo (MCMC) through Jags to 
-obtain posterior distribution for hazard ratio between treatment and control arms. Bayesian 
-commensurate prior approach is implemented (Lewis, et al., 2019). The probability density 
-function for the survival time of patient $i$ following a Weibull model is as below:
+The package uses Markov chain Monte Carlo (MCMC) through JAGS to 
+obtain the posterior distribution for the hazard ratio between treatment and control arms. The 
+package relies on the Bayesian commensurate prior approach (Lewis, et al., 2019).
+The probability density function for the survival time of patient $i$ following a Weibull model is as below:
 
 $$
 t_i \sim Weibull( \nu, \lambda_i)
 $$
 
 for $i = 1, 2, \dots,n$, where:
+
 - $\nu$ is the shape parameter
 - $\lambda$ is the rate,
 - $n$ is the total sample size of the analysis population.
@@ -47,55 +48,50 @@ $$
 with the rate taking the format:
 
 $$
-\lambda_i = exp(\alpha_i + \beta_{trt}  * I_{trt} + \beta_i * x_i)
+\lambda_i = exp(\alpha_i + \beta_{trt}  \times I_{trt} + \beta_n^T \times X_{ni})
 $$
 
 Where:
 
-- $\alpha_i = \alpha_{cc}$ if patient $i$ is in the concurrent control arm, and
-$\alpha_i = \alpha_{ec}$ if patient $i$ is in the external control arm.
-$\alpha_{cc}$ and $\alpha_{ec}$ correspond to the log of baseline hazard rate for
-concurrent control arm and external control arm, respectively.  
-- $\beta = \{\beta_{trt}, \beta_i\}$ is the vector of regression coefficients    
-- $x_i$ is the corresponding covariate vector including the additional parameters
+- $\alpha_i = \alpha_{cc}$ if patient $i$ is in the concurrent trial, and
+$\alpha_i = \alpha_{ec}$ if patient $i$ is in the external trial.
+Because the impact of therapy is captured by $I_{trt}$ below,
+$\alpha_{cc}$ and $\alpha_{ec}$ effectively correspond to the log of baseline hazard rate for
+concurrent control arm and external control arm, respectively.
+- $\beta_n$ is an n-length vector of regression coefficients    
+- $X_{ni}$ is an n-length covariate vector for patient $i$, including all additional parameters
 to adjust for (e.g. propensity score).  
 - $I_{trt}$ is the treatment indicator (value equals to 0 or 1).   
 
-A hyperprior $\tau$ is set based on $\alpha_{cc} | \alpha_{ec} \sim N(\alpha_{ec}, \tau)$, 
-i.e. an informative prior for concurrent control coefficient, with mean equal to the
-log of the external 
-control effect.
-
+A hierarchical model is defined in which the log hazard rate for the 
+concurrent controls is centered on the external controls, i.e.
+$\alpha_{cc} | \alpha_{ec} \sim N(\alpha_{ec}, \tau)$. The hyperprior
+$\tau$, also referred to as the commensurability parameter, determines the 
+extent of borrowing (see Lewis, et al., 2019).
 
 Four borrowing methods have been implemented: 
 
 1. Not borrowing any external control information 
-2. Fully incorporate external control arm patients to the concurrent control group
-3. Dynamic borrowing with hierarchical Bayesian models with the commensurability
-hyperparameter $\tau$ following a Gamma distribution
-4. Dynamic borrowing with a half-Cauchy hyperprior distribution.
+2. Fully incorporating external control arm patients to the concurrent control group
+3. Dynamic borrowing with the commensurability hyperparameter $\tau$ following a Gamma distribution
+4. Dynamic borrowing with the commensurability hyperparameter $\tau$ following a half-Cauchy distribution
 
-For methods (1) and (2), a conventional Bayesian model is deployed with 
-all relevant parameters assigned a non-informative prior. The concurrent and external control 
+For methods (1) and (2), a conventional Bayesian model without dynamic borrowing is deployed with 
+all relevant parameters assigned non-informative priors. The concurrent and external control 
 groups share the same prior for the log of the baseline hazard rate:
+
 $\alpha_{cc} \sim N(0, 0.0001)$ and 
 $\alpha_{ec} \sim N(0, 0.0001)$. 
 
-In comparison, methods (3) and (4) have the additional hyper-parameter $\tau$, which acts as the 
+In comparison, methods (3) and (4) have the commensurability hyper-parameter $\tau$, which acts as the 
 precision variable assessing the similarity between the concurrent and external control groups. 
-While the log of the baseline hazard rate of the external control group $\alpha_{ec}$ has a
-normal prior 
-$N(0, 0.0001)$, the prior for the log of the baseline hazard rate of the concurrent group is
-$\alpha_{cc} \sim N(\alpha_{ec}, 1/\tau)$.
 The prior of $tau$ follows a Gamma distribution (default: shape = 1, rate = 0.001) and a 
-half-Cauchy distribution (default: location = 0, scale = 0.2), respectively.
-Users can update the 
-default values for the parameter if they wish to customize the hyper-prior.
-
+half-Cauchy distribution (default: location = 0, scale = 0.2), respectively, 
+in methods 3 and 4.
+Users can update the default values for the parameter if they wish to customize the hyper-prior.
 
 After users state the prior choices and the simulated data is ready for use, the Markov chain 
 Monte Carlo (MCMC) algorithm is deployed to obtain samples from the posterior distribution.
-
 
 ## Example of use
 
@@ -108,12 +104,12 @@ $$
 Where:
 
 $$
-\lambda_i =  \frac{1}{150}I_{ec} * \frac{1}{200}I_{cc} * \frac{1}{400}I_{trt} *
-exp(0.2*x_{age} - 0.1*I_{female})
+\lambda_i =  \frac{1}{150}I_{ec} \times \frac{1}{200}I_{cc} \times \frac{1}{400}I_{trt} \times
+exp(0.2\times x_{age} - 0.1\times I_{female})
 $$
 
-- $I_{ec}$ is 1 if the patient is in the external control arm else 0  
-- $I_{cc}$ is 1 if the patient is in the concurrent control arm else 0  
+- $I_{ec}$ is 1 if the patient is in the external trial else 0  
+- $I_{cc}$ is 1 if the patient is in the concurrent trial else 0  
 - $I_{trt}$ is 1 if the patient is in the treatment arm else 0  
 - $I_{female}$ is 1 if the patient is female else 0  
 - $x_{age}$ is the patient's age  
@@ -181,7 +177,6 @@ we first need to convert our data into the required format.
 Full details of the required format can be found in `help(apply_mcmc)` however an example of
 this is shown below:
 
-
 ```{r}
 dat2 <- dat %>%
     mutate(trt = ifelse(grp == "TRT", 1, 0)) %>%
@@ -231,16 +226,17 @@ For reference the returned parameters are:
 This can be be thought of as the ratio of the scale parameter between the baseline trial distribution and the baseline external control distribution. This is equivalent to `exp(alpha[1] - alpha[2])`
 
 - `HR_trt_cc` - The hazard ratio between the treatment arm and the concurrent control arm.
-This is equivalent to `exp(beta[1])`
+This is equivalent to `exp(beta_trt)`
 
 - `alpha[1]` - The shape parameter for the trial's baseline distribution
 
 - `alpha[2]` - The shape parameter for the historical control's baseline distribution
 
-- `beta[1]` - The log-hazard ratio for the treatment effect. This is equivalent to `log(HR_trt_cc)`
+- `beta_trt` - The log-hazard ratio for the treatment effect. This is equivalent to `log(HR_trt_cc)`
 
-- `beta[x]` - The log-hazard ratio for any other covariate(s) provided to the model via
-`formula_cov`
+- `beta_age` - The log-hazard ratio for the covariate `age`
+
+- `beta_sexFemale` - The log-hazard ratio for the covariate `sexFemale`
 
 - `r0` - The scale parameter for the baseline distribution of both the trial and the
 historical control

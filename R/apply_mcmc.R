@@ -3,8 +3,8 @@
 
 #' Fit Dynamic Borrowing MCMC Model
 #'
-#' Fit a dynamic borrowing Weibull MCMC model to the given dataset and extract the posterior
-#' samples.
+#' Fit a dynamic borrowing Weibull survival model to the given dataset and extract the posterior
+#' samples using MCMC.
 #' See the user guide for more information on the model formulation.
 #' See [run_mcmc()] for more information on the available parameters for tuning the MCMC sampling
 #' process
@@ -57,16 +57,16 @@
 #'
 #' - **`HR_trt_cc`** - The hazard ratio between the treatment arm and the concurrent control arm.
 #' This is equivalent
-#' to `exp(beta[1])`
+#' to `exp(beta_trt)`
 #'
 #' - **`alpha[1]`** - The shape parameter for the trial's baseline distribution
 #'
 #' - **`alpha[2]`** - The shape parameter for the historical control's baseline distribution
 #'
-#' - **`beta[1]`** - The log-hazard ratio for the treatment effect. This is equivalent to
+#' - **`beta_trt`** - The log-hazard ratio for the treatment effect. This is equivalent to
 #' `log(HR_trt_cc)`
 #'
-#' - **`beta[x]`** - The log-hazard ratio for any other covariate provided to the model via
+#' - **`beta_x`** - The log-hazard ratio for any other covariate provided to the model via
 #' `formula_cov`
 #'
 #' - **`r0`** - The scale parameter for the baseline distribution of both the trial and the
@@ -85,6 +85,13 @@ apply_mcmc <- function(dt, formula_cov, ...) {
     if (!"(Intercept)" %in% colnames(design_mat)) {
         stop("Covariate formula must contain the intercept term")
     }
+
+    if (ncol(design_mat)==1) {
+      stop("Right now, apply_mcmc is designed to incorporate conditional
+      models with all covariates of interest. The function cannot be run
+      without additional covariates (i.e.,  with formula_cov: ~ 1L)")
+    }
+
     keep_columns <- colnames(design_mat)[!grepl("\\(Intercept\\)", colnames(design_mat))]
     design_mat <- design_mat[, keep_columns]
 
@@ -102,6 +109,8 @@ apply_mcmc <- function(dt, formula_cov, ...) {
     )[[1]]
 
     class(x) <- "apply_mcmc"
+    colnames(x$mcmc.list[[1]])[colnames(x$mcmc.list[[1]])=='beta[1]'] <- 'beta_trt'
+    colnames(x$mcmc.list[[1]])[grep('beta\\[[0-9]+\\]',colnames(x$mcmc.list[[1]]))] <- paste0('beta_',keep_columns)
     return(x)
 }
 
