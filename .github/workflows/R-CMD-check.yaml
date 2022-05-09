@@ -35,10 +35,10 @@ jobs:
           del wjags.exe
         shell: cmd
 
-      - name: Install jags (macOS)
+      - name: Installajags (macOS)
         if: runner.os == 'macOS'
         run : |
-          brew install -y jags
+          brew install jags
     
       - uses: actions/checkout@v2
 
