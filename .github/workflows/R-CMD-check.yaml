@@ -26,6 +26,21 @@ jobs:
       R_KEEP_PKG_SOURCE: yes
 
     steps:
+      
+      - name: Install jags (windows)
+        if: runner.os == 'Windows'
+        run: |
+          curl.exe -o wjags.exe --url https://jztkft.dl.sourceforge.net/project/mcmc-jags/JAGS/4.x/Windows/JAGS-4.3.1.exe
+          wjags.exe /S
+          del wjags.exe
+        shell: cmd
+
+      - name: Install jags (macOS)
+        if: runner.os == 'macOS'
+        run : |
+              rm '/usr/local/bin/gfortran'
+              brew install jags
+    
       - uses: actions/checkout@v2
 
       - uses: r-lib/actions/setup-pandoc@v1
