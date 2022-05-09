@@ -1,18 +1,14 @@
 Package: psborrow
 Title: Bayesian Dynamic Borrowing with Propensity Score
-Version: 0.1.0
-Authors@R: 
-    c(person(given = "Yichen",
-           family = "Lu",
-           role = c("aut"),
-           email = "lu.yichen@gene.com",
-           comment = c(ORCID = "")),
-    person(given = "Aijing",
-           family = "Lin",
-           role = c("ctb","cre"),
-           email = "lina21@gene.com"))      
+Version: 0.2.0
+Authors@R: c(
+    person(given = "Craig", family = "Gower-Page", role = c("cre"), email = "craig.gower-page@roche.com"),
+    person(given = "Matt", family = "Secrest", role = c("ctb"), email = "secrestm@gene.com"),
+    person(given = "Yichen", family = "Lu", role = c("aut")),
+    person(given = "Aijing", family = "Lin", role = c("aut")),
+    person("F. Hoffmann-La Roche AG", role = c("cph", "fnd"))
+    )
 Description: A tool which aims to help evaluate the effect of external borrowing using an integrated approach described in Lewis et al., (2019) <doi:10.1080/19466315.2018.1497533> that combines propensity score and Bayesian dynamic borrowing methods.
-License: GPL (>= 3) | file LICENCE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
@@ -53,3 +49,4 @@ Collate:
 Depends: 
     R (>= 3.5.0)
 Config/testthat/edition: 3
+License: Apache License (>= 2)

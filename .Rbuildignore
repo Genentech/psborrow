@@ -9,3 +9,6 @@
 ^LICENSE\.md$
 ^doc$
 ^Meta$
+^cran-comments\.md$
+^local$
+^.lintr$
