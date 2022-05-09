@@ -89,7 +89,7 @@ test_that("Ensure errors are correct", {
 
 })
 
-test_that("Ensure output is producing a correct ggplot2 object", {
+test_that("Ensure output is producing a ggplot2 object with appropriate parameters", {
 
   dt5 <- tibble(
     HR = c(rep(0.8,4), rep(1.0,4)),
@@ -121,15 +121,38 @@ test_that("Ensure output is producing a correct ggplot2 object", {
   p9 <- plot_mse(dt5, HR = 0.8, driftHR = 1, pred = 'all')
   p10 <- plot_mse(dt6, HR = 0.8, driftHR = 1, pred = 'all')
 
-  expect_snapshot_file(path = save_png(p1), 'plot_type1error_p1.png')
-  expect_snapshot_file(path = save_png(p2), "plot_type1error_p2.png")
-  expect_snapshot_file(path = save_png(p3), 'plot_power_p3.png')
-  expect_snapshot_file(path = save_png(p4), 'plot_power_p4.png')
-  expect_snapshot_file(path = save_png(p5), 'plot_hr_p5.png')
-  expect_snapshot_file(path = save_png(p6), 'plot_hr_p6.png')
-  expect_snapshot_file(path = save_png(p7), 'plot_bias_p7.png')
-  expect_snapshot_file(path = save_png(p8), 'plot_bias_p8.png')
-  expect_snapshot_file(path = save_png(p9), 'plot_mse_p9.png')
-  expect_snapshot_file(path = save_png(p10), 'plot_mse_p10.png')
+  for(p in list(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10)){
+    expect_equal(class(p)[1],'gg')
+    expect_equal(p1$labels$yintercept, 'ref')
+  }
+  for(p in list(p1, p3, p7, p9)) {
+    expect_equal(NROW(p$layers), 3L)
+  }
+  for(p in list(p2, p4, p8, p10)) {
+    expect_equal(NROW(p$layers), 2L)
+  }
+  expect_equal(NROW(p5$layers), 4L)
+  expect_equal(NROW(p6$layers), 3L)
+
+  expect_equal(p1$labels$caption, 'Horizontal purple line refers to the type 1 error without any external arm (0.2143)')
+  expect_equal(p1$labels$title, 'Summarizing posterior distributions: Type 1 Error')
+  expect_equal(p2$labels$title, 'Summarizing posterior distributions: Type 1 Error')
+
+  expect_equal(p3$labels$caption, 'Horizontal purple line refers to the power without any external arm (0.1)')
+  expect_equal(p3$labels$title, 'Summarizing posterior distributions: power')
+  expect_equal(p4$labels$title, 'Summarizing posterior distributions: power')
+
+  expect_equal(p5$labels$caption, 'Horizontal purple line refers to the posterior hazard ratio without any external arm (0.8)')
+  expect_equal(p5$labels$title, 'Summarizing posterior distributions: mean posterior hazard ratio')
+  expect_equal(p6$labels$title, 'Summarizing posterior distributions: mean posterior hazard ratio')
+
+  expect_equal(p7$labels$caption, 'Horizontal purple line refers to the bias without any external arm (-0.2)')
+  expect_equal(p7$labels$title, 'Summarizing posterior distributions: bias')
+  expect_equal(p8$labels$title, 'Summarizing posterior distributions: bias')
+
+  expect_equal(p9$labels$caption, 'Horizontal purple line refers to the MSE without any external arm (0.11)')
+  expect_equal(p9$labels$title, 'Summarizing posterior distributions: MSE')
+  expect_equal(p10$labels$title, 'Summarizing posterior distributions: MSE')
+
 
 })
