@@ -86,8 +86,11 @@ apply_mcmc <- function(dt, formula_cov, ...) {
         stop("Covariate formula must contain the intercept term")
     }
 
-    if (ncol(design_mat)==1) {
-      stop("The function cannot be run without additional covariates (i.e. `formula_cov = ~ 1 ` is not supported)")
+    if (ncol(design_mat) == 1) {
+      stop(paste(
+          "The function cannot be run without additional covariates",
+          "i.e. `formula_cov = ~ 1 ` is not supported"
+      ))
     }
 
     keep_columns <- colnames(design_mat)[!grepl("\\(Intercept\\)", colnames(design_mat))]
@@ -101,14 +104,36 @@ apply_mcmc <- function(dt, formula_cov, ...) {
         as_tibble() %>%
         bind_cols(dt2)
 
-    x <- add_mcmc(
+    mcmc_results <- add_mcmc(
         dt = as.data.frame(design_df),
         ...
     )[[1]]
 
-    class(x) <- "apply_mcmc"
-    colnames(x$mcmc.list[[1]])[colnames(x$mcmc.list[[1]])=='beta[1]'] <- 'beta_trt'
-    colnames(x$mcmc.list[[1]])[grep('beta\\[[0-9]+\\]',colnames(x$mcmc.list[[1]]))] <- paste0('beta_',keep_columns)
+    mcmc_results$mcmc.list <- lapply(
+        mcmc_results$mcmc.list,
+        fix_col_names,
+        column_names = keep_columns
+    )
+
+    class(mcmc_results) <- "apply_mcmc"
+
+    return(mcmc_results)
+}
+
+
+#' Fix Column Names
+#'
+#' Utility function to make the mcmc column names more human friendly
+#'
+#' @param x a mcmc results object created by [add_mcmc()]
+#' @param column_names The names to change the beta columns to
+#'
+fix_col_names <- function(x, column_names) {
+    index_trt <- which(colnames(x) == "beta[1]")
+    colnames(x)[index_trt] <- "beta_trt"
+
+    index_beta <- grep("beta\\[[0-9]+\\]", colnames(x))
+    colnames(x)[index_beta] <- paste0("beta_", column_names)
     return(x)
 }
 

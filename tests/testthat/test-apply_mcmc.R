@@ -69,17 +69,17 @@ test_that("apply_mcmc can recover known parameters and catches errors", {
         n.iter = 700,
         seed = 47
       ),
-      "Right now, apply_mcmc is designed to incorporate conditional"
+      "`formula_cov = ~ 1 ` is not supported"
     )
 
     x <- apply_mcmc(
         dt = dat,
         formula_cov = ~ 1 + age + sex,
         priorObj = set_prior(pred = "all", prior = "gamma", r0 = 0.85, alpha = c(0, 0)),
-        n.chains = 1,
-        n.adapt = 200,
-        n.burn = 300,
-        n.iter = 700,
+        n.chains = 2,
+        n.adapt = 100,
+        n.burn = 100,
+        n.iter = 200,
         seed = 47
     )
 

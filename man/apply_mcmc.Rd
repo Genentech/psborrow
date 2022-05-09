@@ -76,7 +76,7 @@ to \code{exp(beta_trt)}
 \item \strong{\code{alpha[2]}} - The shape parameter for the historical control's baseline distribution
 \item \strong{\code{beta_trt}} - The log-hazard ratio for the treatment effect. This is equivalent to
 \code{log(HR_trt_cc)}
-\item \strong{\code{beta_x}} - The log-hazard ratio for any other covariate provided to the model via
+\item \strong{\verb{beta_<var>}} - The log-hazard ratio for any other covariate provided to the model via
 \code{formula_cov}
 \item \strong{\code{r0}} - The scale parameter for the baseline distribution of both the trial and the
 historical control
