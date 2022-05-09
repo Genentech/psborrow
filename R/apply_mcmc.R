@@ -66,7 +66,7 @@
 #' - **`beta_trt`** - The log-hazard ratio for the treatment effect. This is equivalent to
 #' `log(HR_trt_cc)`
 #'
-#' - **`beta_x`** - The log-hazard ratio for any other covariate provided to the model via
+#' - **`beta_<var>`** - The log-hazard ratio for any other covariate provided to the model via
 #' `formula_cov`
 #'
 #' - **`r0`** - The scale parameter for the baseline distribution of both the trial and the
