@@ -6,9 +6,7 @@ suppressPackageStartupMessages({
 })
 
 
-
-
-test_that("apply_mcmc can recover known parameters", {
+test_that("apply_mcmc can recover known parameters and catches errors", {
     set.seed(13465)
 
     n <- 4000
@@ -60,6 +58,20 @@ test_that("apply_mcmc can recover known parameters", {
 
     options("psborrow.quiet" = TRUE)
 
+    expect_error(
+      apply_mcmc(
+        dt = dat,
+        formula_cov = ~ 1,
+        priorObj = set_prior(pred = "all", prior = "gamma", r0 = 0.85, alpha = c(0, 0)),
+        n.chains = 1,
+        n.adapt = 200,
+        n.burn = 300,
+        n.iter = 700,
+        seed = 47
+      ),
+      "Right now, apply_mcmc is designed to incorporate conditional"
+    )
+
     x <- apply_mcmc(
         dt = dat,
         formula_cov = ~ 1 + age + sex,
@@ -99,13 +111,13 @@ test_that("apply_mcmc can recover known parameters", {
     expect_between(real, "alpha[2]")
 
     real <- log_hr_grp["TRT"] - log_hr_grp["CC"]
-    expect_between(real, "beta[1]")
+    expect_between(real, "beta_trt")
 
     real <- log_hr_age
-    expect_between(real, "beta[2]")
+    expect_between(real, "beta_age")
 
     real <- log_hr_sex["Female"]
-    expect_between(real, "beta[3]")
+    expect_between(real, "beta_sexFemale")
 
     real <- Shape
     expect_between(real, "r0")

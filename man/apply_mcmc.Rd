@@ -24,8 +24,8 @@ be included into the model. See details}
 \item{object}{A \code{apply_mcmc} object created by \code{\link[=apply_mcmc]{apply_mcmc()}}}
 }
 \description{
-Fit a dynamic borrowing Weibull MCMC model to the given dataset and extract the posterior
-samples.
+Fit a dynamic borrowing Weibull survival model to the given dataset and extract the posterior
+samples using MCMC.
 See the user guide for more information on the model formulation.
 See \code{\link[=run_mcmc]{run_mcmc()}} for more information on the available parameters for tuning the MCMC sampling
 process
@@ -71,12 +71,12 @@ the baseline
 external control distribution. This is equivalent to \code{exp(alpha[1] - alpha[2])}
 \item \strong{\code{HR_trt_cc}} - The hazard ratio between the treatment arm and the concurrent control arm.
 This is equivalent
-to \code{exp(beta[1])}
+to \code{exp(beta_trt)}
 \item \strong{\code{alpha[1]}} - The shape parameter for the trial's baseline distribution
 \item \strong{\code{alpha[2]}} - The shape parameter for the historical control's baseline distribution
-\item \strong{\code{beta[1]}} - The log-hazard ratio for the treatment effect. This is equivalent to
+\item \strong{\code{beta_trt}} - The log-hazard ratio for the treatment effect. This is equivalent to
 \code{log(HR_trt_cc)}
-\item \strong{\code{beta[x]}} - The log-hazard ratio for any other covariate provided to the model via
+\item \strong{\code{beta_x}} - The log-hazard ratio for any other covariate provided to the model via
 \code{formula_cov}
 \item \strong{\code{r0}} - The scale parameter for the baseline distribution of both the trial and the
 historical control
