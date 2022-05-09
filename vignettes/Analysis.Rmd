@@ -76,10 +76,9 @@ hyperparameter $\tau$ following a Gamma distribution
 4. Dynamic borrowing with a half-Cauchy hyperprior distribution.
 
 For methods (1) and (2), a conventional Bayesian model is deployed with 
-all relevant parameters assigned a non-informative prior. The concurrent and external control 
-groups share the same prior for the log of the baseline hazard rate:
-$\alpha_{cc} \sim N(0, 0.0001)$ and 
-$\alpha_{ec} \sim N(0, 0.0001)$. 
+all relevant parameters assigned a non-informative prior. 
+For method (1) no external control arm information is used and as such $\alpha_{cc} = \alpha \sim N(0, 0.0001)$
+For method (2) the external control arm is treated as part of the concurrent control and as such $\alpha_{cc} = \alpha_{ec} = \alpha \sim N(0, 0.0001)$.
 
 In comparison, methods (3) and (4) have the additional hyper-parameter $\tau$, which acts as the 
 precision variable assessing the similarity between the concurrent and external control groups. 
