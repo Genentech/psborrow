@@ -4,21 +4,25 @@ This `psborrow` package aims to evaluate the effect of external borrowing using 
 
 ## Installation
 
-Please first download the supporting package and [rjags](https://mcmc-jags.sourceforge.io/):
+
+The package can be installed directly from CRAN via:
 
 ```r
-# remotes
-install.packages("remotes")
+install.packages("psborrow")
 ```
-Then install this psborrow package with:
+
+Alternatively you can install the development version via:
 
 ```r
 remotes::install_github("Genentech/psborrow")
 ```
 
+Please note that this package requires [JAGs](https://mcmc-jags.sourceforge.io/) to be installed. 
+
 ## Usage
+
 You can use the following tutorials to follow the package flow
 
-- [User guide](https://htmlpreview.github.io/?https://github.com/Genentech/psborrow/blob/master/vignettes/user_guide.html)
+- [User guide](https://genentech.github.io/psborrow/articles/user_guide.html)
 
 

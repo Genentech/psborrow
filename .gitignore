@@ -51,3 +51,5 @@ src/*
 local/
 
 inst/doc
+
+cran-comments.md
