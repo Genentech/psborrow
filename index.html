@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="index.html">psborrow</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,6 +44,9 @@
     <a class="dropdown-item" href="articles/Analysis.html">Analysing data with psborrow</a>
     <a class="dropdown-item" href="articles/user_guide.html">User Guide: Dynamic Borrowing with psborrow</a>
   </div>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="news/index.html">Changelog</a>
 </li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
@@ -64,20 +67,20 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>Please first download the supporting package and <a href="https://mcmc-jags.sourceforge.io/" class="external-link">rjags</a>:</p>
+<p>The package can be installed directly from CRAN via:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># remotes</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></code></pre></div>
-<p>Then install this psborrow package with:</p>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"psborrow"</span><span class="op">)</span></code></pre></div>
+<p>Alternatively you can install the development version via:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"Genentech/psborrow"</span><span class="op">)</span></code></pre></div>
+<p>Please note that this package requires <a href="https://mcmc-jags.sourceforge.io/" class="external-link">JAGs</a> to be installed.</p>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
 <p>You can use the following tutorials to follow the package flow</p>
 <ul>
-<li><a href="https://htmlpreview.github.io/?https://github.com/Genentech/psborrow/blob/master/vignettes/user_guide.html" class="external-link">User guide</a></li>
+<li><a href="https://genentech.github.io/psborrow/articles/user_guide.html" class="external-link">User guide</a></li>
 </ul>
 </div>
 </div>
@@ -91,8 +94,8 @@
 <div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li>GPL (&gt;= 3) | file <a href="LICENSE-text.html">LICENCE</a>
-</li>
+<li><a href="LICENSE.html">Full license</a></li>
+<li><small>Apache License (&gt;= 2)</small></li>
 </ul>
 </div>
 
@@ -107,8 +110,11 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
+<li>Craig Gower-Page <br><small class="roles"> Maintainer </small>  </li>
 <li>Yichen Lu <br><small class="roles"> Author </small>  </li>
-<li>Aijing Lin <br><small class="roles"> Contributor, maintainer </small>  </li>
+<li>Aijing Lin <br><small class="roles"> Author </small>  </li>
+<li>F. Hoffmann-La Roche AG <br><small class="roles"> Copyright holder, funder </small>  </li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
 
@@ -120,7 +126,7 @@
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Yichen Lu, Aijing Lin.</p>
+<p>Developed by Craig Gower-Page, Yichen Lu, Aijing Lin, F. Hoffmann-La Roche AG.</p>
 </div>
 
 <div class="pkgdown-footer-right">
