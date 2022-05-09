@@ -48,7 +48,7 @@ $$
 with the rate taking the format:
 
 $$
-\lambda_i = exp(\alpha_i + \beta_{trt}  \times I_{trt} + \beta_n^T \times X_{ni})
+\lambda_i = exp(\alpha_i + \beta_{trt}  \times I_{trt} + \beta^T \times X_{i})
 $$
 
 Where:

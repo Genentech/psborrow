@@ -87,9 +87,7 @@ apply_mcmc <- function(dt, formula_cov, ...) {
     }
 
     if (ncol(design_mat)==1) {
-      stop("Right now, apply_mcmc is designed to incorporate conditional
-      models with all covariates of interest. The function cannot be run
-      without additional covariates (i.e.,  with formula_cov: ~ 1L)")
+      stop("The function cannot be run without additional covariates (i.e. `formula_cov = ~ 1 ` is not supported)")
     }
 
     keep_columns <- colnames(design_mat)[!grepl("\\(Intercept\\)", colnames(design_mat))]
