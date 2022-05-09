@@ -24,6 +24,7 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/Analysis.html">Analysing data with psborrow</a>
     <a class="dropdown-item" href="../articles/user_guide.html">User Guide: Dynamic Borrowing with psborrow</a>
   </div>
 </li>
@@ -54,15 +55,25 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>pred</dt>
-<dd><p>Predictors to include in the weibull distribution. No covariates except for treatment indicator is included if <code>pred = NULL</code>. Only propensity score generated using a logistic regression model on all covariates and treatment indicator are included if <code>pred = ps</code>. All covariates and treatment indicator are included if <code>pred = all</code></p></dd>
+<dd><p>Predictors to include in the weibull distribution. No covariates except for
+treatment indicator is included if <code>pred = NULL</code>. Only propensity score generated
+using a logistic regression model on all covariates and treatment indicator are included
+if <code>pred = ps</code>. All covariates and treatment indicator are included if <code>pred = all</code></p></dd>
 <dt>prior</dt>
-<dd><p>Prior distribution for the precision parameter that controls the degree of borrowing. Half-cauchy distribution if <code>prior = "cauchy"</code>. No external data is included in the data if <code>prior = "no_ext"</code>. External control arm is assumed to have the same baseline hazards as internal control arm if <code>prior = "full_ext"</code>. Other options include "gamma" and "unif"</p></dd>
+<dd><p>Prior distribution for the precision parameter that controls the degree of
+borrowing. Half-cauchy distribution if <code>prior = "cauchy"</code>. No external data is
+included in the data if <code>prior = "no_ext"</code>. External control arm is assumed to
+have the same baseline hazards as internal control arm if <code>prior = "full_ext"</code>.
+Other options include "gamma" and "unif"</p></dd>
 <dt>r0</dt>
 <dd><p>Initial values for the shape of the weibull distribution for time-to-events</p></dd>
 <dt>alpha</dt>
-<dd><p>Initial values for log of baseline hazard rate for external and internal control arms. Length of <code>alpha</code> should be 1 if <code>prior = "full_ext"</code> or <code>prior = "no_ext"</code>, and equal to 2 otherwise</p></dd>
+<dd><p>Initial values for log of baseline hazard rate for external and internal control
+arms. Length of <code>alpha</code> should be 1 if <code>prior = "full_ext"</code> or <code>prior =
+"no_ext"</code>, and equal to 2 otherwise</p></dd>
 <dt>sigma</dt>
-<dd><p>Initial values for precision parameter if <code>prior = "cauchy"</code>. If left <code>NULL</code>, default value 0.03 is used</p></dd>
+<dd><p>Initial values for precision parameter if <code>prior = "cauchy"</code>.
+If left <code>NULL</code>, default value 0.03 is used</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>

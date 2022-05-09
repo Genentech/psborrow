@@ -7,6 +7,9 @@
     <loc>/LICENSE-text.html</loc>
   </url>
   <url>
+    <loc>/articles/Analysis.html</loc>
+  </url>
+  <url>
     <loc>/articles/index.html</loc>
   </url>
   <url>
@@ -28,6 +31,9 @@
     <loc>/reference/add_time.html</loc>
   </url>
   <url>
+    <loc>/reference/apply_mcmc.html</loc>
+  </url>
+  <url>
     <loc>/reference/c-.covClass-method.html</loc>
   </url>
   <url>
@@ -44,6 +50,9 @@
   </url>
   <url>
     <loc>/reference/dot-priorClass-class.html</loc>
+  </url>
+  <url>
+    <loc>/reference/fix_col_names.html</loc>
   </url>
   <url>
     <loc>/reference/get_summary.html</loc>
