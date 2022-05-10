@@ -439,23 +439,3 @@ is_psborrow_dev <- function() {
   }
   return(FALSE)
 }
-
-
-
-#' Save .png file (for snapshot testing purposes)
-#'
-#' @param plot plot to be printed
-#' @param width in pixels
-#' @param height in pixels
-#'
-#'
-#' @return temp path to the image
-save_png <- function(plot, width = 1200, height = 800) {
-
-  path <- tempfile(fileext = ".png")
-  png(path, width = width, height = height)
-  on.exit(dev.off())
-  print(plot)
-
-  path
-}
