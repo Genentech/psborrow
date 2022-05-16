@@ -32,8 +32,9 @@ Suggests:
     Matrix,
     assertthat,
     pkgload,
-    flexsurv
-VignetteBuilder: knitr
+    flexsurv,
+    R.rsp
+VignetteBuilder: R.rsp
 Collate:
     'zzz.R'
     'add_cov.R'

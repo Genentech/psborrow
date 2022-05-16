@@ -1,5 +1,9 @@
 ## Release summary
 
+This is a resubmission to reduce package build time to get < 10 mins for R CMD CHECK.
+
+Changes since last release:
+
 * Change of license (see below)
 * Change of maintainer (see below)
 * Minor bug fixes
