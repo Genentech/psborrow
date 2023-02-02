@@ -1,5 +1,13 @@
 # psborrow
 
+
+## DEPRECATED
+
+Please note that this package has been depreciated in favour of [psborrow2](https://github.com/Genentech/psborrow2). This package will be left here for reference but we recommend that all users should use psborrow2 instead.
+
+## Introduction
+
+
 This `psborrow` package aims to evaluate the effect of external borrowing using an integrated approach that combines propensity score and Bayesian dynamic borrowing methods. Users are encouraged to check the vigbette for detailed instructions.
 
 ## Installation
