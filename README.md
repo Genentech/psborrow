@@ -3,7 +3,7 @@
 
 ## DEPRECATED
 
-Please note that this package has been deprecated in favour of [psborrow2](https://github.com/Genentech/psborrow2). This package will be left here for reference but we recommend that all users should use psborrow2 instead.
+Please note that this package has been deprecated in favour of [psborrow2](https://github.com/Genentech/psborrow2). This package will be left here for reference but we recommend that all users should use [psborrow2](https://github.com/Genentech/psborrow2) instead. Please refer to the [psborrow2 website](https://genentech.github.io/psborrow2/main/).
 
 ## Introduction
 
