@@ -3,7 +3,6 @@
 #' @import dplyr
 #' @import rjags
 #' @import mvtnorm
-#' @import MatchIt
 #' @import ggplot2
 #' @import survival
 #' @import futile.logger
@@ -127,16 +126,23 @@ c_cov = function(dt, change, keep){
 
 # match individuals from the external dataset to the internal tx group
 m_cov <- function(dt, match.formula){
+  if (!requireNamespace("MatchIt", quietly = TRUE)) {
+    stop(
+      "Package \"MatchIt\" must be installed to use this function.",
+      call. = FALSE
+    )
+  }
+
   dt2 <- data.frame(dt)
   dt2$int = 1 - dt2$ext
 
-  m.out <- matchit(as.formula(match.formula), method = "nearest", ratio = 1, caliper = 0.2, data = dt2)
+  m.out <- MatchIt::matchit(as.formula(match.formula), method = "nearest", ratio = 1, caliper = 0.2, data = dt2)
   #matchit(ext ~ cov1 + cov2, method = "nearest", ratio = 1, caliper = 0.2, data = sample_cov.df) # match on all covariates
 
-  dt.match <- match.data(m.out)
+  dt.match <- MatchIt::match.data(m.out)
 
   ps_message(nrow(dt2[dt2$ext == 1,]) - nrow(dt.match[dt.match$ext == 1,]), " patients from the external arm are excluded. ",
-          nrow(dt2[dt2$int == 1,]) - nrow(dt.match[dt.match$int == 1,]), " patients from the internal trial are excluded.")
+             nrow(dt2[dt2$int == 1,]) - nrow(dt.match[dt.match$int == 1,]), " patients from the internal trial are excluded.")
 
   dt.match_ext <- dt.match[dt.match$ext == 1, colnames(dt.match) %notin% c("distance", "weights", "subclass")]
 
