@@ -1,174 +1,174 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="apply_mcmc" timestamp="2023-02-21T13:49:58Z" hostname="b404c9df4dbe" tests="17" skipped="0" failures="0" errors="0" time="107.283">
-    <testcase time="0.306" classname="apply_mcmc" name="apply_mcmc_can_recover_known_parameters_and_catches_errors"/>
-    <testcase time="106.938" classname="apply_mcmc" name="apply_mcmc_can_recover_known_parameters_and_catches_errors"/>
-    <testcase time="0.01400000000001" classname="apply_mcmc" name="apply_mcmc_can_recover_known_parameters_and_catches_errors"/>
+  <testsuite name="apply_mcmc" timestamp="2023-02-21T14:00:55Z" hostname="1cd7a49d6129" tests="17" skipped="0" failures="0" errors="0" time="33.742">
+    <testcase time="0.187" classname="apply_mcmc" name="apply_mcmc_can_recover_known_parameters_and_catches_errors"/>
+    <testcase time="33.528" classname="apply_mcmc" name="apply_mcmc_can_recover_known_parameters_and_catches_errors"/>
+    <testcase time="0.00900000000000034" classname="apply_mcmc" name="apply_mcmc_can_recover_known_parameters_and_catches_errors"/>
     <testcase time="0.00199999999999534" classname="apply_mcmc" name="apply_mcmc_can_recover_known_parameters_and_catches_errors"/>
     <testcase time="0.00100000000000477" classname="apply_mcmc" name="apply_mcmc_can_recover_known_parameters_and_catches_errors"/>
-    <testcase time="0.00199999999999534" classname="apply_mcmc" name="apply_mcmc_can_recover_known_parameters_and_catches_errors"/>
-    <testcase time="0.00199999999999534" classname="apply_mcmc" name="apply_mcmc_can_recover_known_parameters_and_catches_errors"/>
+    <testcase time="0.000999999999997669" classname="apply_mcmc" name="apply_mcmc_can_recover_known_parameters_and_catches_errors"/>
+    <testcase time="0.000999999999997669" classname="apply_mcmc" name="apply_mcmc_can_recover_known_parameters_and_catches_errors"/>
     <testcase time="0.00100000000000477" classname="apply_mcmc" name="apply_mcmc_can_recover_known_parameters_and_catches_errors"/>
     <testcase time="0.00199999999999534" classname="apply_mcmc" name="apply_mcmc_can_recover_known_parameters_and_catches_errors"/>
-    <testcase time="0.00200000000000955" classname="apply_mcmc" name="apply_mcmc_can_recover_known_parameters_and_catches_errors"/>
-    <testcase time="0.00199999999999534" classname="apply_mcmc" name="apply_mcmc_can_recover_known_parameters_and_catches_errors"/>
     <testcase time="0.00100000000000477" classname="apply_mcmc" name="apply_mcmc_can_recover_known_parameters_and_catches_errors"/>
-    <testcase time="0.00300000000000011" classname="apply_mcmc" name="apply_mcmc_can_recover_known_parameters_and_catches_errors"/>
-    <testcase time="0.00199999999999534" classname="apply_mcmc" name="apply_mcmc_can_recover_known_parameters_and_catches_errors"/>
-    <testcase time="0.00100000000000477" classname="apply_mcmc" name="apply_mcmc_can_recover_known_parameters_and_catches_errors"/>
-    <testcase time="0.00199999999999534" classname="apply_mcmc" name="apply_mcmc_can_recover_known_parameters_and_catches_errors"/>
-    <testcase time="0.00199999999999534" classname="apply_mcmc" name="apply_mcmc_can_recover_known_parameters_and_catches_errors"/>
+    <testcase time="0.000999999999997669" classname="apply_mcmc" name="apply_mcmc_can_recover_known_parameters_and_catches_errors"/>
+    <testcase time="0.000999999999997669" classname="apply_mcmc" name="apply_mcmc_can_recover_known_parameters_and_catches_errors"/>
+    <testcase time="0.00200000000000244" classname="apply_mcmc" name="apply_mcmc_can_recover_known_parameters_and_catches_errors"/>
+    <testcase time="0.000999999999997669" classname="apply_mcmc" name="apply_mcmc_can_recover_known_parameters_and_catches_errors"/>
+    <testcase time="0.000999999999997669" classname="apply_mcmc" name="apply_mcmc_can_recover_known_parameters_and_catches_errors"/>
+    <testcase time="0.00200000000000244" classname="apply_mcmc" name="apply_mcmc_can_recover_known_parameters_and_catches_errors"/>
+    <testcase time="0.000999999999997669" classname="apply_mcmc" name="apply_mcmc_can_recover_known_parameters_and_catches_errors"/>
   </testsuite>
-  <testsuite name="covariates" timestamp="2023-02-21T13:51:45Z" hostname="b404c9df4dbe" tests="12" skipped="0" failures="0" errors="0" time="1.631">
-    <testcase time="1.426" classname="covariates" name="Check_that_binary_probability_is_correct"/>
-    <testcase time="0.00600000000000023" classname="covariates" name="Check_that_binary_probability_is_correct"/>
-    <testcase time="0.138000000000005" classname="covariates" name="Check_that_Covariate_distributions_are_created_correctly"/>
-    <testcase time="0.00600000000000023" classname="covariates" name="Check_that_Covariate_distributions_are_created_correctly"/>
-    <testcase time="0.00499999999999545" classname="covariates" name="Check_that_Covariate_distributions_are_created_correctly"/>
-    <testcase time="0.00600000000000023" classname="covariates" name="Check_that_Covariate_distributions_are_created_correctly"/>
-    <testcase time="0.00600000000000023" classname="covariates" name="Check_that_Covariate_distributions_are_created_correctly"/>
-    <testcase time="0.00499999999999545" classname="covariates" name="Check_that_Covariate_distributions_are_created_correctly"/>
-    <testcase time="0.00600000000000023" classname="covariates" name="Check_that_Covariate_distributions_are_created_correctly"/>
-    <testcase time="0.00500000000000966" classname="covariates" name="Check_that_Covariate_distributions_are_created_correctly"/>
-    <testcase time="0.0159999999999911" classname="covariates" name="Check_that_Covariate_distributions_are_created_correctly"/>
-    <testcase time="0.00600000000000023" classname="covariates" name="Check_that_Covariate_distributions_are_created_correctly"/>
+  <testsuite name="covariates" timestamp="2023-02-21T14:01:29Z" hostname="1cd7a49d6129" tests="12" skipped="0" failures="0" errors="0" time="1.077">
+    <testcase time="0.941000000000003" classname="covariates" name="Check_that_binary_probability_is_correct"/>
+    <testcase time="0.00399999999999778" classname="covariates" name="Check_that_binary_probability_is_correct"/>
+    <testcase time="0.0930000000000035" classname="covariates" name="Check_that_Covariate_distributions_are_created_correctly"/>
+    <testcase time="0.00399999999999778" classname="covariates" name="Check_that_Covariate_distributions_are_created_correctly"/>
+    <testcase time="0.00400000000000489" classname="covariates" name="Check_that_Covariate_distributions_are_created_correctly"/>
+    <testcase time="0.00300000000000011" classname="covariates" name="Check_that_Covariate_distributions_are_created_correctly"/>
+    <testcase time="0.00399999999999778" classname="covariates" name="Check_that_Covariate_distributions_are_created_correctly"/>
+    <testcase time="0.00300000000000011" classname="covariates" name="Check_that_Covariate_distributions_are_created_correctly"/>
+    <testcase time="0.00399999999999778" classname="covariates" name="Check_that_Covariate_distributions_are_created_correctly"/>
+    <testcase time="0.00300000000000011" classname="covariates" name="Check_that_Covariate_distributions_are_created_correctly"/>
+    <testcase time="0.0110000000000028" classname="covariates" name="Check_that_Covariate_distributions_are_created_correctly"/>
+    <testcase time="0.00300000000000011" classname="covariates" name="Check_that_Covariate_distributions_are_created_correctly"/>
   </testsuite>
-  <testsuite name="inputs" timestamp="2023-02-21T13:51:47Z" hostname="b404c9df4dbe" tests="29" skipped="0" failures="0" errors="0" time="26.626">
-    <testcase time="26.448" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
-    <testcase time="0.00600000000000023" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
-    <testcase time="0.00600000000000023" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
-    <testcase time="0.007000000000005" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
-    <testcase time="0.00600000000000023" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
-    <testcase time="0.00600000000000023" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
-    <testcase time="0.007000000000005" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
-    <testcase time="0.00600000000000023" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
-    <testcase time="0.007000000000005" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
-    <testcase time="0.007000000000005" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
-    <testcase time="0.00600000000000023" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
-    <testcase time="0.00699999999997658" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
-    <testcase time="0.00600000000000023" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
-    <testcase time="0.007000000000005" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
-    <testcase time="0.00600000000000023" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
-    <testcase time="0.00600000000000023" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
-    <testcase time="0.0130000000000052" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
-    <testcase time="0.007000000000005" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
-    <testcase time="0.00600000000000023" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
-    <testcase time="0.00600000000000023" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
+  <testsuite name="inputs" timestamp="2023-02-21T14:01:30Z" hostname="1cd7a49d6129" tests="29" skipped="0" failures="0" errors="0" time="16.112">
+    <testcase time="15.994" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
+    <testcase time="0.00399999999999778" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
+    <testcase time="0.00399999999999778" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
+    <testcase time="0.00500000000000256" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
+    <testcase time="0.00300000000000011" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
+    <testcase time="0.00399999999999778" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
+    <testcase time="0.00500000000000256" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
+    <testcase time="0.00399999999999778" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
+    <testcase time="0.00400000000000489" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
+    <testcase time="0.00399999999999778" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
+    <testcase time="0.00399999999999778" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
+    <testcase time="0.00400000000000489" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
     <testcase time="0.00499999999999545" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
-    <testcase time="0.00499999999999545" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
-    <testcase time="0.00600000000000023" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
-    <testcase time="0.00499999999999545" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
-    <testcase time="0.00600000000000023" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
-    <testcase time="0.00600000000000023" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
-    <testcase time="0.00600000000000023" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
-    <testcase time="0.00600000000000023" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
-    <testcase time="0.00499999999999545" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
+    <testcase time="0.00400000000000489" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
+    <testcase time="0.00399999999999778" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
+    <testcase time="0.00399999999999778" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
+    <testcase time="0.00999999999999801" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
+    <testcase time="0.00400000000000489" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
+    <testcase time="0.00399999999999778" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
+    <testcase time="0.00399999999999778" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
+    <testcase time="0.00400000000000489" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
+    <testcase time="0.00300000000000011" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
+    <testcase time="0.00399999999999778" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
+    <testcase time="0.00399999999999778" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
+    <testcase time="0.00400000000000489" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
+    <testcase time="0.00300000000000011" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
+    <testcase time="0.00399999999999778" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
+    <testcase time="0.00399999999999778" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
+    <testcase time="0.00399999999999778" classname="inputs" name="inputs_are_correctly_carried_through_to_outputs"/>
   </testsuite>
-  <testsuite name="messages" timestamp="2023-02-21T13:52:13Z" hostname="b404c9df4dbe" tests="2" skipped="0" failures="0" errors="0" time="0.017">
-    <testcase time="0.0120000000000005" classname="messages" name="Messages_for_set_cov_are_printed_only_when_appropriate"/>
-    <testcase time="0.00500000000002387" classname="messages" name="Messages_for_set_cov_are_printed_only_when_appropriate"/>
+  <testsuite name="messages" timestamp="2023-02-21T14:01:46Z" hostname="1cd7a49d6129" tests="2" skipped="0" failures="0" errors="0" time="0.01">
+    <testcase time="0.007000000000005" classname="messages" name="Messages_for_set_cov_are_printed_only_when_appropriate"/>
+    <testcase time="0.00300000000000011" classname="messages" name="Messages_for_set_cov_are_printed_only_when_appropriate"/>
   </testsuite>
-  <testsuite name="parallel" timestamp="2023-02-21T13:52:13Z" hostname="b404c9df4dbe" tests="1" skipped="0" failures="0" errors="0" time="31.757">
-    <testcase time="31.757" classname="parallel" name="parallisation_works_as_expected"/>
+  <testsuite name="parallel" timestamp="2023-02-21T14:01:46Z" hostname="1cd7a49d6129" tests="1" skipped="0" failures="0" errors="0" time="16.44">
+    <testcase time="16.44" classname="parallel" name="parallisation_works_as_expected"/>
   </testsuite>
-  <testsuite name="plots" timestamp="2023-02-21T13:52:45Z" hostname="b404c9df4dbe" tests="67" skipped="0" failures="0" errors="0" time="0.774">
-    <testcase time="0.0650000000000261" classname="plots" name="Ensure_errors_are_correct"/>
-    <testcase time="0.00799999999998136" classname="plots" name="Ensure_errors_are_correct"/>
-    <testcase time="0.0100000000000193" classname="plots" name="Ensure_errors_are_correct"/>
-    <testcase time="0.00999999999999091" classname="plots" name="Ensure_errors_are_correct"/>
-    <testcase time="0.00999999999999091" classname="plots" name="Ensure_errors_are_correct"/>
-    <testcase time="0.0100000000000193" classname="plots" name="Ensure_errors_are_correct"/>
-    <testcase time="0.00899999999998613" classname="plots" name="Ensure_errors_are_correct"/>
-    <testcase time="0.00999999999999091" classname="plots" name="Ensure_errors_are_correct"/>
-    <testcase time="0.00800000000000978" classname="plots" name="Ensure_errors_are_correct"/>
-    <testcase time="0.00899999999998613" classname="plots" name="Ensure_errors_are_correct"/>
-    <testcase time="0.00800000000000978" classname="plots" name="Ensure_errors_are_correct"/>
-    <testcase time="0.00900000000001455" classname="plots" name="Ensure_errors_are_correct"/>
-    <testcase time="0.00899999999998613" classname="plots" name="Ensure_errors_are_correct"/>
-    <testcase time="0.0109999999999957" classname="plots" name="Ensure_errors_are_correct"/>
-    <testcase time="0.00900000000001455" classname="plots" name="Ensure_errors_are_correct"/>
-    <testcase time="0.00799999999998136" classname="plots" name="Ensure_errors_are_correct"/>
-    <testcase time="0.00800000000000978" classname="plots" name="Ensure_errors_are_correct"/>
-    <testcase time="0.00899999999998613" classname="plots" name="Ensure_errors_are_correct"/>
-    <testcase time="0.00800000000000978" classname="plots" name="Ensure_errors_are_correct"/>
-    <testcase time="0.00900000000001455" classname="plots" name="Ensure_errors_are_correct"/>
-    <testcase time="0.00899999999998613" classname="plots" name="Ensure_errors_are_correct"/>
-    <testcase time="0.00800000000000978" classname="plots" name="Ensure_errors_are_correct"/>
-    <testcase time="0.203000000000003" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.00600000000000023" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.00600000000000023" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.00600000000000023" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.00600000000000023" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.00699999999997658" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.00600000000000023" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.00600000000000023" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.00600000000000023" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.00600000000000023" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.007000000000005" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.00600000000000023" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.00600000000000023" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.00600000000000023" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.007000000000005" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+  <testsuite name="plots" timestamp="2023-02-21T14:02:02Z" hostname="1cd7a49d6129" tests="67" skipped="0" failures="0" errors="0" time="0.465">
+    <testcase time="0.0479999999999876" classname="plots" name="Ensure_errors_are_correct"/>
+    <testcase time="0.00500000000000966" classname="plots" name="Ensure_errors_are_correct"/>
+    <testcase time="0.00499999999999545" classname="plots" name="Ensure_errors_are_correct"/>
+    <testcase time="0.00499999999999545" classname="plots" name="Ensure_errors_are_correct"/>
+    <testcase time="0.00600000000000023" classname="plots" name="Ensure_errors_are_correct"/>
+    <testcase time="0.00500000000000966" classname="plots" name="Ensure_errors_are_correct"/>
+    <testcase time="0.00499999999999545" classname="plots" name="Ensure_errors_are_correct"/>
+    <testcase time="0.00499999999999545" classname="plots" name="Ensure_errors_are_correct"/>
+    <testcase time="0.00500000000000966" classname="plots" name="Ensure_errors_are_correct"/>
+    <testcase time="0.00499999999999545" classname="plots" name="Ensure_errors_are_correct"/>
+    <testcase time="0.00499999999999545" classname="plots" name="Ensure_errors_are_correct"/>
+    <testcase time="0.00500000000000966" classname="plots" name="Ensure_errors_are_correct"/>
+    <testcase time="0.00499999999999545" classname="plots" name="Ensure_errors_are_correct"/>
+    <testcase time="0.00600000000000023" classname="plots" name="Ensure_errors_are_correct"/>
+    <testcase time="0.00499999999999545" classname="plots" name="Ensure_errors_are_correct"/>
+    <testcase time="0.00500000000000966" classname="plots" name="Ensure_errors_are_correct"/>
+    <testcase time="0.00499999999999545" classname="plots" name="Ensure_errors_are_correct"/>
+    <testcase time="0.00600000000000023" classname="plots" name="Ensure_errors_are_correct"/>
+    <testcase time="0.00499999999999545" classname="plots" name="Ensure_errors_are_correct"/>
+    <testcase time="0.00500000000000966" classname="plots" name="Ensure_errors_are_correct"/>
+    <testcase time="0.00499999999999545" classname="plots" name="Ensure_errors_are_correct"/>
+    <testcase time="0.00499999999999545" classname="plots" name="Ensure_errors_are_correct"/>
+    <testcase time="0.126000000000005" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00399999999999068" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00400000000000489" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00400000000000489" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00300000000000011" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00399999999999068" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00400000000000489" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00400000000000489" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00399999999999068" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00400000000000489" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00400000000000489" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00399999999999068" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00400000000000489" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00300000000000011" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00400000000000489" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00399999999999068" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00400000000000489" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00400000000000489" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00399999999999068" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00400000000000489" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00400000000000489" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00399999999999068" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00400000000000489" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00400000000000489" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00399999999999068" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00400000000000489" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00400000000000489" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00399999999999068" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00400000000000489" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00400000000000489" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
     <testcase time="0.00499999999999545" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.007000000000005" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.00600000000000023" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.00800000000000978" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.00999999999999091" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.00800000000000978" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.00699999999997658" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.00600000000000023" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.007000000000005" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.007000000000005" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.007000000000005" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.00799999999998136" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.00800000000000978" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.00600000000000023" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.007000000000005" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.00600000000000023" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.00799999999998136" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.00600000000000023" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.00800000000000978" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.00800000000000978" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.00799999999998136" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.007000000000005" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.0180000000000007" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.00800000000000978" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.00799999999998136" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.00800000000000978" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.00800000000000978" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.00799999999998136" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.007000000000005" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
-    <testcase time="0.007000000000005" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00399999999999068" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00400000000000489" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00400000000000489" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00399999999999068" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00400000000000489" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00499999999999545" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00900000000000034" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00400000000000489" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00499999999999545" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00400000000000489" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00400000000000489" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00499999999999545" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00400000000000489" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
+    <testcase time="0.00399999999999068" classname="plots" name="Ensure_output_is_producing_a_ggplot2_object_with_appropriate_parameters"/>
   </testsuite>
-  <testsuite name="quiet" timestamp="2023-02-21T13:52:46Z" hostname="b404c9df4dbe" tests="1" skipped="1" failures="0" errors="0" time="21.688">
-    <testcase time="21.688" classname="quiet" name="Using_quiet_supresses_messages_as_expected">
+  <testsuite name="quiet" timestamp="2023-02-21T14:02:03Z" hostname="1cd7a49d6129" tests="1" skipped="1" failures="0" errors="0" time="11.285">
+    <testcase time="11.285" classname="quiet" name="Using_quiet_supresses_messages_as_expected">
       <skipped message="Reason: !Sys.getenv(&quot;RUN_ALL_TESTS&quot;) == TRUE is TRUE ('test-quiet.R:115')"/>
     </testcase>
   </testsuite>
-  <testsuite name="run_mcmc" timestamp="2023-02-21T13:53:07Z" hostname="b404c9df4dbe" tests="24" skipped="0" failures="0" errors="0" time="33.794">
-    <testcase time="33.632" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
-    <testcase time="0.00600000000000023" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
-    <testcase time="0.0340000000000202" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
-    <testcase time="0.00699999999997658" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
-    <testcase time="0.00600000000000023" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
-    <testcase time="0.007000000000005" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
-    <testcase time="0.00600000000000023" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
-    <testcase time="0.00600000000000023" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
-    <testcase time="0.007000000000005" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
-    <testcase time="0.00600000000000023" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
-    <testcase time="0.00499999999999545" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
-    <testcase time="0.00600000000000023" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
-    <testcase time="0.00499999999999545" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
-    <testcase time="0.00600000000000023" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
-    <testcase time="0.00499999999999545" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
-    <testcase time="0.00499999999999545" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
-    <testcase time="0.00600000000000023" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
-    <testcase time="0.00600000000000023" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
-    <testcase time="0.00499999999999545" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
-    <testcase time="0.00600000000000023" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
-    <testcase time="0.00600000000000023" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
-    <testcase time="0.00500000000002387" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
-    <testcase time="0.00499999999999545" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
-    <testcase time="0.00600000000000023" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
+  <testsuite name="run_mcmc" timestamp="2023-02-21T14:02:14Z" hostname="1cd7a49d6129" tests="24" skipped="0" failures="0" errors="0" time="17.034">
+    <testcase time="16.932" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
+    <testcase time="0.00300000000000011" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
+    <testcase time="0.0130000000000052" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
+    <testcase time="0.00400000000000489" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
+    <testcase time="0.00699999999999079" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
+    <testcase time="0.00400000000000489" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
+    <testcase time="0.00900000000000034" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
+    <testcase time="0.00300000000000011" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
+    <testcase time="0.00400000000000489" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
+    <testcase time="0.00399999999999068" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
+    <testcase time="0.00300000000000011" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
+    <testcase time="0.00400000000000489" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
+    <testcase time="0.00400000000000489" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
+    <testcase time="0.00300000000000011" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
+    <testcase time="0.00399999999999068" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
+    <testcase time="0.00300000000000011" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
+    <testcase time="0.00400000000000489" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
+    <testcase time="0.00400000000000489" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
+    <testcase time="0.00300000000000011" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
+    <testcase time="0.00399999999999068" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
+    <testcase time="0.00400000000000489" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
+    <testcase time="0.00400000000000489" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
+    <testcase time="0.00300000000000011" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
+    <testcase time="0.00399999999999068" classname="run_mcmc" name="Check_that_the_outputs_are_correct_for_run_mcmc"/>
   </testsuite>
 </testsuites>
