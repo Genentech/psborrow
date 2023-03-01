@@ -1,6 +1,6 @@
 Package: psborrow
 Title: Bayesian Dynamic Borrowing with Propensity Score
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: c(
     person(given = "Craig", family = "Gower-Page", role = c("cre"), email = "craig.gower-page@roche.com"),
     person(given = "Matt", family = "Secrest", role = c("ctb"), email = "secrestm@gene.com"),
