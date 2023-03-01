@@ -13,4 +13,4 @@ jobs:
     secrets:
       REPO_GITHUB_TOKEN: ${{ secrets.REPO_GITHUB_TOKEN }}
     with:
-      install-system-dependencies: true
+      install-system-dependencies: false
