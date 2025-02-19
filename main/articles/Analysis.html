@@ -5,64 +5,48 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="psborrow">
 <title>Analysing data with psborrow • psborrow</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Analysing data with psborrow">
-<meta property="og:description" content="psborrow">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Analysing data with psborrow">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
-    
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+
     <a class="navbar-brand me-2" href="../index.html">psborrow</a>
 
     <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
 
-    
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item">
-  <a class="nav-link" href="../reference/index.html">Reference</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="active nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/Analysis.html">Analysing data with psborrow</a>
-    <a class="dropdown-item" href="../articles/user_guide.html">User Guide: Dynamic Borrowing with psborrow</a>
-  </div>
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="../articles/Analysis.html">Analysing data with psborrow</a></li>
+    <li><a class="dropdown-item" href="../articles/user_guide.html">User Guide: Dynamic Borrowing with psborrow</a></li>
+  </ul>
 </li>
-<li class="nav-item">
-  <a class="nav-link" href="../news/index.html">Changelog</a>
-</li>
-<!-- start dropdown for versions --> <li class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle"
-          data-bs-toggle="dropdown" role="button"
-          aria-expanded="false" aria-haspopup="true"
-          id="dropdown-versions">Versions</a> <div class="dropdown-menu" aria-labelledby="dropdown-versions"> <a class="dropdown-item" data-toggle="tooltip" title="" href="https://Genentech.github.io/psborrow/main">main</a> </div></li>
-<!-- end dropdown for versions -->
+<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul>
-<form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
-</form>
-
-      <ul class="navbar-nav"></ul>
+<ul class="navbar-nav">
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
+</form></li>
+      </ul>
 </div>
 
-    
+
   </div>
 </nav><div class="container template-article">
 
@@ -71,10 +55,11 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>Analysing data with psborrow</h1>
+
+      <h1>Analysing data with psborrow</h1>
             
       
-      
+
       <div class="d-none name"><code>Analysis.Rmd</code></div>
     </div>
 
@@ -94,83 +79,104 @@ from Lu, Y. et al. (2021).</p>
 obtain the posterior distribution for the hazard ratio between treatment
 and control arms. The package relies on the Bayesian commensurate prior
 approach (Lewis, et al., 2019). The probability density function for the
-survival time of patient <span class="math inline">\(i\)</span>
+survival time of patient
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math>
 following a Weibull model is as below:</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>t</mi><mi>i</mi></msub><mo>∼</mo><mi>W</mi><mi>e</mi><mi>i</mi><mi>b</mi><mi>u</mi><mi>l</mi><mi>l</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>ν</mi><mo>,</mo><msub><mi>λ</mi><mi>i</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">
 t_i \sim Weibull( \nu, \lambda_i)
-\]</span></p>
-<p>for <span class="math inline">\(i = 1, 2, \dots,n\)</span>,
+</annotation></semantics></math></p>
+<p>for
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>=</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mi>…</mi><mo>,</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">i = 1, 2, \dots,n</annotation></semantics></math>,
 where:</p>
 <ul>
 <li>
-<span class="math inline">\(\nu\)</span> is the shape parameter</li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ν</mi><annotation encoding="application/x-tex">\nu</annotation></semantics></math>
+is the shape parameter</li>
 <li>
-<span class="math inline">\(\lambda\)</span> is the rate,</li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math>
+is the rate,</li>
 <li>
-<span class="math inline">\(n\)</span> is the total sample size of
-the analysis population.</li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>
+is the total sample size of the analysis population.</li>
 </ul>
 <p>The probability density function is:</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>t</mi><mi>i</mi></msub><mo>,</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>ν</mi><msub><mi>λ</mi><mi>i</mi></msub><msup><mi>t</mi><mrow><mi>ν</mi><mo>−</mo><mn>1</mn></mrow></msup><msup><mi>e</mi><mrow><mi>−</mi><msub><mi>λ</mi><mi>i</mi></msub><msup><mi>t</mi><mi>ν</mi></msup></mrow></msup></mrow><annotation encoding="application/x-tex">
 f(t_i, x_i) = \nu\lambda_i t^{\nu-1} e^{-\lambda_it^\nu}
-\]</span></p>
+</annotation></semantics></math></p>
 <p>with the rate taking the format:</p>
-<p><span class="math display">\[
-\lambda_i = exp(\alpha_i + \beta_{trt}  \times I_{trt} + \beta^T \times
-X_{i})
-\]</span></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>λ</mi><mi>i</mi></msub><mo>=</mo><mi>e</mi><mi>x</mi><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>α</mi><mi>i</mi></msub><mo>+</mo><msub><mi>β</mi><mrow><mi>t</mi><mi>r</mi><mi>t</mi></mrow></msub><mo>×</mo><msub><mi>I</mi><mrow><mi>t</mi><mi>r</mi><mi>t</mi></mrow></msub><mo>+</mo><msup><mi>β</mi><mi>T</mi></msup><mo>×</mo><msub><mi>X</mi><mi>i</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">
+\lambda_i = exp(\alpha_i + \beta_{trt}  \times I_{trt} + \beta^T \times X_{i})
+</annotation></semantics></math></p>
 <p>Where:</p>
 <ul>
 <li>
-<span class="math inline">\(\alpha_i = \alpha_{cc}\)</span> if
-patient <span class="math inline">\(i\)</span> is in the concurrent
-trial, and <span class="math inline">\(\alpha_i = \alpha_{ec}\)</span>
-if patient <span class="math inline">\(i\)</span> is in the external
-trial. Because the impact of therapy is captured by <span class="math inline">\(I_{trt}\)</span> below, <span class="math inline">\(\alpha_{cc}\)</span> and <span class="math inline">\(\alpha_{ec}\)</span> effectively correspond to the
-log of baseline hazard rate for concurrent control arm and external
-control arm, respectively.</li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>α</mi><mi>i</mi></msub><mo>=</mo><msub><mi>α</mi><mrow><mi>c</mi><mi>c</mi></mrow></msub></mrow><annotation encoding="application/x-tex">\alpha_i = \alpha_{cc}</annotation></semantics></math>
+if patient
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math>
+is in the concurrent trial, and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>α</mi><mi>i</mi></msub><mo>=</mo><msub><mi>α</mi><mrow><mi>e</mi><mi>c</mi></mrow></msub></mrow><annotation encoding="application/x-tex">\alpha_i = \alpha_{ec}</annotation></semantics></math>
+if patient
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math>
+is in the external trial. Because the impact of therapy is captured by
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mrow><mi>t</mi><mi>r</mi><mi>t</mi></mrow></msub><annotation encoding="application/x-tex">I_{trt}</annotation></semantics></math>
+below,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>α</mi><mrow><mi>c</mi><mi>c</mi></mrow></msub><annotation encoding="application/x-tex">\alpha_{cc}</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>α</mi><mrow><mi>e</mi><mi>c</mi></mrow></msub><annotation encoding="application/x-tex">\alpha_{ec}</annotation></semantics></math>
+effectively correspond to the log of baseline hazard rate for concurrent
+control arm and external control arm, respectively.</li>
 <li>
-<span class="math inline">\(\beta_n\)</span> is an n-length vector
-of regression coefficients<br>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>β</mi><mi>n</mi></msub><annotation encoding="application/x-tex">\beta_n</annotation></semantics></math>
+is an n-length vector of regression coefficients<br>
 </li>
 <li>
-<span class="math inline">\(X_{ni}\)</span> is an n-length covariate
-vector for patient <span class="math inline">\(i\)</span>, including all
-additional parameters to adjust for (e.g. propensity score).<br>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mrow><mi>n</mi><mi>i</mi></mrow></msub><annotation encoding="application/x-tex">X_{ni}</annotation></semantics></math>
+is an n-length covariate vector for patient
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math>,
+including all additional parameters to adjust for (e.g. propensity
+score).<br>
 </li>
 <li>
-<span class="math inline">\(I_{trt}\)</span> is the treatment
-indicator (value equals to 0 or 1).</li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mrow><mi>t</mi><mi>r</mi><mi>t</mi></mrow></msub><annotation encoding="application/x-tex">I_{trt}</annotation></semantics></math>
+is the treatment indicator (value equals to 0 or 1).</li>
 </ul>
 <p>A hierarchical model is defined in which the log hazard rate for the
-concurrent controls is centered on the external controls, i.e. <span class="math inline">\(\alpha_{cc} | \alpha_{ec} \sim N(\alpha_{ec},
-\tau)\)</span>. The hyperprior <span class="math inline">\(\tau\)</span>, also referred to as the
-commensurability parameter, determines the extent of borrowing (see
-Lewis, et al., 2019).</p>
+concurrent controls is centered on the external controls, i.e.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>α</mi><mrow><mi>c</mi><mi>c</mi></mrow></msub><mo stretchy="false" form="prefix">|</mo><msub><mi>α</mi><mrow><mi>e</mi><mi>c</mi></mrow></msub><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>α</mi><mrow><mi>e</mi><mi>c</mi></mrow></msub><mo>,</mo><mi>τ</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\alpha_{cc} | \alpha_{ec} \sim N(\alpha_{ec}, \tau)</annotation></semantics></math>.
+The hyperprior
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>τ</mi><annotation encoding="application/x-tex">\tau</annotation></semantics></math>,
+also referred to as the commensurability parameter, determines the
+extent of borrowing (see Lewis, et al., 2019).</p>
 <p>Four borrowing methods have been implemented:</p>
 <ol style="list-style-type: decimal">
 <li>Not borrowing any external control information</li>
 <li>Fully incorporating external control arm patients to the concurrent
 control group</li>
-<li>Dynamic borrowing with the commensurability hyperparameter <span class="math inline">\(\tau\)</span> following a Gamma distribution</li>
-<li>Dynamic borrowing with the commensurability hyperparameter <span class="math inline">\(\tau\)</span> following a half-Cauchy
-distribution</li>
+<li>Dynamic borrowing with the commensurability hyperparameter
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>τ</mi><annotation encoding="application/x-tex">\tau</annotation></semantics></math>
+following a Gamma distribution</li>
+<li>Dynamic borrowing with the commensurability hyperparameter
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>τ</mi><annotation encoding="application/x-tex">\tau</annotation></semantics></math>
+following a half-Cauchy distribution</li>
 </ol>
 <p>For methods (1) and (2), a conventional Bayesian model without
 dynamic borrowing is deployed with all relevant parameters assigned a
 non-informative prior. For method (1) no external control arm
-information is used and as such <span class="math inline">\(\alpha_{cc}
-= \alpha \sim N(0, 0.0001)\)</span> For method (2) the external control
-arm is treated as part of the concurrent control and as such <span class="math inline">\(\alpha_{cc} = \alpha_{ec} = \alpha \sim N(0,
-0.0001)\)</span>.</p>
+information is used and as such
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>α</mi><mrow><mi>c</mi><mi>c</mi></mrow></msub><mo>=</mo><mi>α</mi><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>0.0001</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\alpha_{cc} = \alpha \sim N(0, 0.0001)</annotation></semantics></math>
+For method (2) the external control arm is treated as part of the
+concurrent control and as such
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>α</mi><mrow><mi>c</mi><mi>c</mi></mrow></msub><mo>=</mo><msub><mi>α</mi><mrow><mi>e</mi><mi>c</mi></mrow></msub><mo>=</mo><mi>α</mi><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>0.0001</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\alpha_{cc} = \alpha_{ec} = \alpha \sim N(0, 0.0001)</annotation></semantics></math>.</p>
 <p>In comparison, methods (3) and (4) have the commensurability
-hyper-parameter <span class="math inline">\(\tau\)</span>, which acts as
-the precision variable assessing the similarity between the concurrent
-and external control groups. The prior of <span class="math inline">\(tau\)</span> follows a Gamma distribution
-(default: shape = 1, rate = 0.001) and a half-Cauchy distribution
-(default: location = 0, scale = 0.2), respectively, in methods 3 and 4.
-Users can update the default values for the parameter if they wish to
-customize the hyper-prior.</p>
+hyper-parameter
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>τ</mi><annotation encoding="application/x-tex">\tau</annotation></semantics></math>,
+which acts as the precision variable assessing the similarity between
+the concurrent and external control groups. The prior of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mi>a</mi><mi>u</mi></mrow><annotation encoding="application/x-tex">tau</annotation></semantics></math>
+follows a Gamma distribution (default: shape = 1, rate = 0.001) and a
+half-Cauchy distribution (default: location = 0, scale = 0.2),
+respectively, in methods 3 and 4. Users can update the default values
+for the parameter if they wish to customize the hyper-prior.</p>
 <p>After users state the prior choices and the simulated data is ready
 for use, the Markov chain Monte Carlo (MCMC) algorithm is deployed to
 obtain samples from the posterior distribution.</p>
@@ -181,42 +187,42 @@ obtain samples from the posterior distribution.</p>
 <p>To demonstrate how to use the package to fit the analysis model we
 first generate a dataset where the time to event is drawn from the
 following distribution:</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>t</mi><mi>i</mi></msub><mo>∼</mo><mi>W</mi><mi>e</mi><mi>i</mi><mi>b</mi><mi>u</mi><mi>l</mi><mi>l</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>0.95</mn><mo>,</mo><msub><mi>λ</mi><mi>i</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">
 t_i \sim Weibull(0.95, \lambda_i)
-\]</span> Where:</p>
-<p><span class="math display">\[
-\lambda_i =  \frac{1}{150}I_{ec} \times \frac{1}{200}I_{cc} \times
-\frac{1}{400}I_{trt} \times
+</annotation></semantics></math> Where:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>λ</mi><mi>i</mi></msub><mo>=</mo><mfrac><mn>1</mn><mn>150</mn></mfrac><msub><mi>I</mi><mrow><mi>e</mi><mi>c</mi></mrow></msub><mo>×</mo><mfrac><mn>1</mn><mn>200</mn></mfrac><msub><mi>I</mi><mrow><mi>c</mi><mi>c</mi></mrow></msub><mo>×</mo><mfrac><mn>1</mn><mn>400</mn></mfrac><msub><mi>I</mi><mrow><mi>t</mi><mi>r</mi><mi>t</mi></mrow></msub><mo>×</mo><mi>e</mi><mi>x</mi><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>0.2</mn><mo>×</mo><msub><mi>x</mi><mrow><mi>a</mi><mi>g</mi><mi>e</mi></mrow></msub><mo>−</mo><mn>0.1</mn><mo>×</mo><msub><mi>I</mi><mrow><mi>f</mi><mi>e</mi><mi>m</mi><mi>a</mi><mi>l</mi><mi>e</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">
+\lambda_i =  \frac{1}{150}I_{ec} \times \frac{1}{200}I_{cc} \times \frac{1}{400}I_{trt} \times
 exp(0.2\times x_{age} - 0.1\times I_{female})
-\]</span></p>
+</annotation></semantics></math></p>
 <ul>
 <li>
-<span class="math inline">\(I_{ec}\)</span> is 1 if the patient is
-in the external trial else 0<br>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mrow><mi>e</mi><mi>c</mi></mrow></msub><annotation encoding="application/x-tex">I_{ec}</annotation></semantics></math>
+is 1 if the patient is in the external trial else 0<br>
 </li>
 <li>
-<span class="math inline">\(I_{cc}\)</span> is 1 if the patient is
-in the concurrent trial else 0<br>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mrow><mi>c</mi><mi>c</mi></mrow></msub><annotation encoding="application/x-tex">I_{cc}</annotation></semantics></math>
+is 1 if the patient is in the concurrent trial else 0<br>
 </li>
 <li>
-<span class="math inline">\(I_{trt}\)</span> is 1 if the patient is
-in the treatment arm else 0<br>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mrow><mi>t</mi><mi>r</mi><mi>t</mi></mrow></msub><annotation encoding="application/x-tex">I_{trt}</annotation></semantics></math>
+is 1 if the patient is in the treatment arm else 0<br>
 </li>
 <li>
-<span class="math inline">\(I_{female}\)</span> is 1 if the patient
-is female else 0<br>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mrow><mi>f</mi><mi>e</mi><mi>m</mi><mi>a</mi><mi>l</mi><mi>e</mi></mrow></msub><annotation encoding="application/x-tex">I_{female}</annotation></semantics></math>
+is 1 if the patient is female else 0<br>
 </li>
 <li>
-<span class="math inline">\(x_{age}\)</span> is the patient’s
-age</li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mrow><mi>a</mi><mi>g</mi><mi>e</mi></mrow></msub><annotation encoding="application/x-tex">x_{age}</annotation></semantics></math>
+is the patient’s age</li>
 </ul>
 <p>Patients are then censored by drawing a censoring time from the
-exponential distribution with a rate parameter of <span class="math inline">\(\lambda = 1/400\)</span></p>
+exponential distribution with a rate parameter of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>1</mn><mi>/</mi><mn>400</mn></mrow><annotation encoding="application/x-tex">\lambda = 1/400</annotation></semantics></math></p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>    <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">psborrow</span><span class="op">)</span></span>
 <span>    <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span>    <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/chjackson/flexsurv-dev" class="external-link">flexsurv</a></span><span class="op">)</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/chjackson/flexsurv" class="external-link">flexsurv</a></span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">401</span><span class="op">)</span></span>
@@ -257,7 +263,7 @@ exponential distribution with a rate parameter of <span class="math inline">\(\l
 <span>        <span class="va">log_hr_sex</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">sex</span><span class="op">)</span><span class="op">]</span> <span class="op">+</span></span>
 <span>        <span class="va">log_hr_grp</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">grp</span><span class="op">)</span><span class="op">]</span></span>
 <span>    <span class="op">)</span>,</span>
-<span>    time <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/flexsurv/man/WeibullPH.html" class="external-link">rweibullPH</a></span><span class="op">(</span><span class="va">n</span>, scale <span class="op">=</span> <span class="va">lambda</span>, shape <span class="op">=</span> <span class="va">Shape</span><span class="op">)</span>,</span>
+<span>    time <span class="op">=</span> <span class="fu"><a href="http://chjackson.github.io/flexsurv-dev/reference/WeibullPH.html" class="external-link">rweibullPH</a></span><span class="op">(</span><span class="va">n</span>, scale <span class="op">=</span> <span class="va">lambda</span>, shape <span class="op">=</span> <span class="va">Shape</span><span class="op">)</span>,</span>
 <span>    centime <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Exponential.html" class="external-link">rexp</a></span><span class="op">(</span><span class="va">n</span>, <span class="fl">1</span> <span class="op">/</span> <span class="fl">400</span><span class="op">)</span></span>
 <span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>event <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">time</span> <span class="op">&lt;=</span> <span class="va">centime</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -278,7 +284,7 @@ exponential distribution with a rate parameter of <span class="math inline">\(\l
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>     8 TRT    0.906 Female 105.      1</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>     9 CC     1.43  Male    57.9     1</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>    10 TRT    2.75  Female  85.9     1</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 990 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 990 more rows</span></span></span></code></pre></div>
 <p>To conduct an analysis we need to use the <code><a href="../reference/apply_mcmc.html">apply_mcmc()</a></code>
 function. However to use this function we first need to convert our data
 into the required format. Full details of the required format can be
@@ -305,7 +311,7 @@ shown below:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>     8     1     0 105.      0 Female  0.906</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>     9     0     0  57.9     0 Male    1.43 </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>    10     1     0  85.9     0 Female  2.75 </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 990 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 990 more rows</span></span></span></code></pre></div>
 <p>We can now pass our data to <code><a href="../reference/apply_mcmc.html">apply_mcmc()</a></code> to produce our
 posterior samples. Prior distributions are specified using the
 <code><a href="../reference/set_prior.html">set_prior()</a></code> function, details for which can be found in
@@ -409,28 +415,26 @@ cautionary tale and practical guidelines. Statistics in
 biopharmaceutical research, 11(1), 67-78.</p></li>
 </ol>
 </div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
 
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p>
-<p>Developed by Isaac Gravestock, Craig Gower-Page, Yichen Lu, Aijing Lin, F. Hoffmann-La Roche AG.</p>
+  <p>Developed by Isaac Gravestock, Craig Gower-Page, Yichen Lu, Aijing Lin, F. Hoffmann-La Roche AG.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>
 </div>
 
-  
 
-  
+
+
 
   </body>
 </html>

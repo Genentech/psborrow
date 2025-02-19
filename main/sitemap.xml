@@ -1,123 +1,43 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>/articles/Analysis.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/articles/user_guide.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/news/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/add_cov.html</loc>
-  </url>
-  <url>
-    <loc>/reference/add_mcmc.html</loc>
-  </url>
-  <url>
-    <loc>/reference/add_time.html</loc>
-  </url>
-  <url>
-    <loc>/reference/apply_mcmc.html</loc>
-  </url>
-  <url>
-    <loc>/reference/c-.covClass-method.html</loc>
-  </url>
-  <url>
-    <loc>/reference/c-.priorClass-method.html</loc>
-  </url>
-  <url>
-    <loc>/reference/dot-clinClass-class.html</loc>
-  </url>
-  <url>
-    <loc>/reference/dot-covClass-class.html</loc>
-  </url>
-  <url>
-    <loc>/reference/dot-eventClass-class.html</loc>
-  </url>
-  <url>
-    <loc>/reference/dot-priorClass-class.html</loc>
-  </url>
-  <url>
-    <loc>/reference/fix_col_names.html</loc>
-  </url>
-  <url>
-    <loc>/reference/get_summary.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/is_psborrow_dev.html</loc>
-  </url>
-  <url>
-    <loc>/reference/match_cov.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot_bias.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot_hr.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot_mse.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot_power.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot_type1error.html</loc>
-  </url>
-  <url>
-    <loc>/reference/ps_message.html</loc>
-  </url>
-  <url>
-    <loc>/reference/rej_est.html</loc>
-  </url>
-  <url>
-    <loc>/reference/run_mcmc.html</loc>
-  </url>
-  <url>
-    <loc>/reference/run_mcmc_p.html</loc>
-  </url>
-  <url>
-    <loc>/reference/set_clin.html</loc>
-  </url>
-  <url>
-    <loc>/reference/set_cov.html</loc>
-  </url>
-  <url>
-    <loc>/reference/set_event.html</loc>
-  </url>
-  <url>
-    <loc>/reference/set_n.html</loc>
-  </url>
-  <url>
-    <loc>/reference/set_prior.html</loc>
-  </url>
-  <url>
-    <loc>/reference/simu_cov.html</loc>
-  </url>
-  <url>
-    <loc>/reference/simu_time.html</loc>
-  </url>
-  <url>
-    <loc>/reference/valid_mcmc.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/LICENSE.html</loc></url>
+<url><loc>/articles/Analysis.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/articles/user_guide.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/news/index.html</loc></url>
+<url><loc>/reference/add_cov.html</loc></url>
+<url><loc>/reference/add_mcmc.html</loc></url>
+<url><loc>/reference/add_time.html</loc></url>
+<url><loc>/reference/apply_mcmc.html</loc></url>
+<url><loc>/reference/c-.covClass-method.html</loc></url>
+<url><loc>/reference/c-.priorClass-method.html</loc></url>
+<url><loc>/reference/dot-clinClass-class.html</loc></url>
+<url><loc>/reference/dot-covClass-class.html</loc></url>
+<url><loc>/reference/dot-eventClass-class.html</loc></url>
+<url><loc>/reference/dot-priorClass-class.html</loc></url>
+<url><loc>/reference/fix_col_names.html</loc></url>
+<url><loc>/reference/get_summary.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/is_psborrow_dev.html</loc></url>
+<url><loc>/reference/match_cov.html</loc></url>
+<url><loc>/reference/plot_bias.html</loc></url>
+<url><loc>/reference/plot_hr.html</loc></url>
+<url><loc>/reference/plot_mse.html</loc></url>
+<url><loc>/reference/plot_power.html</loc></url>
+<url><loc>/reference/plot_type1error.html</loc></url>
+<url><loc>/reference/ps_message.html</loc></url>
+<url><loc>/reference/rej_est.html</loc></url>
+<url><loc>/reference/run_mcmc.html</loc></url>
+<url><loc>/reference/run_mcmc_p.html</loc></url>
+<url><loc>/reference/set_clin.html</loc></url>
+<url><loc>/reference/set_cov.html</loc></url>
+<url><loc>/reference/set_event.html</loc></url>
+<url><loc>/reference/set_n.html</loc></url>
+<url><loc>/reference/set_prior.html</loc></url>
+<url><loc>/reference/simu_cov.html</loc></url>
+<url><loc>/reference/simu_time.html</loc></url>
+<url><loc>/reference/valid_mcmc.html</loc></url>
 </urlset>
+
