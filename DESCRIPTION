@@ -18,7 +18,7 @@ Imports:
     data.table,
     rjags,
     mvtnorm,
-    ggplot2 (>= 3.2.0),
+    ggplot2 (>= 3.5.2),
     foreach,
     doParallel,
     parallel,
