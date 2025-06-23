@@ -124,6 +124,9 @@ test_that("Ensure output is producing a ggplot2 object with appropriate paramete
   for(p in list(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10)){
     expect_s3_class(p, 'gg')
   }
+
+  skip_if_not_installed("ggplot2", minimum_version = "3.5.2")
+
   for(p in list(p1, p3, p7, p9)) {
     expect_equal(NROW(p$layers), 3L)
     expect_equal(ggplot2::get_labs(p)$yintercept, 'ref')

@@ -1,6 +1,6 @@
 Package: psborrow
 Title: Bayesian Dynamic Borrowing with Propensity Score
-Version: 0.2.2
+Version: 0.2.3
 Authors@R: c(
     person(given = "Isaac", family = "Gravestock", role = c("cre", "ctb"), email = "isaac.gravestock@roche.com"),
     person(given = "Craig", family = "Gower-Page", role = c("aut"), email = "craig.gower-page@roche.com"),
@@ -18,7 +18,7 @@ Imports:
     data.table,
     rjags,
     mvtnorm,
-    ggplot2 (>= 3.5.2),
+    ggplot2,
     foreach,
     doParallel,
     parallel,
